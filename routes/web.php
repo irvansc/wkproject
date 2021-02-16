@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('keluar', function () {
+    Auth::logout();
+    return redirect('/');
+});
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('dashboard', 'Admin\DashboardController');
+Route::resource('pengguna', 'Admin\UserController');
+Route::post('pengguna/updatepw/{id}', 'Admin\UserController@updatepw');
+Route::get('pengguna/delete/{id}', 'Admin\UserController@delete');
