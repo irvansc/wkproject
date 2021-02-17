@@ -25,7 +25,14 @@ Route::get('keluar', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('dashboard', 'Admin\DashboardController');
-Route::resource('pengguna', 'Admin\UserController');
-Route::post('pengguna/updatepw/{id}', 'Admin\UserController@updatepw');
-Route::get('pengguna/delete/{id}', 'Admin\UserController@delete');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('dashboard', 'Admin\DashboardController');
+    Route::resource('pengguna', 'Admin\UserController');
+    Route::post('pengguna/updatepw/{id}', 'Admin\UserController@updatepw');
+    Route::get('pengguna/delete/{id}', 'Admin\UserController@delete');
+    Route::resource('post', 'Admin\PostController');
+    Route::get('post/delete/{id}', 'Admin\PostController@delete');
+    // Route::any('/post/data', 'Admin\PostController@data');
+    Route::resource('kategori', 'Admin\CategoryController');
+    Route::get('kategori/delete/{id}', 'Admin\CategoryController@delete');
+});

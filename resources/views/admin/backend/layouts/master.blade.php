@@ -16,5 +16,5 @@
 
                 </section>
             </div>
-
+            @yield('modal')
             @include('admin.backend.layouts.footer')

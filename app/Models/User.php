@@ -15,8 +15,8 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
+    protected $guarded = [
+        'id'
     ];
 
     /**
@@ -36,4 +36,54 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getPhoto()
+    {
+        if (!$this->image) {
+            return asset('images/default.png');
+        }
+        return asset('images/' . $this->image);
+    }
+    function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+
+    // function roles()
+    // {
+    //     return $this->belongsToMany(Role::class);
+    // }
+
+    // function pengumuman()
+    // {
+    //     return $this->hasMany(Pengumuman::class);
+    // }
+
+    // function isAdmin()
+    // {
+    //     return $this->roles()->where('name', 'admin')->exists();
+    // }
+
+    // function permission($permission)
+    // {
+    //     foreach ($this->roles as $role) {
+    //         if ($role->permissions->pluck('name')->contains($permission)) {
+    //             return true;
+    //         }
+    //     }
+    // }
+
+    // function album()
+    // {
+    //     return $this->hasMany(Album::class);
+    // }
+    // function foto()
+    // {
+    //     return $this->hasMany(Foto::class);
+    // }
+    // function video()
+    // {
+    //     return $this->hasMany(Video::class);
+    // }
 }

@@ -8,10 +8,13 @@
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="{{ url('') }}/assets/modules/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url('') }}/assets/modules/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="{{ url('') }}/assets/modules/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{asset('')}}assets/modules/@fortawesome/fontawesome-free/css/all.min.css"
+        type="text/css">
 
     <!-- CSS Libraries -->
-
+    <link href="{{asset('')}}assets/modules/toastr/build/toastr.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{asset('')}}assets/modules/summernote-0.8.18-dist/summernote.min.css">
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ url('') }}/assets/css/style.css">
     <link rel="stylesheet" href="{{ url('') }}/assets/css/components.css">

@@ -6,38 +6,82 @@
         <a href="index.html">St</a>
     </div>
     <ul class="sidebar-menu">
-        <li class="menu-header">Dashboard</li>
-        <li class="dropdown">
-            <a href="/dashboard" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard
-                    Admin</span></a>
-            <ul class="dropdown-menu">
-                <li><a class="nav-link" href="index-0.html">General Dashboard</a></li>
-                <li><a class="nav-link" href="index.html">Ecommerce Dashboard</a></li>
-            </ul>
-        </li>
-        <li class=""><a class="nav-link" href="/dashboard"><i class="fas fa-tachometer-alt"></i>
+        <li class=""><a class="nav-link" href="/dashboard"><i class="fas fa-tachometer-alt" style="color: #007bff"></i>
                 <span>Dashboard</span></a></li>
-        <li class="menu-header">Mahasiswa</li>
+        <hr>
         <li class="dropdown">
-            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users"></i> <span>Data
-                    Mahasiswa</span></a>
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                <i class="fas fa-blog" style="color: #007bff"></i>
+                <span>Data Artikel</span>
+            </a>
             <ul class="dropdown-menu">
-                <li><a class="nav-link" href="layout-default.html">Mahasiswa</a></li>
-                <li><a class="nav-link" href="layout-default.html">Edit Data Mahasiswa</a></li>
+                <li><a class="nav-link" href="{{route('post.create')}}">Post Artikel</a></li>
+                <li><a class="nav-link" href="{{route('post.index')}}">List Artikel</a></li>
+                <li><a class="nav-link" href="{{route('kategori.index')}}">Kategori Artikel</a></li>
             </ul>
         </li>
+        <hr>
         <li class="dropdown">
-            <a href="#" class="nav-link has-dropdown"><i class="fas fa-th"></i> <span>Bootstrap</span></a>
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users"
+                    style="color: #007bff"></i> <span>Data
+                    Pengguna</span></a>
             <ul class="dropdown-menu">
-                <li><a class="nav-link" href="bootstrap-alert.html">Alert</a></li>
-
+                <li><a class="nav-link" href="{{route('pengguna.index')}}">List Pengguna</a></li>
+                <li><a class="nav-link" href="layout-default.html">Permissions</a></li>
+                <li><a class="nav-link" href="layout-default.html">Role</a></li>
             </ul>
+        </li>
+        <hr>
+        <li class="dropdown">
+            <a href="#" class="nav-link has-dropdown " data-toggle="dropdown">
+                <i class="fas fa-chalkboard-teacher" style="color: #007bff"></i>
+                <span>Data Akademik</span></a>
+            <ul class="dropdown-menu">
+                <li><a class="nav-link" href="layout-default.html">Kelas</a></li>
+                <li><a class="nav-link" href="layout-default.html">Guru</a></li>
+                <li><a class="nav-link" href="layout-default.html">Siswa</a></li>
+                <li><a class="nav-link" href="layout-default.html">File Download</a></li>
+            </ul>
+        </li>
+        <hr>
+        <li class="dropdown">
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-info"
+                    style="color: #007bff"></i>
+                <span>Informasi</span></a>
+            <ul class="dropdown-menu">
+                <li><a class="nav-link" href="layout-default.html">Pengumuman</a></li>
+                <li><a class="nav-link" href="layout-default.html">Agenda</a></li>
+                <li><a class="nav-link" href="layout-default.html">Testimonial</a></li>
+                <li><a class="nav-link" href="layout-default.html">Visi-Misi</a></li>
+                <li><a class="nav-link" href="layout-default.html">Sejarah</a></li>
+                <li><a class="nav-link" href="layout-default.html">About</a></li>
+            </ul>
+        </li>
+        <hr>
+        <li class="dropdown">
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas  fa-camera"
+                    style="color: #007bff"></i>
+                <span>Galery</span></a>
+            <ul class="dropdown-menu">
+                <li><a class="nav-link" href="layout-default.html">Album</a></li>
+                <li><a class="nav-link" href="layout-default.html">Foto</a></li>
+                <li><a class="nav-link" href="layout-default.html">Video</a></li>
+            </ul>
+        </li>
+        <hr>
+        <li class=""><a class="nav-link" href=""><i class="fa fa-envelope" style="color: #007bff"></i>
+                <span>Inbox</span></a>
+        </li>
+        <li class=""><a class="nav-link" href=""><i class="fa fa-comments" style="color: #007bff"></i>
+                <span>Komentar</span></a>
         </li>
     </ul>
 
     <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-        <a href="#" class="btn btn-primary btn-lg btn-block btn-icon-split">
-            Logout
-        </a>
+        <center>
+            <a href="{{url('keluar')}}" class="btn btn-warning btn-lg ">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </center>
     </div>
 </aside>

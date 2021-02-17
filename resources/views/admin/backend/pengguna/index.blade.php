@@ -1,14 +1,17 @@
 @extends('admin.backend.layouts.master')
 
 @section('content')
-<div class="row">
-    <div class="col-md-8">
+<div class="section-header">
+    <h1>List Pengguna</h1>
+</div>
+<div class="section-body">
+    <div class="col-md-10">
+        <button data-toggle="modal" data-target="#tambah" class="btn btn-primary mb-2">
+            <i class="fas fa-plus-circle"></i> Tambah Data</button>
         <div class="card shadow mb-5">
             <div class="card-header py-3">
                 <div class="row">
-                    <h6 class="m-0 font-weight-bold text-primary">Data pengguna</h6>
-                    <button data-toggle="modal" data-target="#tambah" class="btn btn-sm btn-primary ml-auto"> <i
-                            class="fas fa-plus-circle"></i> Tambah Data</button>
+                    <h6 class="font-weight-bold text-primary">Data pengguna</h6>
                 </div>
             </div>
             <div class="card-body">
@@ -38,20 +41,19 @@
                             <tr>
                                 <td>{{$e+1}}</td>
                                 <td>
-                                    <img src="{{asset('images/'.$u->image)}}" alt="" class="img">
+                                    <img src="{{Auth::user()->getPhoto()}}" alt="" class="img">
                                 </td>
                                 <td>{{$u->name}}</td>
                                 <td></td>
                                 <td>{{$u->telp}}</td>
                                 <td>{{$u->jenkel}}</td>
                                 <td>
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#pw{{$u->id}}">
+                                    <button class="btn btn-primary " data-toggle="modal" data-target="#pw{{$u->id}}">
                                         <i class="fa fa-key"></i></button>
-                                    <a href="{{route('pengguna.edit',$u->id)}}" class="btn btn-warning btn-sm"><i
+                                    <a href="{{route('pengguna.edit',$u->id)}}" class="btn btn-warning "><i
                                             class="fas fa-user-edit"></i></a>
-                                    <button class="btn btn-danger btn-sm delete" name="{{ $u->name }}"
-                                        id="{{ $u->id }}"><i class="fas fa-trash"></i></button>
+                                    <button class="btn btn-danger  delete" name="{{ $u->name }}" id="{{ $u->id }}"><i
+                                            class="fas fa-trash"></i></button>
                                 </td>
                             </tr>
                             @endforeach
@@ -64,6 +66,10 @@
         </div>
     </div>
 </div>
+
+
+@endsection
+@section('modal')
 <div class="modal fade" id="tambah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -91,11 +97,11 @@
                                 required>
                         </div>
                         {{-- <div class="form-group">
-                            <label for="">Role</label>
-                            <select id="" name="role" class="form-control" required>
-                                <option value="">--Pilih Role--</option>
-                                @foreach ($roles as $role)
-                                <option value="{{$role->id}}">{{$role->name}}</option>
+                                <label for="">Role</label>
+                                <select id="" name="role" class="form-control" required>
+                                    <option value="">--Pilih Role--</option>
+                                    @foreach ($roles as $role)
+                                    <option value="{{$role->id}}">{{$role->name}}</option>
                         @endforeach
                         </select>
                     </div> --}}
@@ -168,13 +174,11 @@
     </div>
 </div>
 @endforeach
-
 @endsection
 
 @section('js')
 <script>
     $(document).ready(function(){
-
     $('.form-checkbox').click(function(){
         if($(this).is(':checked')){
         $('.form-password').attr('type','text');
