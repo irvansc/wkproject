@@ -1,5 +1,10 @@
 @extends('admin.backend.layouts.master')
 
 @section('content')
-<h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+<div class="section-header">
+    <h1>Blank Page</h1>
+</div>
+
+<div class="section-body">
+</div>
 @endsection

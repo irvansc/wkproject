@@ -1,14 +1,17 @@
-<!-- Bootstrap core JavaScript-->
-<script src="{{asset('')}}assets/vendor/jquery/jquery.min.js"></script>
-<script src="{{asset('')}}assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- General JS Scripts -->
+<script src="{{ url('') }}/assets/modules/jquery.min.js"></script>
+<script src="{{ url('') }}/assets/modules/bootstrap/js/bootstrap.min.js"></script>
+<script src="{{ url('') }}/assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
+<script src="{{ url('') }}/assets/modules/moment.min.js"></script>
+<script src="{{ url('') }}/assets/js/stisla.js"></script>
 
-<!-- Core plugin JavaScript-->
-<script src="{{asset('')}}assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- JS Libraies -->
 
-<!-- Custom scripts for all pages-->
-<script src="{{asset('')}}assets/js/sb-admin-2.min.js"></script>
-<script src="{{asset('')}}assets/vendor/toastr/build/toastr.min.js"></script>
-<script src="{{ asset('') }}assets/vendor/sweetalert/sweetalert.min.js"></script>
+<!-- Page Specific JS File -->
+
+<!-- Template JS File -->
+<script src="{{ url('') }}/assets/js/scripts.js"></script>
+<script src="{{ url('') }}/assets/js/custom.js"></script>
 @yield('js')
 <script>
     @if (Session::has('sukses'))
