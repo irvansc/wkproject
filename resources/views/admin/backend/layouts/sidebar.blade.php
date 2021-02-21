@@ -27,8 +27,8 @@
                     Pengguna</span></a>
             <ul class="dropdown-menu">
                 <li><a class="nav-link" href="{{route('pengguna.index')}}">List Pengguna</a></li>
-                <li><a class="nav-link" href="layout-default.html">Permissions</a></li>
-                <li><a class="nav-link" href="layout-default.html">Role</a></li>
+                <li><a class="nav-link" href="{{route('permissions.index')}}">Permissions</a></li>
+                <li><a class="nav-link" href="{{route('roles.index')}}">Role</a></li>
             </ul>
         </li>
         <hr>
@@ -72,7 +72,8 @@
         <li class=""><a class="nav-link" href=""><i class="fa fa-envelope" style="color: #007bff"></i>
                 <span>Inbox</span></a>
         </li>
-        <li class=""><a class="nav-link" href=""><i class="fa fa-comments" style="color: #007bff"></i>
+        <li class=""><a class="nav-link" href="{{route('komentar.index')}}"><i class="fa fa-comments"
+                    style="color: #007bff"></i>
                 <span>Komentar</span></a>
         </li>
     </ul>

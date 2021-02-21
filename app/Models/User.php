@@ -50,40 +50,40 @@ class User extends Authenticatable
     }
 
 
-    // function roles()
-    // {
-    //     return $this->belongsToMany(Role::class);
-    // }
+    function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 
-    // function pengumuman()
-    // {
-    //     return $this->hasMany(Pengumuman::class);
-    // }
+    function pengumuman()
+    {
+        return $this->hasMany(Pengumuman::class);
+    }
 
-    // function isAdmin()
-    // {
-    //     return $this->roles()->where('name', 'admin')->exists();
-    // }
+    function isAdmin()
+    {
+        return $this->roles()->where('name', 'admin')->exists();
+    }
 
-    // function permission($permission)
-    // {
-    //     foreach ($this->roles as $role) {
-    //         if ($role->permissions->pluck('name')->contains($permission)) {
-    //             return true;
-    //         }
-    //     }
-    // }
+    function permission($permission)
+    {
+        foreach ($this->roles as $role) {
+            if ($role->permissions->pluck('name')->contains($permission)) {
+                return true;
+            }
+        }
+    }
 
-    // function album()
-    // {
-    //     return $this->hasMany(Album::class);
-    // }
-    // function foto()
-    // {
-    //     return $this->hasMany(Foto::class);
-    // }
-    // function video()
-    // {
-    //     return $this->hasMany(Video::class);
-    // }
+    function album()
+    {
+        return $this->hasMany(Album::class);
+    }
+    function foto()
+    {
+        return $this->hasMany(Foto::class);
+    }
+    function video()
+    {
+        return $this->hasMany(Video::class);
+    }
 }

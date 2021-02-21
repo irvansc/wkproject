@@ -24,15 +24,14 @@
                     </style>
                     {{-- py-4 --}}
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="data">
+                        <table class="table table-bordered" id="postData">
                             <thead class="">
                                 <tr>
-                                    <th width="20px">No</th>
-                                    <th>Image</th>
-                                    <th width="30%">Judul</th>
-                                    <th width="30px">Penulis</th>
+                                    <th>No</th>
+                                    <th>Judul</th>
+                                    <th>Penulis</th>
                                     <th>kategori</th>
-                                    <th width="30px">Dipublikasikan pada</th>
+                                    <th>Dipublikasikan pada</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -40,9 +39,9 @@
                                 @foreach ($posts as $e=>$post)
                                 <tr>
                                     <td>{{$e+1}}</td>
-                                    <td><img src="{{asset('artikel/'.$post->img)}}" alt="" class="img"></td>
-                                    <td>{!!str_limit($post->title,50)!!}</td>
-                                    {{-- <td>{!! str_limit ($post->content,50) !!}</td> --}}
+                                    <td>
+                                        <a href="{{route('post.show',$post->id)}}">{!!str_limit($post->title,50)!!}</a>
+                                    </td>
                                     <td>{{$post->user->name}}</td>
                                     <td>
                                         @if ($post->categories->isNotEmpty())
@@ -57,6 +56,8 @@
                                     </td>
                                     <td>{{$post->created_at}}</td>
                                     <td>
+                                        <a href="{{route('post.show',$post->id)}}" class="btn btn-info btn-sm"><i
+                                                class="fas fa-eye"></i></a>
                                         <a href="{{route('post.edit',$post->id)}}" class="btn btn-warning btn-sm"><i
                                                 class="fas fa-pencil-alt"></i></a>
 
@@ -73,12 +74,17 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @section('js')
 <script>
     $(document).ready(function(){
+        $('#postData').DataTable({
+            "pageLength": 5,
+    "lengthMenu": [[ 5,10, 25, 50, 100], [5,10, 25, 50, 'semua']],
+    "bLengthChange": true,
+        });
+
     $('.form-checkbox').click(function(){
         if($(this).is(':checked')){
         $('.form-password').attr('type','text');

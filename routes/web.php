@@ -27,12 +27,20 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('dashboard', 'Admin\DashboardController');
-    Route::resource('pengguna', 'Admin\UserController');
-    Route::post('pengguna/updatepw/{id}', 'Admin\UserController@updatepw');
-    Route::get('pengguna/delete/{id}', 'Admin\UserController@delete');
-    Route::resource('post', 'Admin\PostController');
-    Route::get('post/delete/{id}', 'Admin\PostController@delete');
-    // Route::any('/post/data', 'Admin\PostController@data');
-    Route::resource('kategori', 'Admin\CategoryController');
-    Route::get('kategori/delete/{id}', 'Admin\CategoryController@delete');
+
+    Route::group(['middleware' => 'role'], function () {
+        Route::resource('pengguna', 'Admin\UserController');
+        Route::post('pengguna/updatepw/{id}', 'Admin\UserController@updatepw');
+        Route::get('pengguna/delete/{id}', 'Admin\UserController@delete');
+        Route::resource('post', 'Admin\PostController');
+        Route::get('post/delete/{id}', 'Admin\PostController@delete');
+        Route::resource('kategori', 'Admin\CategoryController');
+        Route::get('kategori/delete/{id}', 'Admin\CategoryController@delete');
+
+        Route::resource('komentar', 'Admin\CommentController');
+        Route::get('komentar/delete/{id}', 'Admin\CommentController@delete');
+        Route::resource('permissions', 'Admin\PermissionController')->middleware('can:permissions');
+        Route::resource('roles', 'Admin\RoleController')->middleware('can:roles');
+        Route::match(['get', 'post'], 'roles/{id}/add', 'Admin\RoleController@add')->name('roles.add');
+    });
 });

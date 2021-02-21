@@ -7,12 +7,11 @@
     <title>Blank Page &mdash; Stisla</title>
 
     <!-- General CSS Files -->
-    <link rel="stylesheet" href="{{ url('') }}/assets/modules/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" rel="stylesheet" href="{{ url('') }}/assets/modules/datatables/datatables.min.css">
+    <link rel="stylesheet" rel="stylesheet" href="{{ url('') }}/assets/modules/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url('') }}/assets/modules/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="{{asset('')}}assets/modules/@fortawesome/fontawesome-free/css/all.min.css"
         type="text/css">
-
-    <!-- CSS Libraries -->
     <link href="{{asset('')}}assets/modules/toastr/build/toastr.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('')}}assets/modules/summernote-0.8.18-dist/summernote.min.css">
     <!-- Template CSS -->

@@ -1,5 +1,6 @@
 <!-- General JS Scripts -->
 <script src="{{ url('') }}/assets/modules/jquery.min.js"></script>
+<script src="{{ url('') }}/assets/modules/datatables/datatables.min.js"></script>
 <script src="{{ url('') }}/assets/modules/popper.js"></script>
 <script src="{{ url('') }}/assets/modules/tooltip.js"></script>
 <script src="{{ url('') }}/assets/modules/bootstrap/js/bootstrap.min.js"></script>
@@ -12,12 +13,10 @@
 <script src="{{ asset('') }}assets/modules/sweetalert/sweetalert.min.js"></script>
 <script src="{{asset('assets/modules/summernote-0.8.18-dist/summernote.min.js')}}"></script>
 <!-- Page Specific JS File -->
-
 <!-- Template JS File -->
 <script src="{{ url('') }}/assets/js/scripts.js"></script>
 <script src="{{ url('') }}/assets/js/custom.js"></script>
-@yield('js')
-<script>
+@yield(' js') <script>
     $('#summernote').summernote();
     @if (Session::has('sukses'))
         // Display a success toast, with a title

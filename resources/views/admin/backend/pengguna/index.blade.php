@@ -96,39 +96,39 @@
                             <input type="password" class="form-control form-control-alternative" name="password"
                                 required>
                         </div>
-                        {{-- <div class="form-group">
-                                <label for="">Role</label>
-                                <select id="" name="role" class="form-control" required>
-                                    <option value="">--Pilih Role--</option>
-                                    @foreach ($roles as $role)
-                                    <option value="{{$role->id}}">{{$role->name}}</option>
-                        @endforeach
-                        </select>
-                    </div> --}}
-                    <div class="form-group">
-                        <label for="">No Hp</label>
-                        <input type="text" class="form-control form-control-alternative" name="telp">
+                        <div class="form-group">
+                            <label for="">Role</label>
+                            <select id="" name="role" class="form-control" required>
+                                <option value="">--Pilih Role--</option>
+                                @foreach ($roles as $role)
+                                <option value="{{$role->id}}">{{$role->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">No Hp</label>
+                            <input type="text" class="form-control form-control-alternative" name="telp">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Jenis Kelamin</label>
+                            <select name="jenkel" id="" class="form-control" required>
+                                <option value="L">Laki Laki</option>
+                                <option value="P">Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Foto</label>
+                            <input name="image" type="file" class="form-control form-control-alternative">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="">Jenis Kelamin</label>
-                        <select name="jenkel" id="" class="form-control" required>
-                            <option value="L">Laki Laki</option>
-                            <option value="P">Perempuan</option>
-                        </select>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
-                    <div class="form-group">
-                        <label for="">Foto</label>
-                        <input name="image" type="file" class="form-control form-control-alternative">
-                    </div>
+                </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
-            </div>
-            </form>
         </div>
     </div>
-</div>
 </div>
 
 @foreach ($user as $us)

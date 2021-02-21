@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use DataTables;
 
 class PostController extends Controller
 {
@@ -25,11 +28,9 @@ class PostController extends Controller
         $posts = Post::get();
         return view('admin.backend.post.index', compact('posts', 'title'));
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+
+
     public function create()
     {
         $title = 'Create Artikel';
@@ -80,7 +81,10 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $title = 'Artikel';
+        $post = Post::find($id);
+        $user = User::get();
+        return view('admin.backend.post.show', compact('post', 'title', 'user'));
     }
 
     /**

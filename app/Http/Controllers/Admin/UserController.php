@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdatePasswordRequest;
+use App\Models\Role;
 use App\Models\User;
 // use App\Models\Role;
 use Illuminate\Http\Request;
@@ -21,8 +22,8 @@ class UserController extends Controller
     {
         $title = 'Pengguna';
         $user = User::get();
-        // $roles = Role::all();
-        return view('admin.backend.pengguna.index', compact('user', 'title'));
+        $roles = Role::all();
+        return view('admin.backend.pengguna.index', compact('user', 'title', 'roles'));
     }
 
     /**
@@ -59,8 +60,8 @@ class UserController extends Controller
             $user->image = $Filename;
         }
         $user->save();
-        // $user->roles()
-        //     ->sync($request->role);
+        $user->roles()
+            ->sync($request->role);
         return redirect()->back()->with('sukses', 'User Berhasil diTambahkan');
     }
 
@@ -86,8 +87,8 @@ class UserController extends Controller
         $title = 'Edit Pengguna';
 
         $user = User::find($id);
-        // $roles = Role::get();
-        return view('admin.backend.pengguna.edit', compact('user', 'title'));
+        $roles = Role::get();
+        return view('admin.backend.pengguna.edit', compact('user', 'title', 'roles'));
     }
 
     /**
@@ -113,8 +114,8 @@ class UserController extends Controller
         }
 
         $user->save();
-        // $user->roles()
-        //     ->sync($request->role);
+        $user->roles()
+            ->sync($request->role);
 
         return redirect('/pengguna')->with('sukses', 'Data Berhasil diUpdate');
     }
