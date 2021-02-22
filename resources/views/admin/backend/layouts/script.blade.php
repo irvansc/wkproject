@@ -10,49 +10,50 @@
 
 <!-- JS Libraies -->
 <script src="{{asset('')}}assets/modules/toastr/build/toastr.min.js"></script>
-<script src="{{ asset('') }}assets/modules/sweetalert/sweetalert.min.js"></script>
+<script src="{{ asset('') }}assets/modules/sweetalert2/dist/sweetalert2.min.js"></script>
 <script src="{{asset('assets/modules/summernote-0.8.18-dist/summernote.min.js')}}"></script>
 <!-- Page Specific JS File -->
 <!-- Template JS File -->
 <script src="{{ url('') }}/assets/js/scripts.js"></script>
 <script src="{{ url('') }}/assets/js/custom.js"></script>
+@stack('js')
 @yield(' js') <script>
     $('#summernote').summernote();
     @if (Session::has('sukses'))
-        // Display a success toast, with a title
-        toastr.success("{{ Session::get('sukses') }}", "Sukses",
-        toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": true,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-        });
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+    Toast.fire({
+        icon: 'success',
+        title: '{{ Session::get('sukses') }}'
+    })
+
         @endif
-        @if (Session::has('error'))
-        // Display a success toast, with a title
-        toastr.error("{{ Session::get('error') }}", "Error",
-        toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": true,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000",
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-        });
+    @if (Session::has('error'))
+    const Toast = Swal.mixin({
+    toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+})
+    Toast.fire({
+        icon: 'error',
+        title: '{{ Session::get('error') }}'
+})
+
         @endif
 </script>
 </body>

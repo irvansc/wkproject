@@ -75,8 +75,7 @@
     </div>
 </div>
 @endsection
-
-@section('js')
+@push('js')
 <script>
     $(document).ready(function(){
         $('#postData').DataTable({
@@ -93,28 +92,43 @@
         }
     });
     $('body').on('click','.delete',function(){
-            var id = $(this).attr('id');
-            var name = $(this).attr('name');
-            swal({
-                title: "Yakin?",
-                text: "Mau Mengahapus "+ name +" ??",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
+        var id = $(this).attr('id');
+    var name = $(this).attr('name');
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
             })
-            .then((willDelete) => {
-                console.log(willDelete);
-                if (willDelete) {
-                    window.location = "/post/delete/"+id;
-                    // swal("Data siswa dengan name "+ siswa_name +" telah berhasil dihapus!", {
-                    // icon: "success",
-                    // });
 
-                } else {
-                    swal("Batal Menghapus  "+ name);
-                }
-            });
+swalWithBootstrapButtons.fire({
+  title: 'Yakin ? ',
+  text: "Mau menghapus "+ name +" ??",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Yes !',
+  cancelButtonText: 'No !',
+  reverseButtons: true
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location = "/post/delete/"+id;
+    // swalWithBootstrapButtons.fire(
+    //   'Deleted!',
+    //   'Your file has been deleted.',
+    //   'success'
+    // )
+  } else if (
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire(
+      'Batal',
+      'Menghapus Post ' + name ,
+      'error'
+    )
+  }
+})
         });
 })
 </script>
-@endsection
+@endpush
