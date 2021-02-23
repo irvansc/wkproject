@@ -20,7 +20,7 @@ class PermissionController extends Controller
     {
         $title = 'Permissions';
         $permissions = Permission::with('roles')
-            ->paginate(5);
+            ->get();
         $roles = Role::all();
 
         return view('admin.backend.permissions.index', compact('permissions', 'title', 'roles'));

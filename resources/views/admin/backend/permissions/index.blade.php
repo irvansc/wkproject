@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="section-header">
-    <h1>Role</h1>
+    <h1>Permission</h1>
 </div>
 <div class="section-body">
     <div class="row">
@@ -10,17 +10,14 @@
             <div class="card shadow mb-5">
                 <div class="card-header py-3">
                     <div class="row">
-                        <h6 class="font-weight-bold text-primary">List Role</h6>
-                        <a href="{{ route('roles.create') }}" class="btn btn-primary ml-auto"> <i
-                                class="fas fa-plus-circle"></i>
-                            Add a
-                            Roles</a>
+                        <h6 class="font-weight-bold text-primary">List Permission</h6>
+
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         @if ($permissions->isNotEmpty())
-                        <table class="table align-items-center table-flush">
+                        <table class="table align-items-center table-flush" id="data">
                             <thead class="thead-light">
                                 <tr>
                                     <th width="20px">No</th>
@@ -48,7 +45,7 @@
                                     <td>
                                         <div class="d-flex justify-content-center my-2">
                                             <a href="{{ route('permissions.edit', $permission->id) }}"
-                                                class="btn btn-sm btn-light mr-2 border">Edit</a>
+                                                class="btn btn-sm btn-warning mr-2 ">Edit</a>
                                             <form action="{{ route('permissions.destroy', $permission->id) }}"
                                                 method="POST">
                                                 @method('DELETE')
@@ -66,10 +63,7 @@
                         @endif
 
                     </div>
-                    <!-- Pagination -->
-                    <div class="d-flex justify-content-center">
-                        {{ $permissions->links() }}
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -77,11 +71,8 @@
             <div class="card shadow mb-5">
                 <div class="card-header py-3">
                     <div class="row">
-                        <h6 class="font-weight-bold text-primary">List Role</h6>
-                        <a href="{{ route('roles.create') }}" class="btn btn-primary ml-auto"> <i
-                                class="fas fa-plus-circle"></i>
-                            Add a
-                            Roles</a>
+                        <h6 class="font-weight-bold text-primary">Add Role</h6>
+
                     </div>
                 </div>
                 <div class="card-body">
@@ -118,3 +109,12 @@
     </div>
 </div>
 @endsection
+@push('js')
+<script>
+    $('#data').DataTable({
+    "pageLength": 5,
+    "lengthMenu": [[ 5,10, 25, 50, 100], [5,10, 25, 50, 'semua']],
+    "bLengthChange": true,
+});
+</script>
+@endpush

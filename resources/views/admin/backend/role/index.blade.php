@@ -8,13 +8,11 @@
         <div class="col">
             <div class="card shadow mb-5">
                 <div class="card-header py-3">
-                    <div class="row">
-                        <h6 class="font-weight-bold text-primary">List Role</h6>
-                        <a href="{{ route('roles.create') }}" class="btn btn-primary ml-auto"> <i
-                                class="fas fa-plus-circle"></i>
-                            Add a
-                            Roles</a>
-                    </div>
+                    <h6 class="font-weight-bold text-primary">List Role</h6>
+                    <a href="{{ route('roles.create') }}" class="btn btn-primary ml-auto"> <i
+                            class="fas fa-plus-circle"></i>
+                        Add a
+                        Roles</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -33,7 +31,6 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($roles->sortByDesc('created_at') as $e=>$role)
-
                                     <tr>
                                         <td>{{$e+1}}</td>
                                         <td>{{$role->id}}</td>
@@ -44,7 +41,8 @@
                                             @if ($role->permissions->isNotEmpty())
                                             <div>
                                                 @foreach ($role->permissions as $permission)
-                                                <span class="badge badge-primary">{{ $permission->name }}</span>
+                                                <span class="badge badge-primary mb-2">{{ $permission->name }}</span>
+
                                                 @endforeach
                                             </div>
                                             @endif
@@ -52,7 +50,7 @@
                                         <td>
                                             <div class="d-flex justify-content-center my-2">
                                                 <a href="{{ route('roles.edit', $role->id) }}"
-                                                    class="btn btn-sm btn-light mr-2 border">Edit</a>
+                                                    class="btn btn-sm btn-warning mr-2">Edit</a>
                                                 <form action="{{ route('roles.destroy', $role->id) }}" method="POST">
                                                     @method('DELETE')
                                                     @csrf

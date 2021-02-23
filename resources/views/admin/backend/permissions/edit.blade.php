@@ -5,15 +5,11 @@
 </div>
 <div class="section-body">
     <div class="row">
-        <div class="col">
+        <div class="col-md-5">
             <div class="card shadow mb-5">
                 <div class="card-header py-3">
-                    <div class="row">
-                        <h3 class="">permissions Edit</h3>
-                        <a href="{{route('permissions.index')}}" class="btn btn-warning ml-auto"> <i
-                                class="ni ni-bold-left"></i>
-                            Batal</a>
-                    </div>
+                    <h3 class="">permissions Edit</h3>
+
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -46,7 +42,14 @@
                                 </div>
                                 @endforeach
                             </div>
-                            <button type="submit" class="btn btn-lg btn-block btn-primary">Kirim</button>
+                            <a href="{{route('permissions.index')}}" class="btn btn-warning">
+                                <i class="fas fa-arrow-circle-left"></i>
+                                Batal
+                            </a>
+                            <button type="submit" class="btn btn-primary float-right">
+
+                                <i class="fas fa-paper-plane"></i>
+                                Kirim</button>
                         </form>
                     </div>
                 </div>

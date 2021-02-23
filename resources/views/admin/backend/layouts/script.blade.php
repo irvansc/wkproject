@@ -1,5 +1,6 @@
 <!-- General JS Scripts -->
 <script src="{{ url('') }}/assets/modules/jquery.min.js"></script>
+<script src="{{ url('') }}/assets/modules/jquery.form.js"></script>
 <script src="{{ url('') }}/assets/modules/datatables/datatables.min.js"></script>
 <script src="{{ url('') }}/assets/modules/popper.js"></script>
 <script src="{{ url('') }}/assets/modules/tooltip.js"></script>

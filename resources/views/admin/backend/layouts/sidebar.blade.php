@@ -20,6 +20,7 @@
                 <li><a class="nav-link" href="{{route('kategori.index')}}">Kategori Artikel</a></li>
             </ul>
         </li>
+        @can('pengguna')
         <hr>
         <li class="dropdown">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users"
@@ -31,26 +32,29 @@
                 <li><a class="nav-link" href="{{route('roles.index')}}">Role</a></li>
             </ul>
         </li>
+        @endcan
+        @can('kelas')
         <hr>
         <li class="dropdown">
             <a href="#" class="nav-link has-dropdown " data-toggle="dropdown">
                 <i class="fas fa-chalkboard-teacher" style="color: #007bff"></i>
                 <span>Data Akademik</span></a>
             <ul class="dropdown-menu">
-                <li><a class="nav-link" href="layout-default.html">Kelas</a></li>
-                <li><a class="nav-link" href="layout-default.html">Guru</a></li>
-                <li><a class="nav-link" href="layout-default.html">Siswa</a></li>
-                <li><a class="nav-link" href="layout-default.html">File Download</a></li>
+                <li><a class="nav-link" href="{{route('kelas.index')}}">Kelas</a></li>
+                <li><a class="nav-link" href="{{route('aguru.index')}}">Guru</a></li>
+                <li><a class="nav-link" href="{{route('asiswa.index')}}">Siswa</a></li>
+                <li><a class="nav-link" href="{{route('adownload.index')}}">File Download</a></li>
             </ul>
         </li>
+        @endcan
         <hr>
         <li class="dropdown">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-info"
                     style="color: #007bff"></i>
                 <span>Informasi</span></a>
             <ul class="dropdown-menu">
-                <li><a class="nav-link" href="layout-default.html">Pengumuman</a></li>
-                <li><a class="nav-link" href="layout-default.html">Agenda</a></li>
+                <li><a class="nav-link" href="{{route('apengumuman.index')}}">Pengumuman</a></li>
+                <li><a class="nav-link" href="{{route('aagenda.index')}}">Agenda</a></li>
                 <li><a class="nav-link" href="layout-default.html">Testimonial</a></li>
                 <li><a class="nav-link" href="layout-default.html">Visi-Misi</a></li>
                 <li><a class="nav-link" href="layout-default.html">Sejarah</a></li>
