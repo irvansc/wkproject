@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Blank Page &mdash; Stisla</title>
+    <title>Admin &mdash; W-school</title>
+    <!-- Favicons -->
 
+    <link href="{{asset('')}}assets/img/fav.png" rel="icon">
     <!-- General CSS Files -->
     <link rel="stylesheet" rel="stylesheet" href="{{ url('') }}/assets/modules/datatables/datatables.min.css">
     <link rel="stylesheet" rel="stylesheet" href="{{ url('') }}/assets/modules/bootstrap/css/bootstrap.min.css">

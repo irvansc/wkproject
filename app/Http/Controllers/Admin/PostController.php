@@ -68,8 +68,8 @@ class PostController extends Controller
             $post->categories()
                 ->attach($request->category);
             return redirect('/post')->with('sukses', 'Post Berhasil diPublikasikan');
-        } catch (\Throwable $th) {
-            Session::flash('error', $th);
+        } catch (\Exception $e) {
+            Session::flash('error', $e);
         }
     }
 

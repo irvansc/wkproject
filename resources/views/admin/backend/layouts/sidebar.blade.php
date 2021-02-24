@@ -1,5 +1,6 @@
 <aside id="sidebar-wrapper">
     <div class="sidebar-brand">
+        <img src="{{asset('')}}assets/img/smk.png" alt="" srcset="" style="width: 50px">
         <a href="index.html">Stisla</a>
     </div>
     <div class="sidebar-brand sidebar-brand-sm">
@@ -55,10 +56,10 @@
             <ul class="dropdown-menu">
                 <li><a class="nav-link" href="{{route('apengumuman.index')}}">Pengumuman</a></li>
                 <li><a class="nav-link" href="{{route('aagenda.index')}}">Agenda</a></li>
-                <li><a class="nav-link" href="layout-default.html">Testimonial</a></li>
-                <li><a class="nav-link" href="layout-default.html">Visi-Misi</a></li>
-                <li><a class="nav-link" href="layout-default.html">Sejarah</a></li>
-                <li><a class="nav-link" href="layout-default.html">About</a></li>
+                <li><a class="nav-link" href="{{route('testimoni.index')}}">Testimonial</a></li>
+                <li><a class="nav-link" href="{{route('vm.index')}}">Visi-Misi</a></li>
+                <li><a class="nav-link" href="{{route('sejarah.index')}}">Sejarah</a></li>
+                <li><a class="nav-link" href="{{route('aabout.index')}}">About</a></li>
             </ul>
         </li>
         <hr>
@@ -67,12 +68,27 @@
                     style="color: #007bff"></i>
                 <span>Galery</span></a>
             <ul class="dropdown-menu">
-                <li><a class="nav-link" href="layout-default.html">Album</a></li>
-                <li><a class="nav-link" href="layout-default.html">Foto</a></li>
-                <li><a class="nav-link" href="layout-default.html">Video</a></li>
+                <li><a class="nav-link" href="{{route('albums.index')}}">Album</a></li>
+                <li><a class="nav-link" href="{{route('fotos.index')}}">Foto</a></li>
+                <li><a class="nav-link" href="{{route('avideo.index')}}">Video</a></li>
             </ul>
         </li>
         <hr>
+        <li class="dropdown">
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-tools"
+                    style="color: #007bff"></i>
+                <span>Konfigurasi Web</span></a>
+            <ul class="dropdown-menu">
+                <li><a class="nav-link" href="{{route('meta.index')}}">Meta Tag</a></li>
+                <li><a class="nav-link" href="{{route('fav.index')}}">Favicon</a></li>
+                <li><a class="nav-link" href="{{route('im.index')}}">Image Web</a></li>
+                <li><a class="nav-link" href="{{route('slider.index')}}">Slider Image</a></li>
+                <li><a class="nav-link" href="{{route('sejarah.index')}}">Sosial Media</a></li>
+                <li><a class="nav-link" href="layout-default.html">Profile</a></li>
+            </ul>
+        </li>
+        <hr>
+
         <li class=""><a class="nav-link" href=""><i class="fa fa-envelope" style="color: #007bff"></i>
                 <span>Inbox</span></a>
         </li>

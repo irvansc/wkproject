@@ -62,5 +62,30 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('aagenda', 'Admin\AgendaController');
         Route::get('aagenda/delete/{id}', 'Admin\AgendaController@delete');
+
+        Route::resource('testimoni', 'Admin\TestimonialController');
+        Route::get('testimoni/delete/{id}', 'Admin\TestimonialController@delete');
+
+        Route::resource('vm', 'Admin\VmController');
+        Route::resource('sejarah', 'Admin\SejarahController');
+        Route::resource('aabout', 'Admin\AboutController');
+        Route::get('aabout/delete/{id}', 'Admin\AboutController@delete');
+
+        Route::resource('albums', 'Admin\AlbumController');
+        Route::get('albums/delete/{id}', 'Admin\AlbumController@delete');
+
+        Route::resource('fotos', 'Admin\FotoController');
+        Route::get('fotos/delete/{id}', 'Admin\FotoController@delete');
+
+        Route::resource('avideo', 'Admin\VideoController');
+        Route::get('avideo/delete/{id}', 'Admin\VideoController@delete');
+
+        Route::resource('meta', 'Admin\MetaController');
+        Route::get('meta/delete/{id}', 'Admin\MetaController@delete');
+
+        Route::resource('fav', 'Admin\FavController');
+        Route::resource('im', 'Admin\ImController');
+        Route::resource('slider', 'Admin\SliderController');
+        Route::get('slider/delete/{id}', 'Admin\SliderController@delete');
     });
 });
