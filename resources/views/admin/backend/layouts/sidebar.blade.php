@@ -1,10 +1,17 @@
 <aside id="sidebar-wrapper">
     <div class="sidebar-brand">
-        <img src="{{asset('')}}assets/img/smk.png" alt="" srcset="" style="width: 50px">
-        <a href="index.html">Stisla</a>
+        @php
+        $img = DB::table('image_web')->where('favicon','=','1.png')->first();
+        @endphp
+        <img src="{{asset('web_photo/'.$img->favicon)}}" alt="" srcset=""> <br>
+        <a href="index.html">SMk W-SCHOOL</a>
     </div>
     <div class="sidebar-brand sidebar-brand-sm">
-        <a href="index.html">St</a>
+        @php
+        $img = DB::table('image_web')->where('favicon','=','1.png')->first();
+        @endphp
+        <img src="{{asset('web_photo/'.$img->favicon)}}" style="width: 50px"> <br>
+        {{-- <a href="index.html">SMK</a> --}}
     </div>
     <ul class="sidebar-menu">
         <li class=""><a class="nav-link" href="/dashboard"><i class="fas fa-tachometer-alt" style="color: #007bff"></i>
@@ -48,6 +55,8 @@
             </ul>
         </li>
         @endcan
+        @can('apengumuman')
+
         <hr>
         <li class="dropdown">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-info"
@@ -62,6 +71,9 @@
                 <li><a class="nav-link" href="{{route('aabout.index')}}">About</a></li>
             </ul>
         </li>
+        @endcan
+
+        @can('albums')
         <hr>
         <li class="dropdown">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas  fa-camera"
@@ -73,6 +85,9 @@
                 <li><a class="nav-link" href="{{route('avideo.index')}}">Video</a></li>
             </ul>
         </li>
+        @endcan
+        @can('fav', Model::class)
+
         <hr>
         <li class="dropdown">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-tools"
@@ -83,18 +98,44 @@
                 <li><a class="nav-link" href="{{route('fav.index')}}">Favicon</a></li>
                 <li><a class="nav-link" href="{{route('im.index')}}">Image Web</a></li>
                 <li><a class="nav-link" href="{{route('slider.index')}}">Slider Image</a></li>
-                <li><a class="nav-link" href="{{route('sejarah.index')}}">Sosial Media</a></li>
-                <li><a class="nav-link" href="layout-default.html">Profile</a></li>
+                <li><a class="nav-link" href="{{route('sosmed.index')}}">Sosial Media</a></li>
+                <li><a class="nav-link" href="{{route('aprofile.index')}}">Profile</a></li>
             </ul>
         </li>
-        <hr>
+        @endcan
+        @can('inbox')
 
-        <li class=""><a class="nav-link" href=""><i class="fa fa-envelope" style="color: #007bff"></i>
-                <span>Inbox</span></a>
+        <hr>
+        <li class="">
+            @php
+            $count = DB::table('contact')->where('status','=','0')->count();
+            @endphp
+            <a class="nav-link" href="{{route('inbox.index')}}">
+                <i class="fa fa-envelope" style="color: #007bff"></i>
+                <span>
+                    Inbox
+                </span>
+                <h6 style="color: red">
+                    {{$count}}
+
+                </h6>
+            </a>
         </li>
-        <li class=""><a class="nav-link" href="{{route('komentar.index')}}"><i class="fa fa-comments"
-                    style="color: #007bff"></i>
-                <span>Komentar</span></a>
+        @endcan
+
+        <li class="">
+            @php
+            $count = DB::table('comments')->where('status','=','n')->count();
+            @endphp
+            <a class="nav-link" href="{{route('komentar.index')}}">
+                <i class="fa fa-comments" style="color: #007bff">
+                </i>
+                <span>Komentar</span>
+                <h6 style="color: red">
+                    {{$count}}
+
+                </h6>
+            </a>
         </li>
     </ul>
 

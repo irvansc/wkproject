@@ -57,35 +57,44 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('adownload', 'Admin\DownloadController')->middleware('can:download');
         Route::get('adownload/delete/{id}', 'Admin\DownloadController@delete');
 
-        Route::resource('apengumuman', 'Admin\PengumumanController');
+        Route::resource('apengumuman', 'Admin\PengumumanController')->middleware('can:pengumuman');
         Route::get('apengumuman/delete/{id}', 'Admin\PengumumanController@delete');
 
-        Route::resource('aagenda', 'Admin\AgendaController');
+        Route::resource('aagenda', 'Admin\AgendaController')->middleware('can:pengumuman');
         Route::get('aagenda/delete/{id}', 'Admin\AgendaController@delete');
 
-        Route::resource('testimoni', 'Admin\TestimonialController');
+        Route::resource('testimoni', 'Admin\TestimonialController')->middleware('can:testimoni');
         Route::get('testimoni/delete/{id}', 'Admin\TestimonialController@delete');
 
-        Route::resource('vm', 'Admin\VmController');
-        Route::resource('sejarah', 'Admin\SejarahController');
-        Route::resource('aabout', 'Admin\AboutController');
+        Route::resource('vm', 'Admin\VmController')->middleware('can:vm');
+        Route::resource('sejarah', 'Admin\SejarahController')->middleware('can:sejarah');
+        Route::resource('aabout', 'Admin\AboutController')->middleware('can:aabout');
         Route::get('aabout/delete/{id}', 'Admin\AboutController@delete');
 
-        Route::resource('albums', 'Admin\AlbumController');
+        Route::resource('albums', 'Admin\AlbumController')->middleware('can:albums');
         Route::get('albums/delete/{id}', 'Admin\AlbumController@delete');
 
-        Route::resource('fotos', 'Admin\FotoController');
+        Route::resource('fotos', 'Admin\FotoController')->middleware('can:fotos');
         Route::get('fotos/delete/{id}', 'Admin\FotoController@delete');
 
-        Route::resource('avideo', 'Admin\VideoController');
+        Route::resource('avideo', 'Admin\VideoController')->middleware('can:avideo');
         Route::get('avideo/delete/{id}', 'Admin\VideoController@delete');
 
-        Route::resource('meta', 'Admin\MetaController');
+        Route::resource('meta', 'Admin\MetaController')->middleware('can:meta');
         Route::get('meta/delete/{id}', 'Admin\MetaController@delete');
 
-        Route::resource('fav', 'Admin\FavController');
-        Route::resource('im', 'Admin\ImController');
-        Route::resource('slider', 'Admin\SliderController');
+        Route::resource('fav', 'Admin\FavController')->middleware('can:fav');
+
+        Route::resource('sosmed', 'Admin\SosmedController')->middleware('can:sosmed');
+
+        Route::resource('im', 'Admin\ImController')->middleware('can:im');
+
+        Route::resource('aprofile', 'Admin\footController')->middleware('can:aprofile');
+
+        Route::resource('slider', 'Admin\SliderController')->middleware('can:slider');
         Route::get('slider/delete/{id}', 'Admin\SliderController@delete');
+
+        Route::resource('inbox', 'Admin\KontakController')->middleware('can:inbox');
+        Route::get('inbox/delete/{id}', 'Admin\KontakController@delete');
     });
 });

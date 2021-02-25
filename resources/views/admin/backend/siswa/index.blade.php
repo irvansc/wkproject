@@ -19,7 +19,7 @@
                         <div class="row">
                             <h6 class="font-weight-bold text-primary">Filter Data</h6>
                             <div class="col-md-4 mb-3">
-                                <select id="filter-prodi" class="form-control filter">
+                                <select id="filter-kelas" class="form-control filter">
                                     <option value="">Pilih Kelas</option>
                                     @foreach ($kelas as $row)
                                     <option value="{{$row->id}}">{{$row->nama_kelas}}</option>
@@ -151,7 +151,7 @@
     $(".filter").on('change',function(){
     kelas = $("#filter-kelas").val()
     table.ajax.reload(null,false)
-  })
+  });
     $('body').on('click','.delete',function(){
         var id = $(this).attr('id');
         var name = $(this).attr('name');

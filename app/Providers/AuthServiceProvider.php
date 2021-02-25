@@ -110,20 +110,100 @@ class AuthServiceProvider extends ServiceProvider
             return $user->permission('agenda-create');
         });
         //pengumuman
-        Gate::define('pengumuman', function ($user) {
-            return $user->permission('pengumuman');
+        Gate::define('apengumuman', function ($user) {
+            return $user->permission('apengumuman');
         });
-        Gate::define('pengumuman-edit', function ($user) {
-            return $user->permission('pengumuman-edit');
+        Gate::define('apengumuman-edit', function ($user) {
+            return $user->permission('apengumuman-edit');
         });
-        Gate::define('pengumuman-delete', function ($user) {
-            return $user->permission('pengumuman-delete');
+        Gate::define('apengumuman-delete', function ($user) {
+            return $user->permission('apengumuman-delete');
         });
-        Gate::define('pengumuman-update', function ($user) {
-            return $user->permission('pengumuman-update');
+        Gate::define('apengumuman-update', function ($user) {
+            return $user->permission('apengumuman-update');
         });
-        Gate::define('pengumuman-create', function ($user) {
-            return $user->permission('pengumuman-create');
+        Gate::define('apengumuman-create', function ($user) {
+            return $user->permission('apengumuman-create');
+        });
+        //agenda
+        Gate::define('aagenda', function ($user) {
+            return $user->permission('aagenda');
+        });
+        Gate::define('aagenda-edit', function ($user) {
+            return $user->permission('aagenda-edit');
+        });
+        Gate::define('aagenda-delete', function ($user) {
+            return $user->permission('aagenda-delete');
+        });
+        Gate::define('aagenda-update', function ($user) {
+            return $user->permission('aagenda-update');
+        });
+        Gate::define('aagenda-create', function ($user) {
+            return $user->permission('aagenda-create');
+        });
+        //testimoni
+        Gate::define('testimoni', function ($user) {
+            return $user->permission('testimoni');
+        });
+        Gate::define('testimoni-edit', function ($user) {
+            return $user->permission('testimoni-edit');
+        });
+        Gate::define('testimoni-delete', function ($user) {
+            return $user->permission('testimoni-delete');
+        });
+        Gate::define('testimoni-update', function ($user) {
+            return $user->permission('testimoni-update');
+        });
+        Gate::define('testimoni-create', function ($user) {
+            return $user->permission('testimoni-create');
+        });
+        //vm
+        Gate::define('vm', function ($user) {
+            return $user->permission('vm');
+        });
+        Gate::define('vm-edit', function ($user) {
+            return $user->permission('vm-edit');
+        });
+        Gate::define('vm-delete', function ($user) {
+            return $user->permission('vm-delete');
+        });
+        Gate::define('vm-update', function ($user) {
+            return $user->permission('vm-update');
+        });
+        Gate::define('vm-create', function ($user) {
+            return $user->permission('vm-create');
+        });
+        //sejarah
+        Gate::define('sejarah', function ($user) {
+            return $user->permission('sejarah');
+        });
+        Gate::define('sejarah-edit', function ($user) {
+            return $user->permission('sejarah-edit');
+        });
+        Gate::define('sejarah-delete', function ($user) {
+            return $user->permission('sejarah-delete');
+        });
+        Gate::define('sejarah-update', function ($user) {
+            return $user->permission('sejarah-update');
+        });
+        Gate::define('sejarah-create', function ($user) {
+            return $user->permission('sejarah-create');
+        });
+        //aabout
+        Gate::define('aabout', function ($user) {
+            return $user->permission('aabout');
+        });
+        Gate::define('aabout-edit', function ($user) {
+            return $user->permission('aabout-edit');
+        });
+        Gate::define('aabout-delete', function ($user) {
+            return $user->permission('aabout-delete');
+        });
+        Gate::define('aabout-update', function ($user) {
+            return $user->permission('aabout-update');
+        });
+        Gate::define('aabout-create', function ($user) {
+            return $user->permission('aabout-create');
         });
         //download
         Gate::define('download', function ($user) {
@@ -172,6 +252,134 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('fotos-create', function ($user) {
             return $user->permission('fotos-create');
+        });
+        //avideo
+        Gate::define('avideo', function ($user) {
+            return $user->permission('avideo');
+        });
+        Gate::define('avideo-edit', function ($user) {
+            return $user->permission('avideo-edit');
+        });
+        Gate::define('avideo-delete', function ($user) {
+            return $user->permission('avideo-delete');
+        });
+        Gate::define('avideo-update', function ($user) {
+            return $user->permission('avideo-update');
+        });
+        Gate::define('avideo-create', function ($user) {
+            return $user->permission('avideo-create');
+        });
+        //meta
+        Gate::define('meta', function ($user) {
+            return $user->permission('meta');
+        });
+        Gate::define('meta-edit', function ($user) {
+            return $user->permission('meta-edit');
+        });
+        Gate::define('meta-delete', function ($user) {
+            return $user->permission('meta-delete');
+        });
+        Gate::define('meta-update', function ($user) {
+            return $user->permission('meta-update');
+        });
+        Gate::define('meta-create', function ($user) {
+            return $user->permission('meta-create');
+        });
+        //fav
+        Gate::define('fav', function ($user) {
+            return $user->permission('fav');
+        });
+        Gate::define('fav-edit', function ($user) {
+            return $user->permission('fav-edit');
+        });
+        Gate::define('fav-delete', function ($user) {
+            return $user->permission('fav-delete');
+        });
+        Gate::define('fav-update', function ($user) {
+            return $user->permission('fav-update');
+        });
+        Gate::define('fav-create', function ($user) {
+            return $user->permission('fav-create');
+        });
+        //sosmed
+        Gate::define('sosmed', function ($user) {
+            return $user->permission('sosmed');
+        });
+        Gate::define('sosmed-edit', function ($user) {
+            return $user->permission('sosmed-edit');
+        });
+        Gate::define('sosmed-delete', function ($user) {
+            return $user->permission('sosmed-delete');
+        });
+        Gate::define('sosmed-update', function ($user) {
+            return $user->permission('sosmed-update');
+        });
+        Gate::define('sosmed-create', function ($user) {
+            return $user->permission('sosmed-create');
+        });
+        //im
+        Gate::define('im', function ($user) {
+            return $user->permission('im');
+        });
+        Gate::define('im-edit', function ($user) {
+            return $user->permission('im-edit');
+        });
+        Gate::define('im-delete', function ($user) {
+            return $user->permission('im-delete');
+        });
+        Gate::define('im-update', function ($user) {
+            return $user->permission('im-update');
+        });
+        Gate::define('im-create', function ($user) {
+            return $user->permission('im-create');
+        });
+        //im
+        Gate::define('aprofile', function ($user) {
+            return $user->permission('aprofile');
+        });
+        Gate::define('aprofile-edit', function ($user) {
+            return $user->permission('aprofile-edit');
+        });
+        Gate::define('aprofile-delete', function ($user) {
+            return $user->permission('aprofile-delete');
+        });
+        Gate::define('aprofile-update', function ($user) {
+            return $user->permission('aprofile-update');
+        });
+        Gate::define('aprofile-create', function ($user) {
+            return $user->permission('aprofile-create');
+        });
+        //slider
+        Gate::define('slider', function ($user) {
+            return $user->permission('slider');
+        });
+        Gate::define('slider-edit', function ($user) {
+            return $user->permission('slider-edit');
+        });
+        Gate::define('slider-delete', function ($user) {
+            return $user->permission('slider-delete');
+        });
+        Gate::define('slider-update', function ($user) {
+            return $user->permission('slider-update');
+        });
+        Gate::define('slider-create', function ($user) {
+            return $user->permission('slider-create');
+        });
+        //inbox
+        Gate::define('inbox', function ($user) {
+            return $user->permission('inbox');
+        });
+        Gate::define('inbox-edit', function ($user) {
+            return $user->permission('inbox-edit');
+        });
+        Gate::define('inbox-delete', function ($user) {
+            return $user->permission('inbox-delete');
+        });
+        Gate::define('inbox-update', function ($user) {
+            return $user->permission('inbox-update');
+        });
+        Gate::define('inbox-create', function ($user) {
+            return $user->permission('inbox-create');
         });
         //kelas
         Gate::define('kelas', function ($user) {

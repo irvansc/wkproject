@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Siswa;
+
+use App\Models\Foot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
-class DashboardController extends Controller
+class FootController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,18 +18,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $title = 'Dashboard';
-        $siswa = DB::table('siswa')->count();
-        $guru = DB::table('guru')->count();
-        $user = DB::table('users')->count();
-        $post = DB::table('posts')->count();
-        return view('admin.backend.dashboard.index', compact(
-            'title',
-            'siswa',
-            'guru',
-            'user',
-            'post',
-        ));
+        $title = 'Profile';
+        $foot = DB::table('foot')->first();
+        return view('admin.backend.foot.index', compact('title', 'foot'));
     }
 
     /**
@@ -54,10 +47,10 @@ class DashboardController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Foot  $foot
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Foot $foot)
     {
         //
     }
@@ -65,33 +58,46 @@ class DashboardController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Foot  $foot
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $title = 'Edit Profile';
+        $f = Foot::find($id);
+        return view('admin.backend.foot.edit', compact('title', 'f'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Foot  $foot
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $f = Foot::findOrFail($id);
+            $f->alamat = $request->alamat;
+            $f->email = $request->email;
+            $f->phone = $request->phone;
+            $f->maps = $request->maps;
+            $f->save();
+            Session::flash('sukses', 'Data berhasil diUpdate');
+        } catch (\Exception $e) {
+            Session::flash('error', $e->getMessage());
+        }
+        return redirect('/aprofile');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Foot  $foot
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Foot $foot)
     {
         //
     }

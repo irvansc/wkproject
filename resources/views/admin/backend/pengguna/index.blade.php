@@ -44,7 +44,11 @@
                                     <img src="{{Auth::user()->getPhoto()}}" alt="" class="img">
                                 </td>
                                 <td>{{$u->name}}</td>
-                                <td></td>
+                                <td>
+                                    @foreach ($u->roles as $r)
+                                    <span class="badge badge-primary">{{$r->name}}</span>
+                                    @endforeach
+                                </td>
                                 <td>{{$u->telp}}</td>
                                 <td>{{$u->jenkel}}</td>
                                 <td>

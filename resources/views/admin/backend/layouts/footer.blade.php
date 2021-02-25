@@ -1,6 +1,9 @@
 <footer class="main-footer">
     <div class="footer-left">
-        Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval Azhar</a>
+        Copyright © 2020
+        <script>
+            new Date().getFullYear()>2013&&document.write("-"+new Date().getFullYear());
+        </script>, W-SCHOOL. <div class="bullet"></div> Developer By <a href="https://instagram.com/irvansc">Irvansc</a>
     </div>
     <div class="footer-right">
 
