@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/', 'HomeController@index')->name('home');
 Route::get('/', function () {
     return view('welcome');
 });
@@ -29,12 +30,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('dashboard', 'Admin\DashboardController');
 
     Route::group(['middleware' => 'role'], function () {
-        Route::resource('pengguna', 'Admin\UserController');
+        Route::resource('pengguna', 'Admin\UserController')->middleware('can:pengguna');
         Route::post('pengguna/updatepw/{id}', 'Admin\UserController@updatepw');
         Route::get('pengguna/delete/{id}', 'Admin\UserController@delete');
-        Route::resource('post', 'Admin\PostController');
+        Route::resource('profiles', 'Admin\ProfileController')->middleware('can:profiles');
+        Route::resource('post', 'Admin\PostController')->middleware('can:posts');
         Route::get('post/delete/{id}', 'Admin\PostController@delete');
-        Route::resource('kategori', 'Admin\CategoryController');
+        Route::resource('kategori', 'Admin\CategoryController')->middleware('can:categories');
         Route::get('kategori/delete/{id}', 'Admin\CategoryController@delete');
 
         Route::resource('komentar', 'Admin\CommentController');
@@ -56,11 +58,12 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('adownload', 'Admin\DownloadController')->middleware('can:download');
         Route::get('adownload/delete/{id}', 'Admin\DownloadController@delete');
+        Route::get('adownload/file/{data}', 'Admin\DownloadController@File')->name('getfile');
 
-        Route::resource('apengumuman', 'Admin\PengumumanController')->middleware('can:pengumuman');
+        Route::resource('apengumuman', 'Admin\PengumumanController')->middleware('can:apengumuman');
         Route::get('apengumuman/delete/{id}', 'Admin\PengumumanController@delete');
 
-        Route::resource('aagenda', 'Admin\AgendaController')->middleware('can:pengumuman');
+        Route::resource('aagenda', 'Admin\AgendaController')->middleware('can:aagenda');
         Route::get('aagenda/delete/{id}', 'Admin\AgendaController@delete');
 
         Route::resource('testimoni', 'Admin\TestimonialController')->middleware('can:testimoni');
@@ -89,7 +92,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('im', 'Admin\ImController')->middleware('can:im');
 
-        Route::resource('aprofile', 'Admin\footController')->middleware('can:aprofile');
+        Route::resource('aprofile', 'Admin\FootController')->middleware('can:aprofile');
 
         Route::resource('slider', 'Admin\SliderController')->middleware('can:slider');
         Route::get('slider/delete/{id}', 'Admin\SliderController@delete');

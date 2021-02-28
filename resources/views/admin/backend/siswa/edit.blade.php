@@ -70,11 +70,10 @@
                         <div class="form-group">
                             <label for="">Foto Old </label>
                             <br>
-                            <img src="{{asset('siswa_photo/'.$siswa->photo)}}" alt="" style="width: 100px">
+                            <img src="{{url('storage/images/siswa/'.$siswa->photo)}}" alt="" style="width: 100px">
                         </div>
                         <div class="form-group">
                             <label for="">Foto </label>
-                            <input type="hidden" name="hidden_file" value="{{$siswa->photo}}" class="form-control">
                             <input type="file" name="photo" class="form-control">
                         </div>
                         <span class="float-left">- Tanda <strong class="text-danger">*</strong> wajib diisi, selain itu

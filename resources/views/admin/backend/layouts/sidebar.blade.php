@@ -1,16 +1,16 @@
 <aside id="sidebar-wrapper">
     <div class="sidebar-brand">
         @php
-        $img = DB::table('image_web')->where('favicon','=','1.png')->first();
+        $img = DB::table('image_web')->where('id','=',2)->first();
         @endphp
-        <img src="{{asset('web_photo/'.$img->favicon)}}" alt="" srcset=""> <br>
+        <img src="{{url('storage/images/web_foto/'.$img->favicon)}}" alt="" srcset=""> <br>
         <a href="index.html">SMk W-SCHOOL</a>
     </div>
     <div class="sidebar-brand sidebar-brand-sm">
         @php
-        $img = DB::table('image_web')->where('favicon','=','1.png')->first();
+        $img = DB::table('image_web')->where('id','=',2)->first();
         @endphp
-        <img src="{{asset('web_photo/'.$img->favicon)}}" style="width: 50px"> <br>
+        <img src="{{url('storage/images/web_foto/'.$img->favicon)}}" style="width: 50px"> <br>
         {{-- <a href="index.html">SMK</a> --}}
     </div>
     <ul class="sidebar-menu">
@@ -28,7 +28,6 @@
                 <li><a class="nav-link" href="{{route('kategori.index')}}">Kategori Artikel</a></li>
             </ul>
         </li>
-        @can('pengguna')
         <hr>
         <li class="dropdown">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users"
@@ -36,11 +35,12 @@
                     Pengguna</span></a>
             <ul class="dropdown-menu">
                 <li><a class="nav-link" href="{{route('pengguna.index')}}">List Pengguna</a></li>
+                @can('permissions')
                 <li><a class="nav-link" href="{{route('permissions.index')}}">Permissions</a></li>
                 <li><a class="nav-link" href="{{route('roles.index')}}">Role</a></li>
+                @endcan
             </ul>
         </li>
-        @endcan
         @can('kelas')
         <hr>
         <li class="dropdown">

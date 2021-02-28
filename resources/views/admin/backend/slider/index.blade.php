@@ -31,9 +31,10 @@
                                 <tr>
                                     <td>{{$e+1}}</td>
                                     <td>{{$a->title}}</td>
-                                    <td>{{$a->deskripsi}}</td>
+                                    <td>{!!$a->deskripsi!!}</td>
                                     <td>
-                                        <img src="{{asset('web_photo/'.$a->img)}}" alt="" style="width:200px;">
+                                        <img src="{{url('storage/images/web_foto/'.$a->img)}}" alt=""
+                                            style="width:200px;">
                                     </td>
                                     <td>
                                         <a href="{{route('slider.edit',$a->id)}}" class="btn btn-warning btn-sm"><i

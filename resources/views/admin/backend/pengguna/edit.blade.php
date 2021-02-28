@@ -34,7 +34,7 @@
                                 <div class="row mt-4">
                                     <div class="col-lg-3 order-lg-2">
                                         <div class="card-profile-image">
-                                            <img src="{{asset('images/'.$user->image)}}" class="img">
+                                            <img src="{{url('storage/images/'.$user->image)}}" class="img">
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
-                                {{-- <div class="form-group">
+                                <div class="form-group">
                                     <label class="form-control-label" for="input-first-name">Role : </label>
                                     <div>
                                         @foreach ($roles as $role)
@@ -73,65 +73,66 @@
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input"
                                                     id="role-{{ $role->id }}" name="role" value="{{ $role->id }}"
-                                @if($user->roles->pluck('name')->contains($role->name))
-                                checked @endif>
-                                <label class="custom-control-label" for="role-{{ $role->id }}">{{ $role->name }}</label>
+                                                    @if($user->roles->pluck('name')->contains($role->name))
+                                                checked @endif>
+                                                <label class="custom-control-label"
+                                                    for="role-{{ $role->id }}">{{ $role->name }}</label>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-last-name">New Image</label>
+                                    <input type="file" name="image" class="form-control">
+                                </div>
                             </div>
                         </div>
-                        @endforeach
                     </div>
-            </div> --}}
-        </div>
-
-        <div class="col-lg-6">
-            <div class="form-group">
-                <label class="form-control-label" for="input-last-name">New Image</label>
-                <input type="file" name="image" class="form-control">
+                    <hr class="my-4">
+                    <!-- Address -->
+                    <h6 class="heading-small text-muted mb-4">Contact information</h6>
+                    <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-address">Address</label>
+                                    <textarea name="alamat" id="" class="form-control">{{$user->alamat}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-username">No Hp</label>
+                                    <input type="text" id="input-username" class="form-control" placeholder="Username"
+                                        name="telp" value="{{$user->telp}}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-email">Jenis Kelamin</label>
+                                    <select name="jenkel" id="" class="form-control">
+                                        <option value="L" @if ($user->jenkel == 'L')
+                                            selected
+                                            @endif>Laki Laki</option>
+                                        <option value="P" @if ($user->jenkel == 'P')
+                                            selected
+                                            @endif>Perempuan</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
-<hr class="my-4">
-<!-- Address -->
-<h6 class="heading-small text-muted mb-4">Contact information</h6>
-<div class="pl-lg-4">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="form-group">
-                <label class="form-control-label" for="input-address">Address</label>
-                <textarea name="" id="" class="form-control"></textarea>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="form-group">
-                <label class="form-control-label" for="input-username">No Hp</label>
-                <input type="text" id="input-username" class="form-control" placeholder="Username" name="telp"
-                    value="{{$user->telp}}">
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="form-group">
-                <label class="form-control-label" for="input-email">Jenis Kelamin</label>
-                <select name="jenkel" id="" class="form-control">
-                    <option value="L" @if ($user->jenkel == 'L')
-                        selected
-                        @endif>Laki Laki</option>
-                    <option value="P" @if ($user->jenkel == 'P')
-                        selected
-                        @endif>Perempuan</option>
-                </select>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal-footer">
-    <button type="submit" class="btn btn-primary">Save changes</button>
-</div>
-</form>
-</div>
-</div>
-</div>
 </div>
 @endsection

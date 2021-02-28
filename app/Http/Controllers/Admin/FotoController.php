@@ -9,15 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
-use Image;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class FotoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $title = 'Foto';
@@ -26,76 +23,66 @@ class FotoController extends Controller
         return view('admin.backend.album.foto.index', compact('title', 'fotos', 'albums'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        abort(404);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        // dd($request->all());
+        try {
+            $request->validate([
+                'gbr' => 'image|mimes:png,jpg,jpeg'
+            ]);
 
-        $request->validate([
-            'gbr' => 'image|mimes:png,jpg,jpeg'
-        ]);
-        if ($request->file('gbr')) {
-            $file = $request->file('gbr');
-            $File_name = time() . '.' . $file->getClientOriginalExtension();
-            $image_resize = Image::make($file->getRealPath());
-            $image_resize->resize(500, 400);
-            $image_resize->save(public_path('album_foto/foto/' . $File_name));
+            $foto = new Foto;
+            $foto->title = $request->title;
+            $foto->url_video = $request->video;
+            $foto->album_id = $request->album;
+            $foto->user_id = Auth::id();
+
+            if ($request->file('gbr')) {
+                // Get file from request
+                $file = $request->file('gbr');
+                // Get filename with extension
+                $filenameWithExt = $file->getClientOriginalName();
+                // Get file path
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                // Remove unwanted characters
+                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+                $filename = preg_replace("/\s+/", '-', $filename);
+                // Get the original image extension
+                $extension = $file->getClientOriginalExtension();
+                // Create unique file name
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                // Resize image
+                $resize = Image::make($file)->resize(500, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->encode('jpg');
+                $image = $fileNameToStore;
+                // Put image to storage
+                $save = Storage::put("public/images/foto/{$fileNameToStore}", $resize->__toString());
+                $foto->gbr = $image;
+            }
+            $foto->save();
+            Session::flash('sukses', 'Photo added successfully');
+        } catch (\Exception $e) {
+            Session::flash('error', $e->getMessage());
         }
-        $foto = new Foto;
-        $foto->title = $request->title;
-        $foto->url_video = $request->video;
-        $foto->album_id = $request->album;
-        $foto->gbr = $File_name;
-        $foto->user_id = Auth::id();
-
-        $foto->save();
-        Session::flash('sukses', 'Foto berhasil dipost');
         return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Foto  $foto
-     * @return \Illuminate\Http\Response
-     */
     public function show(Foto $foto)
     {
-        //
+        abort(404);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Foto  $foto
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Foto $foto)
     {
+        abort(404);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Foto  $foto
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         try {
@@ -103,39 +90,38 @@ class FotoController extends Controller
             $request->validate([
                 'gbr' => 'image|mimes:png,jpg,jpeg'
             ]);
-            $file_name = $foto->gbr;
-            $file_path = public_path('album_foto/foto/' . $file_name);
-            if ($request->hasFile('gbr')) {
-                unlink($file_path);
+            if ($request->file('gbr')) {
+                Storage::disk('local')->delete('public/images/foto/' . $foto->gbr);
                 $file = $request->file('gbr');
-                $filename = time() . '.' . $file->getClientOriginalExtension();
-                $image_resize = Image::make($file->getRealPath());
-                $image_resize->resize(500, 400);
-                $image_resize->save(public_path('album_foto/foto/' . $filename));
-                $foto->gbr = $filename;
+                $filenameWithExt = $file->getClientOriginalName();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+                $filename = preg_replace("/\s+/", '-', $filename);
+                $extension = $file->getClientOriginalExtension();
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                $resize = Image::make($file)->resize(500, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->encode('jpg');
+                $image = $fileNameToStore;
+                $save = Storage::put("public/images/foto/{$fileNameToStore}", $resize->__toString());
+                $foto->gbr = $image;
             }
             $foto->title = $request->title;
             $foto->album_id = $request->album;
             $foto->url_video = $request->video;
             $foto->save();
-            Session::flash('sukses', 'Foto berhasil diupdate');
+            Session::flash('sukses', 'Photos updated successfully');
         } catch (\Exception $e) {
             Session::flash('error', $e);
         }
         return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Foto  $foto
-     * @return \Illuminate\Http\Response
-     */
     public function delete($id)
     {
         $avatar = Foto::where('id', $id)->first();
-        File::delete('album_foto/foto/' . $avatar->gbr);
+        Storage::disk('local')->delete('public/images/foto/' . $avatar->gbr);
         $avatar->delete();
-        return redirect()->back()->with('sukses', 'Foto Berhasil Dihapus');
+        return redirect()->back()->with('sukses', 'Photo deleted successfully');
     }
 }

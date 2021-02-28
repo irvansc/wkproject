@@ -9,17 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
-use Image;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class AlbumController extends Controller
 {
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $title = 'Album';
@@ -27,112 +22,100 @@ class AlbumController extends Controller
         return view('admin.backend.album.index', compact('title', 'albums'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        abort(404);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $request->validate([
-            'cover' => 'mimes:jpg,jpeg,png,tif,svg'
-        ]);
-        if ($request->file('cover')) {
-            $file = $request->file('cover');
-            $Filename = time() . '.' . $file->getClientOriginalExtension();
-            $image_resize = Image::make($file->getRealPath());
-            $image_resize->resize(500, 400);
-            $image_resize->save(public_path('album_foto/' . $Filename));
-        }
-        $download = new Album;
-        $download->nama = $request->nama;
-        $download->cover = $Filename;
-        $download->user_id = Auth::id();
+        try {
+            $request->validate([
+                'cover' => 'image|mimes:jpg,jpeg,png'
+            ]);
+            $album = new Album;
+            $album->nama = $request->nama;
+            $album->user_id = Auth::id();
+            if ($request->file('cover')) {
+                // Get file from request
+                $file = $request->file('cover');
+                // Get filename with extension
+                $filenameWithExt = $file->getClientOriginalName();
+                // Get file path
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                // Remove unwanted characters
+                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+                $filename = preg_replace("/\s+/", '-', $filename);
+                // Get the original image extension
+                $extension = $file->getClientOriginalExtension();
+                // Create unique file name
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                // Resize image
+                $resize = Image::make($file)->resize(500, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->encode('jpg');
+                $image = $fileNameToStore;
+                // Put image to storage
+                $save = Storage::put("public/images/album/{$fileNameToStore}", $resize->__toString());
+                $album->cover = $image;
+            }
 
-        $download->save();
-        Session::flash('sukses', 'Album berhasil dibuat');
+            $album->save();
+            Session::flash('sukses', 'Album created successfully');
+        } catch (\Exception $e) {
+            Session::flash('sukses', $e->getMessage());
+        }
         return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Album  $album
-     * @return \Illuminate\Http\Response
-     */
     public function show(Album $album)
     {
-        //
+        abort(404);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Album  $album
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Album $album)
     {
-        //
+        abort(404);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Album  $album
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         try {
-            $foto = Album::findOrFail($id);
+            $album = Album::findOrFail($id);
             $request->validate([
-                'cover' => 'mimes:jpg,jpeg,png,tif,svg'
+                'cover' => 'image|mimes:jpg,jpeg,png'
             ]);
-
-            $file_name = $foto->cover;
-            $file_path = public_path('album_foto/' . $file_name);
-            if ($request->hasFile('cover')) {
-                unlink($file_path);
+            if ($request->file('cover')) {
+                Storage::disk('local')->delete('public/images/album/' . $album->cover);
                 $file = $request->file('cover');
-                $filename = time() . '.' . $file->getClientOriginalExtension();
-                $image_resize = Image::make($file->getRealPath());
-                $image_resize->resize(500, 400);
-                $image_resize->save(public_path('album_foto/' . $filename));
+                $filenameWithExt = $file->getClientOriginalName();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+                $filename = preg_replace("/\s+/", '-', $filename);
+                $extension = $file->getClientOriginalExtension();
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                $resize = Image::make($file)->resize(500, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->encode('jpg');
+                $image = $fileNameToStore;
+                $save = Storage::put("public/images/album/{$fileNameToStore}", $resize->__toString());
+                $album->cover = $image;
             }
-            $foto->cover = $filename;
-            $foto->nama = $request->nama;
-            $foto->save();
-            Session::flash('sukses', 'Album berhasil diupdate');
+            $album->nama = $request->nama;
+            $album->save();
+            Session::flash('sukses', 'The album was updated successfully');
         } catch (\Exception $e) {
-            Session::flash('error', $e);
+            Session::flash('error', $e->getMessage());
         }
         return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Album  $album
-     * @return \Illuminate\Http\Response
-     */
+
     public function delete($id)
     {
         $avatar = Album::where('id', $id)->first();
-        File::delete('album_foto/' . $avatar->cover);
+        Storage::disk('local')->delete('public/images/album/' . $avatar->cover);
         $avatar->delete();
-        return redirect()->back()->with('sukses', 'Album Berhasil Dihapus');
+        return redirect()->back()->with('sukses', 'Album deleted successfully');
     }
 }

@@ -26,15 +26,21 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         // Actions
-        Gate::define('update-posts', function ($user) {
-            return $user->permission('update-posts');
+        Gate::define('posts', function ($user) {
+            return $user->permission('posts');
         });
-        Gate::define('edit-posts', function ($user) {
-            return $user->permission('edit-posts');
+        Gate::define('posts-create', function ($user) {
+            return $user->permission('posts-create');
+        });
+        Gate::define('posts-update', function ($user) {
+            return $user->permission('posts-update');
+        });
+        Gate::define('posts-edit', function ($user) {
+            return $user->permission('posts-edit');
         });
 
-        Gate::define('delete-posts', function ($user) {
-            return $user->permission('delete-posts');
+        Gate::define('posts-delete', function ($user) {
+            return $user->permission('posts-delete');
         });
 
         Gate::define('update-users', function ($user) {
@@ -444,6 +450,19 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('video-create', function ($user) {
             return $user->permission('video-create');
+        });
+        //profiles
+        Gate::define('profiles', function ($user) {
+            return $user->permission('profiles');
+        });
+        Gate::define('profiles-edit', function ($user) {
+            return $user->permission('profiles-edit');
+        });
+        Gate::define('profiles-update', function ($user) {
+            return $user->permission('profiles-update');
+        });
+        Gate::define('profiles-create', function ($user) {
+            return $user->permission('profiles-create');
         });
     }
 }

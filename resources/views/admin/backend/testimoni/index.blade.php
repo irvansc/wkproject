@@ -32,7 +32,7 @@
                                 <tr>
                                     <td>{{$e+1}}</td>
                                     <td>
-                                        <img src="{{asset('testimoni_foto/'.$a->foto)}}" alt="" width="100px">
+                                        <img src="{{url('storage/images/testimoni/'.$a->foto)}}" alt="" width="100px">
                                     </td>
                                     <td>{{$a->nama}}</td>
                                     <td>{{str_limit($a->pesan, 50)}}</td>
@@ -86,7 +86,7 @@
                     <div class="form-group">
                         <label for="">Foto</label>
                         <input type="file" name="foto" class="form-control" required>
-                        <small class="text-danger">Foto akan otomatis di Risize ukuran 300 x 300 px</small>
+                        <small class="text-danger">Foto akan otomatis di Risize ukuran 400 x 400 px</small>
                     </div>
                     <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary float-right"><i class="ni ni-send"></i> Save
@@ -127,7 +127,7 @@
                     <div class="form-group">
                         <label for="">Foto</label>
                         <input type="file" name="foto" class="form-control">
-                        <small class="text-danger">Foto akan otomatis di Risize ukuran 300 x 300 px</small>
+                        <small class="text-danger">Foto akan otomatis di Risize ukuran 400 x 400 px</small>
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary float-right"><i class="ni ni-send"></i> Save

@@ -41,7 +41,7 @@
                             <tr>
                                 <td>{{$e+1}}</td>
                                 <td>
-                                    <img src="{{Auth::user()->getPhoto()}}" alt="" class="img">
+                                    <img src="{{$u->getPhoto()}}" alt="" class="img">
                                 </td>
                                 <td>{{$u->name}}</td>
                                 <td>
@@ -52,12 +52,18 @@
                                 <td>{{$u->telp}}</td>
                                 <td>{{$u->jenkel}}</td>
                                 <td>
+                                    <a href="{{route('pengguna.show',$u->id)}}" class="btn btn-info "><i
+                                            class="fas fa-eye"></i></a>
+                                    @can('pengguna-edit')
+
                                     <button class="btn btn-primary " data-toggle="modal" data-target="#pw{{$u->id}}">
                                         <i class="fa fa-key"></i></button>
                                     <a href="{{route('pengguna.edit',$u->id)}}" class="btn btn-warning "><i
                                             class="fas fa-user-edit"></i></a>
                                     <button class="btn btn-danger  delete" name="{{ $u->name }}" id="{{ $u->id }}"><i
                                             class="fas fa-trash"></i></button>
+                                    @endcan
+
                                 </td>
                             </tr>
                             @endforeach
@@ -121,6 +127,10 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="">Alamat</label>
+                            <textarea name="alamat" class="form-control" id="" cols="30" rows="10"></textarea>
+                        </div>
+                        <div class="form-group">
                             <label for="">Foto</label>
                             <input name="image" type="file" class="form-control form-control-alternative">
                         </div>
@@ -180,7 +190,7 @@
 @endforeach
 @endsection
 
-@section('js')
+@push('js')
 <script>
     $(document).ready(function(){
     $('.form-checkbox').click(function(){
@@ -191,28 +201,38 @@
         }
     });
     $('body').on('click','.delete',function(){
-            var mhs_id = $(this).attr('id');
-            var mhs_name = $(this).attr('name');
-            swal({
-                title: "Yakin?",
-                text: "Mau Mengahapus "+ mhs_name +" ??",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
+        var id = $(this).attr('id');
+    var name = $(this).attr('name');
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
             })
-            .then((willDelete) => {
-                console.log(willDelete);
-                if (willDelete) {
-                    window.location = "/pengguna/delete/"+mhs_id;
-                    // swal("Data siswa dengan name "+ siswa_name +" telah berhasil dihapus!", {
-                    // icon: "success",
-                    // });
 
-                } else {
-                    swal("Batal Menghapus  "+ mhs_name);
-                }
-            });
+swalWithBootstrapButtons.fire({
+  title: 'Yakin ? ',
+  text: "Mau menghapus "+ name +" ??",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonText: 'Yes !',
+  cancelButtonText: 'No !',
+  reverseButtons: true
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location = "/pengguna/delete/"+id;
+  } else if (
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+    swalWithBootstrapButtons.fire(
+      'Batal',
+      'Menghapus User ' + name ,
+      'error'
+    )
+  }
+})
         });
 })
 </script>
-@endsection
+@endpush

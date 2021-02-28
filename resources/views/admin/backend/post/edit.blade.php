@@ -9,7 +9,7 @@
         <div class="col-lg-10">
             <div class="card">
                 <div class="card-header border-0">
-                    <h2>Create Artikel</h2>
+                    <h2> Artikel</h2>
                 </div>
                 <div class="card-body">
                     <form action="{{route('post.update',$post->id)}}" method="post" enctype="multipart/form-data">
@@ -43,7 +43,7 @@
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <img src="{{asset('artikel/'.$post->img)}}" alt="" id="showgambar"
+                                    <img src="{{url('storage/artikel/'.$post->img)}}" alt="" id="showgambar"
                                         style="max-width:200px;max-height:200px;">
                                 </div>
                             </div>
@@ -57,7 +57,7 @@
                         </div>
                         <a href="{{route('post.index')}}" class="btn btn-warning"> <i class="ni ni-bold-left"></i>
                             Batal</a>
-                        <button type="submit" class="btn btn-primary float-right"> <i class="ni ni-send"></i>
+                        <button type="submit" class="btn btn-primary float-right"> <i class="fas fa-send"></i>
                             Publish</button>
                     </form>
                 </div>

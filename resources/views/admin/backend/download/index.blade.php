@@ -36,11 +36,11 @@
                                     <td>{{$a->created_at}}</td>
                                     <td>{{$a->author}}</td>
                                     <td>
-                                        <a download class="btn btn-primary button btn-sm" title="Download"
-                                            href="{{ asset('/filedownload/'.$a->data) }}"><i
+                                        <a class="btn btn-primary button btn-sm" title="Download"
+                                            href="{{url('adownload/file/'.$a->data)}}"><i
                                                 class="fas fa-download"></i></a>
-                                        <button class="btn btn-warning btn-sm"><i class="fas fa-user-edit"
-                                                data-toggle="modal" data-target="#file{{$a->id}}"></i></button>
+                                        <a href="{{route('adownload.edit',$a->id)}}" class="btn btn-warning btn-sm"><i
+                                                class="fas fa-user-edit"></i></a>
                                         <button class="btn btn-danger btn-sm delete" name="{{$a->title}}"
                                             id="{{$a->id}}"><i class="fas fa-trash"></i></button>
                                     </td>
@@ -125,58 +125,6 @@
         </div>
     </div>
 </div>
-@foreach ($download as $d)
-<div class="modal fade" id="file{{$d->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Edit File</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="{{route('adownload.update',$d->id)}}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <div class="form-group">
-                        <label for="">Nama File</label>
-                        <input type="text" name="title" class="form-control" value="{{$d->title}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="">Keterangan File <small class="text-red">*Opsional</small></label>
-                        <input type="text" name="keterangan" class="form-control" value="{{$a->keterangan}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="">Nama Author</label>
-                        <input type="text" name="author" class="form-control" value="{{$a->author}}">
-                    </div>
-                    <div class="form-group">
-                        <label for="">File</label>
-                        <input type="file" name="data" class="form-control">
-                        <small><strong class="text-red">Upload file dengan extension| Pdf|doc|xls|ppt</strong></small>
-                        <br>
-
-                        <div class="progress">
-                            <div class="bar">
-                                <div class="percent">
-                                    0%
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">
-                    Save changes</button>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
-@endforeach
 @endsection
 @push('js')
 <script>

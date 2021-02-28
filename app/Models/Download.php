@@ -9,7 +9,7 @@ class Download extends Model
 {
     public $timestamps = false;
     protected $table = 'download';
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     public function getCreatedAtAttribute()
     {

@@ -6,53 +6,45 @@ use App\Http\Controllers\Controller;
 
 use App\Models\About;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use Image;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class AboutController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $title = 'About';
         $about = DB::table('about')->first();
         return view('admin.backend.about.index', compact('title', 'about'));
     }
-    public function edit($id)
-    {
-        $title = 'Edit About';
-        $about = About::find($id);
-        return view('admin.backend.about.edit', compact('title', 'about'));
-    }
-
     public function update(Request $request, $id)
     {
         $about = About::findOrFail($id);
         $request->validate([
             'photo' => 'image|mimes:png,jpg,jpeg'
         ]);
-        $file_name = $about->photo;
-        $file_path = public_path('web_photo/' . $file_name);
-        if ($request->hasFile('photo')) {
-            unlink($file_path);
+        if ($request->file('photo')) {
+            Storage::disk('local')->delete('public/images/' . $about->photo);
             $file = $request->file('photo');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $image_resize = Image::make($file->getRealPath());
-            $image_resize->resize(500, 400);
-            $image_resize->save(public_path('web_photo/' . $filename));
-            $about->photo = $filename;
+            $filenameWithExt = $file->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+            $filename = preg_replace("/\s+/", '-', $filename);
+            $extension = $file->getClientOriginalExtension();
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            $resize = Image::make($file)->resize(400, 400, function ($constraint) {
+                $constraint->aspectRatio();
+            })->encode('jpg');
+            $image = $fileNameToStore;
+            $save = Storage::put("public/images/{$fileNameToStore}", $resize->__toString());
+            $about->photo = $image;
         }
         $about->title = $request->title;
         $about->deskripsi = $request->deskripsi;
-
         $about->save();
-        Session::flash('sukses', 'About berhasil diupdate');
+        Session::flash('sukses', 'About updated successfully');
 
         return redirect('/aabout');
     }

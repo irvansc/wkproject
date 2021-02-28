@@ -26,38 +26,31 @@
                                     @endforeach
                                 </select>
                             </div>
-                            {{-- <div class="col-md-4 mt-1">
-                                <select id="filter-semester" class="form-control filter">
-                                    <option value="">Pilih Semester</option>
-                                    @foreach ($semester as $smt)
-                                    <option value="{{$smt->id}}">{{$smt->nama}}</option>
-                            @endforeach
-                            </select>
-                        </div> --}}
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="data">
-                        <thead class="thead-light">
-                            <tr>
-                                <th width="3%">No</th>
-                                <th>Nip</th>
-                                <th>Nama</th>
-                                <th>Jenis Kelamin</th>
-                                <th>Mapel</th>
-                                <th>kelas</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
 
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="data">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th width="3%">No</th>
+                                    <th>Nip</th>
+                                    <th>Nama</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>Mapel</th>
+                                    <th>kelas</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 @endsection
 @push('js')

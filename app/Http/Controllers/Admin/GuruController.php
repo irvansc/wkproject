@@ -8,15 +8,13 @@ use App\Models\Guru;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Image;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class GuruController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $title = 'Guru';
@@ -79,83 +77,79 @@ class GuruController extends Controller
             'data' => $data
         ]);
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         $title = 'Create Guru';
         $kelas = Kelas::all();
         return view('admin.backend.guru.create', compact('title', 'kelas'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $request->validate([
-            'nip' => 'unique:guru,nip',
-            'nama_guru' => 'required',
-            'tmp_lahir' => 'required',
-            'tgl_lahir' => 'required',
-            'jenkel' => 'required',
-        ], [
+        try {
+            $request->validate([
+                'nip' => 'unique:guru,nip',
+                'nama_guru' => 'required',
+                'tmp_lahir' => 'required',
+                'tgl_lahir' => 'required',
+                'jenkel' => 'required',
+                'photo' => 'image|mimes:png,jpg,jpeg'
+            ], [
 
-            'nip.unique' => 'Nip sudah ada',
-            'nama_guru.required' => 'Nama wajib diisi',
-            'tmp_lahir.required' => 'Tempat lahir wajib diisi',
-            'tgl_lahir.required' => 'Tanggal lahir wajib diisi',
-            'jenkel.required' => 'Jenis Kelamin wajib diisi',
-        ]);
-        if ($request->hasfile('photo')) {
-            $file = $request->file('photo');
-            $Filename = time() . '.' . $file->getClientOriginalExtension();
-            $image_resize = Image::make($file->getRealPath());
-            $image_resize->resize(750, 750);
-            $image_resize->save(public_path('guru_photo/' . $Filename));
-            // $location = public_path('guru_photo' . $image_resize);
-            // $file->move($location, $Filename);
-            // $siswa->photo = $Filename;
+                'nip.unique' => 'Nip sudah ada',
+                'nama_guru.required' => 'Nama wajib diisi',
+                'tmp_lahir.required' => 'Tempat lahir wajib diisi',
+                'tgl_lahir.required' => 'Tanggal lahir wajib diisi',
+                'jenkel.required' => 'Jenis Kelamin wajib diisi',
+            ]);
+
+            $guru = new Guru;
+            $guru->nip = $request->nip;
+            $guru->nama_guru = $request->nama_guru;
+            $guru->kelas_id = $request->kelas;
+            $guru->jenkel = $request->jenkel;
+            $guru->alamat = $request->alamat;
+            $guru->telp = $request->telp;
+            $guru->tmp_lahir = $request->tmp_lahir;
+            $guru->tgl_lahir = $request->tgl_lahir;
+            $guru->mapel = $request->mapel;
+            if ($request->file('photo')) {
+                // Get file from request
+                $file = $request->file('photo');
+                // Get filename with extension
+                $filenameWithExt = $file->getClientOriginalName();
+                // Get file path
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                // Remove unwanted characters
+                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+                $filename = preg_replace("/\s+/", '-', $filename);
+                // Get the original image extension
+                $extension = $file->getClientOriginalExtension();
+                // Create unique file name
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                // Resize image
+                $resize = Image::make($file)->resize(600, 600, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->encode('jpg');
+                $image = $fileNameToStore;
+                // Put image to storage
+                $save = Storage::put("public/images/guru/{$fileNameToStore}", $resize->__toString());
+                $guru->photo = $image;
+            }
+
+            $guru->save();
+            Session::flash('sukses', 'Teacher Successfully Added');
+        } catch (\Exception $e) {
+            Session::flash('error', $e->getMessage());
         }
-        $siswa = new Guru;
-        $siswa->nip = $request->nip;
-        $siswa->nama_guru = $request->nama_guru;
-        $siswa->kelas_id = $request->kelas;
-        $siswa->jenkel = $request->jenkel;
-        $siswa->alamat = $request->alamat;
-        $siswa->telp = $request->telp;
-        $siswa->tmp_lahir = $request->tmp_lahir;
-        $siswa->tgl_lahir = $request->tgl_lahir;
-        $siswa->mapel = $request->mapel;
-        $siswa->photo = $Filename;
-
-        $siswa->save();
-        return redirect('aguru')->with('sukses', 'Data berhasil dibuat');
+        return redirect()->route('aguru.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Guru  $guru
-     * @return \Illuminate\Http\Response
-     */
     public function show(Guru $guru)
     {
-        //
+        abort(404);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Guru  $guru
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $title = 'Edit guru';
@@ -164,51 +158,57 @@ class GuruController extends Controller
         return view('admin.backend.guru.edit', compact('title', 'guru', 'kelas'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Guru  $guru
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        $siswa = Guru::findOrFail($id);
-        $siswa->nip = $request->nip;
-        $siswa->nama_guru = $request->nama_guru;
-        $siswa->kelas_id = $request->kelas;
-        $siswa->jenkel = $request->jenkel;
-        $siswa->alamat = $request->alamat;
-        $siswa->telp = $request->telp;
-        $siswa->tmp_lahir = $request->tmp_lahir;
-        $siswa->tgl_lahir = $request->tgl_lahir;
-        $siswa->mapel = $request->mapel;
-        $old_image = $request->hidden_file;
-        $file = $request->file('photo');
-        if ($file != '') {
-            $file_name = $old_image;
-            $image_resize = Image::make($file->getRealPath());
-            $image_resize->resize(750, 750);
-            $image_resize->save(public_path('guru_photo/' . $file_name));
-            // $file->move(public_path('guru_photo'), $file_name);
-        } else {
-            $file_name = $old_image;
+        try {
+            $siswa = Guru::findOrFail($id);
+            $request->validate([
+                'nip' => 'required',
+                'photo' => 'image|mimes:png,jpg,jpeg'
+            ]);
+            if ($request->file('photo')) {
+                Storage::disk('local')->delete('public/images/guru/' . $siswa->photo);
+                $file = $request->file('photo');
+                $filenameWithExt = $file->getClientOriginalName();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+                $filename = preg_replace("/\s+/", '-', $filename);
+                $extension = $file->getClientOriginalExtension();
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                $resize = Image::make($file)->resize(500, 500, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->encode('jpg');
+                $image = $fileNameToStore;
+                $save = Storage::put("public/images/guru/{$fileNameToStore}", $resize->__toString());
+                $siswa->photo = $image;
+            }
+            if ($siswa->nip != $request->nip) {
+                $request->validate([
+                    'nip' => 'unique:guru,nip,except,id'
+                ]);
+            }
+            $siswa->nip = $request->nip;
+            $siswa->nama_guru = $request->nama_guru;
+            $siswa->kelas_id = $request->kelas;
+            $siswa->jenkel = $request->jenkel;
+            $siswa->alamat = $request->alamat;
+            $siswa->telp = $request->telp;
+            $siswa->tmp_lahir = $request->tmp_lahir;
+            $siswa->tgl_lahir = $request->tgl_lahir;
+            $siswa->mapel = $request->mapel;
+            $siswa->save();
+            Session::flash('sukses', 'Teacher Successfully Updated');
+        } catch (\Exception $e) {
+            Session::flash('error', $e->getMessage());
         }
-        $siswa->save();
-        return redirect('aguru')->with('sukses', 'Data berhasil dibuat');
+        return redirect()->route('aguru.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Guru  $guru
-     * @return \Illuminate\Http\Response
-     */
     public function delete($id)
     {
         $avatar = Guru::where('id', $id)->first();
-        File::delete('guru_photo/' . $avatar->photo);
+        Storage::disk('local')->delete('public/images/guru/' . $avatar->photo);
         $avatar->delete();
-        return redirect()->back()->with('sukses', 'Data Berhasil Dihapus');
+        return redirect()->back()->with('sukses', 'Teacher Successfully Removed');
     }
 }

@@ -28,7 +28,7 @@
                     </p>
                     <div class="collapse" id="Visi">
                         <div class="card card-body">
-                            <img src="{{asset('web_photo/'.$about->photo)}}" alt="" style="width: 200px">
+                            <img src="{{url('storage/images/'.$about->photo)}}" alt="" style="width: 200px">
                         </div>
                     </div>
                     <div class="collapse" id="Misi">
@@ -69,7 +69,7 @@
                                 @method('PUT')
                                 <div class="form-group">
                                     <center>
-                                        <img src="{{asset('web_photo/'.$about->photo)}}" alt="" id="showgambar"
+                                        <img src="{{url('storage/images/'.$about->photo)}}" alt="" id="showgambar"
                                             width="200px">
                                     </center>
                                     <input name="photo" class="form-control" type="file" id="inputgambar">

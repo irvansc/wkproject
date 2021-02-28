@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
 class User extends Authenticatable
 {
@@ -42,7 +43,7 @@ class User extends Authenticatable
         if (!$this->image) {
             return asset('images/default.png');
         }
-        return asset('images/' . $this->image);
+        return url('storage/images/' . $this->image);
     }
     function posts()
     {
@@ -85,5 +86,17 @@ class User extends Authenticatable
     function video()
     {
         return $this->hasMany(Video::class);
+    }
+    public function getCreatedAtAttribute()
+    {
+        \Carbon\Carbon::setLocale('id');
+        return Carbon::parse($this->attributes['created_at'])
+            ->isoFormat('dddd, D MMM Y');
+    }
+
+    public function getUpdatedAtAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['updated_at'])
+            ->diffForHumans();
     }
 }

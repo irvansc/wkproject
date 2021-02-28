@@ -6,8 +6,10 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>Admin &mdash; W-school</title>
     <!-- Favicons -->
-
-    <link href="{{asset('')}}assets/img/fav.png" rel="icon">
+    @php
+    $img = DB::table('image_web')->where('id','=',2)->first();
+    @endphp
+    <link href="{{url('storage/images/web_foto/'.$img->favicon)}}" rel="icon">
     <!-- General CSS Files -->
     <link rel="stylesheet" rel="stylesheet" href="{{ url('') }}/assets/modules/datatables/datatables.min.css">
     <link rel="stylesheet" rel="stylesheet" href="{{ url('') }}/assets/modules/bootstrap/css/bootstrap.min.css">

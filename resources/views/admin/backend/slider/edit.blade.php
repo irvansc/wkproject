@@ -30,7 +30,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Foto old</label>
-                            <img src="{{asset('web_photo/'.$a->img)}}" alt="" style="width: 200px">
+                            <img src="{{url('storage/images/web_foto/'.$a->img)}}" alt="" style="width: 200px">
                         </div>
                         <div class="form-group">
                             <label for="">Foto</label>

@@ -9,16 +9,18 @@
         <div class="col-12 col-md-8 col-lg-8">
             <div class="card shadow mb-5">
                 <div class="card-header py-3">
-                    <div class="row">
-                        <h6 class="font-weight-bold ">Artikel</h6>
-                    </div>
+                    <h6 class="font-weight-bold ">Artikel</h6>
+                    <a href="{{route('post.index')}}" class="btn btn-warning ml-auto"><i
+                            class="fas fa-hand-point-left"></i>
+                        Kembali</a>
                 </div>
                 <div class="card-body">
+                    <img src="" alt="">
                     <article class="article article-style-c">
 
                         <div class="article-header">
-                            <div class="article-image" data-background="{{asset('artikel/'.$post->img)}}"
-                                style="background-image: url({{asset('artikel/'.$post->img)}});">
+                            <div class="col-md-5">
+                                <img src="{{url('storage/artikel/'.$post->img)}}" alt="">
                             </div>
                         </div>
                         <div class="article-details">

@@ -4,14 +4,11 @@
 <div class="section-header">
     <h1>Artikel</h1>
 </div>
-
 <div class="section-body">
-    <div class="col-md-10">
+    <div class="col-md-12">
         <div class="card shadow mb-5">
             <div class="card-header py-3">
-                <div class="row">
-                    <h6 class="font-weight-bold text-primary">Data pengguna</h6>
-                </div>
+                <h6 class="font-weight-bold text-primary">Create Post</h6>
             </div>
             <div class="card-body">
                 <form action="{{route('post.store')}}" method="post" enctype="multipart/form-data">

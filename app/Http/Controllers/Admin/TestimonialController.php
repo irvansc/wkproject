@@ -6,128 +6,109 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
-use Image;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class TestimonialController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $title = 'Testimoni';
         $testimoni = Testimonial::all();
         return view('admin.backend.testimoni.index', compact('title', 'testimoni'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        abort(404);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $request->validate([
-            'foto' => 'mimes:jpg,jpeg,png,tif,svg'
-        ]);
-        if ($request->file('foto')) {
-            $file = $request->file('foto');
-            $File_name = time() . '.' . $file->getClientOriginalExtension();
-            $image_resize = Image::make($file->getRealPath());
-            $image_resize->resize(300, 300);
-            $image_resize->save(public_path('testimoni_foto/' . $File_name));
-        }
-        $foto = new Testimonial;
-        $foto->nama = $request->nama;
-        $foto->ket = $request->ket;
-        $foto->pesan = $request->pesan;
-        $foto->foto = $File_name;
+        try {
+            $request->validate([
+                'foto' => 'image|mimes:png,jpg,jpeg,svg'
+            ]);
 
-        $foto->save();
-        Session::flash('sukses', 'Testimoni berhasil dipost');
+            $testimoni = new Testimonial;
+            $testimoni->nama = $request->nama;
+            $testimoni->ket = $request->ket;
+            $testimoni->pesan = $request->pesan;
+            if ($request->file('foto')) {
+                // Get file from request
+                $file = $request->file('foto');
+                // Get filename with extension
+                $filenameWithExt = $file->getClientOriginalName();
+                // Get file path
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                // Remove unwanted characters
+                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+                $filename = preg_replace("/\s+/", '-', $filename);
+                // Get the original image extension
+                $extension = $file->getClientOriginalExtension();
+                // Create unique file name
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                // Resize image
+                $resize = Image::make($file)->resize(400, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->encode('jpg');
+                $image = $fileNameToStore;
+                // Put image to storage
+                $save = Storage::put("public/images/testimoni/{$fileNameToStore}", $resize->__toString());
+                $testimoni->foto = $image;
+            }
+            $testimoni->save();
+            Session::flash('sukses', 'Testimonial successfully created');
+        } catch (\Exception $e) {
+            Session::flash('error', $e->getMessage());
+        }
         return redirect()->back();
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Testimonial  $testimonial
-     * @return \Illuminate\Http\Response
-     */
     public function show(Testimonial $testimonial)
     {
-        //
+        abort(404);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Testimonial  $testimonial
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Testimonial $testimonial)
     {
-        //
+        abort(404);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Testimonial  $testimonial
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        $about = Testimonial::findOrFail($id);
-        $request->validate([
-            'foto' => 'mimes:jpg,jpeg,png,tif,svg'
-        ]);
-        $file_name = $about->foto;
-        $file_path = public_path('testimoni_foto/' . $file_name);
-        if ($request->hasFile('foto')) {
-            unlink($file_path);
-            $file = $request->file('foto');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $image_resize = Image::make($file->getRealPath());
-            $image_resize->resize(300, 300);
-            $image_resize->save(public_path('testimoni_foto/' . $filename));
+        try {
+            $testimoni = Testimonial::findOrFail($id);
+            $request->validate([
+                'foto' => 'image|mimes:jpg,jpeg,png,tif,svg'
+            ]);
+            if ($request->file('foto')) {
+                Storage::disk('local')->delete('public/images/testimoni/' . $testimoni->foto);
+                $file = $request->file('foto');
+                $filenameWithExt = $file->getClientOriginalName();
+                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+                $filename = preg_replace("/\s+/", '-', $filename);
+                $extension = $file->getClientOriginalExtension();
+                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+                $resize = Image::make($file)->resize(400, 400, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->encode('jpg');
+                $image = $fileNameToStore;
+                $save = Storage::put("public/images/testimoni/{$fileNameToStore}", $resize->__toString());
+                $testimoni->foto = $image;
+            }
+            $testimoni->nama = $request->nama;
+            $testimoni->ket = $request->ket;
+            $testimoni->pesan = $request->pesan;
+            $testimoni->save();
+            Session::flash('sukses', 'Testimonial updated successfully');
+        } catch (\Exception $e) {
+            Session::flash('errot', $e->getMessage());
         }
-        $about->foto = $filename;
-        $about->nama = $request->nama;
-        $about->ket = $request->ket;
-        $about->pesan = $request->pesan;
-
-        $about->save();
-        Session::flash('sukses', 'Testimoni berhasil diupdate');
         return redirect()->back();
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Testimonial  $testimonial
-     * @return \Illuminate\Http\Response
-     */
     public function delete($id)
     {
         $avatar = Testimonial::where('id', $id)->first();
-        File::delete('testimoni_foto/' . $avatar->foto);
+        Storage::disk('local')->delete('public/images/testimoni/' . $avatar->foto);
         $avatar->delete();
         return redirect()->back()->with('sukses', 'Testimoni Berhasil Dihapus');
     }

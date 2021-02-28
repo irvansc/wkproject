@@ -18,8 +18,10 @@ $w = DB::table('image_fron')->first();
         Sebelum anda mengubah gambar ini, maka anda harus menyesuaikan dengan ukuran gambar yang sudah ada. <br>
         dengan menggunakan tools Adobe Ilustrator/Potoshop atau yang lainnya <br>
         jika tidak maka gambar yang anda unggah tidak akan sesuai dengan tampilan website, <br>
+        untuk title Top Teks berwarna hitam atau yang lainya, <br>
+        dan untuk title buttom Teks harus berwarna putih. <br>
         Download File Dibawah ini :
-        <a href="{{asset('web_photo/'.$w->img)}}" class="btn btn-primary btn-sm" download><i
+        <a href="{{url('storage/images/web_foto/'.$w->img)}}" class="btn btn-primary btn-sm" download><i
                 class="fas fa-file-download"></i> Download</a>
     </div>
 </div>
@@ -33,7 +35,7 @@ $w = DB::table('image_fron')->first();
                 </div>
                 <div class="pricing-padding">
                     <div class="pricing-price">
-                        <img src="{{asset('web_photo/'.$r->img)}}" alt="" srcset="" style="width: 200px">
+                        <img src="{{url('storage/images/web_foto/'.$r->img)}}" alt="" srcset="" style="width: 200px">
                     </div>
                     <div class="pricing-details">
 
@@ -74,7 +76,7 @@ $w = DB::table('image_fron')->first();
                     </div>
                     <div class="form-group">
                         <label for="">Image</label>
-                        <img src="{{asset('web_photo/'.$f->img)}}" alt="" style="width: 150px" class="ml-5">
+                        <img src="{{url('storage/images/web_foto/'.$f->img)}}" alt="" style="width: 150px" class="ml-5">
                         <input type="file" name="img" class="form-control mt-2">
                     </div>
                     <button type="button" class="btn btn-warning" data-dismiss="modal">Batal</button>

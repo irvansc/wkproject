@@ -34,7 +34,8 @@
                                     <td>{{$e+1}}</td>
                                     <td>{{$a->nama}}</td>
                                     <td>
-                                        <img src="{{asset('album_foto/'.$a->cover)}}" alt="" style="width:80px;">
+                                        <img src="{{url('storage/images/album/'.$a->cover)}}" alt=""
+                                            style="width:80px;">
                                     </td>
                                     <td>
                                         {{$a->foto->count()}}
@@ -118,13 +119,11 @@
                     </div>
                     <div class="form-group">
                         <label for="">Cover Album</label>
-                        <img src="{{asset('album_foto/'.$d->cover)}}" style="width: 100px" alt="">
+                        <img src="{{url('storage/images/album/'.$d->cover)}}" style="width: 100px" alt="">
                     </div>
 
                     <div class="form-group">
                         <label for="">File</label>
-                        {{-- <input type="hidden" name="hidden_file" value="{{asset('album_foto/'.$d->cover)}}"
-                        class="form-control"> --}}
                         <input type="file" name="cover" class="form-control">
                         <small><strong class="text-red">Upload file dengan extension| jpg|png|jpeg</strong></small>
 
