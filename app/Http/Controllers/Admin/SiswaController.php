@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -100,28 +101,13 @@ class SiswaController extends Controller
             $siswa->alamat = $request->alamat;
             $siswa->telp = $request->telp;
             if ($request->file('photo')) {
-                // Get file from request
                 $file = $request->file('photo');
-                // Get filename with extension
-                $filenameWithExt = $file->getClientOriginalName();
-                // Get file path
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                // Remove unwanted characters
-                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-                $filename = preg_replace("/\s+/", '-', $filename);
-                // Get the original image extension
-                $extension = $file->getClientOriginalExtension();
-                // Create unique file name
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                // Resize image
-                $resize = Image::make($file)->resize(600, 600, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->encode('jpg');
-                $image = $fileNameToStore;
-                // Put image to storage
-                $save = Storage::put("public/images/siswa/{$fileNameToStore}", $resize->__toString());
-                $siswa->photo = $image;
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $image_resize = Image::make($file->getRealPath());
+                $image_resize->resize(600, 600);
+                $image_resize->save('images/foto/siswa/' . $filename);
             }
+            $siswa->photo = $filename;
             $siswa->save();
             Session::flash('sukses', 'Student added successfully');
         } catch (\Exception $e) {
@@ -155,20 +141,13 @@ class SiswaController extends Controller
                 'photo' => 'image|mimes:png,jpg,jpeg'
             ]);
             if ($request->file('photo')) {
-                Storage::disk('local')->delete('public/images/siswa/' . $siswa->photo);
+                File::delete('images/foto/siswa/' . $siswa->photo);
                 $file = $request->file('photo');
-                $filenameWithExt = $file->getClientOriginalName();
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-                $filename = preg_replace("/\s+/", '-', $filename);
-                $extension = $file->getClientOriginalExtension();
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                $resize = Image::make($file)->resize(500, 500, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->encode('jpg');
-                $image = $fileNameToStore;
-                $save = Storage::put("public/images/siswa/{$fileNameToStore}", $resize->__toString());
-                $siswa->photo = $image;
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $image_resize = Image::make($file->getRealPath());
+                $image_resize->resize(600, 600);
+                $image_resize->save('images/foto/siswa/' . $filename);
+                $siswa->photo = $filename;
             }
             if ($siswa->nis != $request->nis) {
                 $request->validate([
@@ -194,7 +173,7 @@ class SiswaController extends Controller
     public function delete($id)
     {
         $avatar = Siswa::where('id', $id)->first();
-        Storage::disk('local')->delete('public/images/siswa/' . $avatar->photo);
+        File::delete('images/foto/siswa/' . $avatar->photo);
         $avatar->delete();
         return redirect()->back()->with('sukses', 'Student deleted successfully');
     }

@@ -114,28 +114,13 @@ class GuruController extends Controller
             $guru->tgl_lahir = $request->tgl_lahir;
             $guru->mapel = $request->mapel;
             if ($request->file('photo')) {
-                // Get file from request
                 $file = $request->file('photo');
-                // Get filename with extension
-                $filenameWithExt = $file->getClientOriginalName();
-                // Get file path
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                // Remove unwanted characters
-                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-                $filename = preg_replace("/\s+/", '-', $filename);
-                // Get the original image extension
-                $extension = $file->getClientOriginalExtension();
-                // Create unique file name
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                // Resize image
-                $resize = Image::make($file)->resize(600, 600, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->encode('jpg');
-                $image = $fileNameToStore;
-                // Put image to storage
-                $save = Storage::put("public/images/guru/{$fileNameToStore}", $resize->__toString());
-                $guru->photo = $image;
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $image_resize = Image::make($file->getRealPath());
+                $image_resize->resize(600, 600);
+                $image_resize->save('images/foto/guru/' . $filename);
             }
+            $guru->photo = $filename;
 
             $guru->save();
             Session::flash('sukses', 'Teacher Successfully Added');
@@ -167,20 +152,13 @@ class GuruController extends Controller
                 'photo' => 'image|mimes:png,jpg,jpeg'
             ]);
             if ($request->file('photo')) {
-                Storage::disk('local')->delete('public/images/guru/' . $siswa->photo);
+                File::delete('images/foto/guru/' . $siswa->photo);
                 $file = $request->file('photo');
-                $filenameWithExt = $file->getClientOriginalName();
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-                $filename = preg_replace("/\s+/", '-', $filename);
-                $extension = $file->getClientOriginalExtension();
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                $resize = Image::make($file)->resize(500, 500, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->encode('jpg');
-                $image = $fileNameToStore;
-                $save = Storage::put("public/images/guru/{$fileNameToStore}", $resize->__toString());
-                $siswa->photo = $image;
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $image_resize = Image::make($file->getRealPath());
+                $image_resize->resize(600, 600);
+                $image_resize->save('images/foto/guru/' . $filename);
+                $siswa->photo = $filename;
             }
             if ($siswa->nip != $request->nip) {
                 $request->validate([
@@ -207,7 +185,7 @@ class GuruController extends Controller
     public function delete($id)
     {
         $avatar = Guru::where('id', $id)->first();
-        Storage::disk('local')->delete('public/images/guru/' . $avatar->photo);
+        File::delete('images/foto/guru/' . $avatar->photo);
         $avatar->delete();
         return redirect()->back()->with('sukses', 'Teacher Successfully Removed');
     }

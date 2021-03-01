@@ -90,7 +90,7 @@
                         <div class="form-group">
                             <label for="">Foto Old </label>
                             <br>
-                            <img src="{{url('storage/images/guru/'.$guru->photo)}}" alt="" style="width: 100px">
+                            <img src="{{asset('images/foto/guru/'.$guru->photo)}}" alt="" style="width: 100px">
                         </div>
                         <div class="form-group">
                             <label for="">Foto </label>

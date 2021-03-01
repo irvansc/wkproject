@@ -37,7 +37,7 @@
                                     <td>{{$a->author}}</td>
                                     <td>
                                         <a class="btn btn-primary button btn-sm" title="Download"
-                                            href="{{url('adownload/file/'.$a->data)}}"><i
+                                            href="{{asset('images/file/'.$a->data)}}"><i
                                                 class="fas fa-download"></i></a>
                                         <a href="{{route('adownload.edit',$a->id)}}" class="btn btn-warning btn-sm"><i
                                                 class="fas fa-user-edit"></i></a>

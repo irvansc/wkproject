@@ -21,7 +21,7 @@ $w = DB::table('image_fron')->first();
         untuk title Top Teks berwarna hitam atau yang lainya, <br>
         dan untuk title buttom Teks harus berwarna putih. <br>
         Download File Dibawah ini :
-        <a href="{{url('storage/images/web_foto/'.$w->img)}}" class="btn btn-primary btn-sm" download><i
+        <a href="{{asset('images/foto/web/'.$w->img)}}" class="btn btn-primary btn-sm" download><i
                 class="fas fa-file-download"></i> Download</a>
     </div>
 </div>
@@ -35,7 +35,7 @@ $w = DB::table('image_fron')->first();
                 </div>
                 <div class="pricing-padding">
                     <div class="pricing-price">
-                        <img src="{{url('storage/images/web_foto/'.$r->img)}}" alt="" srcset="" style="width: 200px">
+                        <img src="{{asset('images/foto/web/'.$r->img)}}" alt="" srcset="" style="width: 200px">
                     </div>
                     <div class="pricing-details">
 

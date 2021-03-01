@@ -34,8 +34,7 @@
                                     <td>{{$e+1}}</td>
                                     <td>{{$a->nama}}</td>
                                     <td>
-                                        <img src="{{url('storage/images/album/'.$a->cover)}}" alt=""
-                                            style="width:80px;">
+                                        <img src="{{asset('images/foto/album/'.$a->cover)}}" alt="" style="width:80px;">
                                     </td>
                                     <td>
                                         {{$a->foto->count()}}
@@ -119,7 +118,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">Cover Album</label>
-                        <img src="{{url('storage/images/album/'.$d->cover)}}" style="width: 100px" alt="">
+                        <img src="{{asset('images/foto/album/'.$d->cover)}}" style="width: 100px" alt="">
                     </div>
 
                     <div class="form-group">

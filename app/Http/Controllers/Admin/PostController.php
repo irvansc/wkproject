@@ -45,31 +45,13 @@ class PostController extends Controller
             $post->user_id = Auth::user()->id;
             $post->alias = Str::slug($request->title);
             if ($request->file('img')) {
-                // Get file from request
                 $file = $request->file('img');
-                // Get filename with extension
-                $filenameWithExt = $file->getClientOriginalName();
-                // Get file path
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                // Remove unwanted characters
-                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-                $filename = preg_replace("/\s+/", '-', $filename);
-                // Get the original image extension
-                $extension = $file->getClientOriginalExtension();
-                // Create unique file name
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                // Resize image
-                $resize = Image::make($file)->resize(1024, 768, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->encode('jpg');
-                // Create hash value
-                // $hash = md5($resize->__toString());
-                // Prepare qualified image name
-                $image = $fileNameToStore;
-                // Put image to storage
-                $save = Storage::put("public/artikel/{$fileNameToStore}", $resize->__toString());
-                $post->img = $image;
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $image_resize = Image::make($file->getRealPath());
+                $image_resize->resize(1024, 768);
+                $image_resize->save('images/foto/post/' . $filename);
             }
+            $post->img = $filename;
             $post->save();
             $post->categories()
                 ->attach($request->category);
@@ -113,20 +95,13 @@ class PostController extends Controller
                 'img' => 'image|mimes:png,jpg,jpeg'
             ]);
             if ($request->file('img')) {
-                Storage::disk('local')->delete('public/artikel/' . $post->img);
+                File::delete('images/foto/post/' . $post->img);
                 $file = $request->file('img');
-                $filenameWithExt = $file->getClientOriginalName();
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-                $filename = preg_replace("/\s+/", '-', $filename);
-                $extension = $file->getClientOriginalExtension();
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                $resize = Image::make($file)->resize(1024, 768, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->encode('jpg');
-                $image = $fileNameToStore;
-                $save = Storage::put("public/artikel/{$fileNameToStore}", $resize->__toString());
-                $post->img = $image;
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $image_resize = Image::make($file->getRealPath());
+                $image_resize->resize(1024, 768);
+                $image_resize->save('images/foto/post/' . $filename);
+                $post->img = $filename;
             }
             if ($post->title != $request->title) {
                 $request->validate([
@@ -156,7 +131,7 @@ class PostController extends Controller
     public function delete($id)
     {
         $avatar = Post::where('id', $id)->first();
-        Storage::disk('local')->delete('public/artikel/' . $avatar->img);
+        File::delete('images/foto/post/' . $avatar->img);
         $avatar->delete();
         return redirect()->back()->with('sukses', 'Data Berhasil Dihapus');
     }

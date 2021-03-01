@@ -43,7 +43,7 @@
                             </div>
                             <div class="col">
                                 <div class="form-group">
-                                    <img src="{{url('storage/artikel/'.$post->img)}}" alt="" id="showgambar"
+                                    <img src="{{asset('images/foto/post/'.$post->img)}}" alt="" id="showgambar"
                                         style="max-width:200px;max-height:200px;">
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
     </div>
 </div>
 @endsection
-@section('js')
+@push('js')
 <script type="text/javascript">
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -75,14 +75,11 @@
             reader.onload = function (e) {
                 $('#showgambar').attr('src', e.target.result);
             }
-
             reader.readAsDataURL(input.files[0]);
         }
     }
-
     $("#inputgambar").change(function () {
         readURL(this);
     });
 </script>
-
-@stop
+@endpush

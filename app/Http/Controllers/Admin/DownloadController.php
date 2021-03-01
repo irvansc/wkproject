@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Download;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
@@ -38,15 +39,11 @@ class DownloadController extends Controller
             $download->title = $request->title;
             $download->keterangan = $request->keterangan;
             $download->author = $request->author;
-
-
             if ($request->hasFile('data')) {
-                $file = $request->file('data');
-                $name = time() . '.' . $file->getClientOriginalExtension();
-                Storage::putFileAs('public/file', $request->file('data'), $name);
-                $download->data = $name;
+                $request->file('data')->move('images/file', $request->file('data')->getClientOriginalName());
+                $download->data = $request->file('data')->getClientOriginalName();
+                $download->save();
             }
-            $download->save();
             Session::flash('sukses', 'File Uploaded Successfully');
         } catch (\Exception $e) {
             Session::flash('error', $e->getMessage());
@@ -77,11 +74,9 @@ class DownloadController extends Controller
                 'title' => 'required',
             ]);
             if ($request->hasFile('data')) {
-                Storage::disk('local')->delete('public/file/' . $download->data);
-                $file = $request->file('data');
-                $name = time() . '.' . $file->getClientOriginalExtension();
-                Storage::putFileAs('public/file', $request->file('data'), $name);
-                $download->data = $name;
+                File::delete('images/file/' . $download->data);
+                $request->file('data')->move('images/file', $request->file('data')->getClientOriginalName());
+                $download->data = $request->file('data')->getClientOriginalName();
             }
 
             if ($download->title != $request->title) {
@@ -101,14 +96,6 @@ class DownloadController extends Controller
         return redirect()->route('adownload.index');
     }
 
-    public function File($data)
-    {
-        try {
-            return Storage::download('public/file/' . $data);
-        } catch (\Exception $e) {
-            $e->getMessage();
-        }
-    }
     public function destroy(Download $download)
     {
         abort(404);
@@ -116,7 +103,7 @@ class DownloadController extends Controller
     public function delete($id)
     {
         $avatar = Download::where('id', $id)->first();
-        Storage::disk('local')->delete('public/file/' . $avatar->data);
+        File::delete('images/file/' . $avatar->data);
         $avatar->delete();
         return redirect()->back()->with('sukses', 'Data Berhasil Dihapus');
     }

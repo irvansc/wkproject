@@ -21,12 +21,25 @@ class DashboardController extends Controller
         $guru = DB::table('guru')->count();
         $user = DB::table('users')->count();
         $post = DB::table('posts')->count();
+        $jenisG = DB::table('guru')
+            ->selectRaw('count(*) as total')
+            ->selectRaw("count(case when jenkel = 'L' then 1 end) as Laki")
+            ->selectRaw("count(case when jenkel = 'P' then 1 end) as Perempuan")
+            ->first();
+        $jenisI = DB::table('siswa')
+            ->selectRaw('count(*) as total')
+            ->selectRaw("count(case when jenkel = 'L' then 1 end) as Laki")
+            ->selectRaw("count(case when jenkel = 'P' then 1 end) as Perempuan")
+            ->first();
+
         return view('admin.backend.dashboard.index', compact(
             'title',
             'siswa',
             'guru',
             'user',
             'post',
+            'jenisI',
+            'jenisG',
         ));
     }
 

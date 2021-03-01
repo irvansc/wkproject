@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\About;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -25,21 +26,16 @@ class AboutController extends Controller
         $request->validate([
             'photo' => 'image|mimes:png,jpg,jpeg'
         ]);
+
+
         if ($request->file('photo')) {
-            Storage::disk('local')->delete('public/images/' . $about->photo);
+            File::delete('images/' . $about->photo);
             $file = $request->file('photo');
-            $filenameWithExt = $file->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-            $filename = preg_replace("/\s+/", '-', $filename);
-            $extension = $file->getClientOriginalExtension();
-            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-            $resize = Image::make($file)->resize(400, 400, function ($constraint) {
-                $constraint->aspectRatio();
-            })->encode('jpg');
-            $image = $fileNameToStore;
-            $save = Storage::put("public/images/{$fileNameToStore}", $resize->__toString());
-            $about->photo = $image;
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $image_resize = Image::make($file->getRealPath());
+            $image_resize->resize(600, 600);
+            $image_resize->save('images/' . $filename);
+            $about->photo = $filename;
         }
         $about->title = $request->title;
         $about->deskripsi = $request->deskripsi;

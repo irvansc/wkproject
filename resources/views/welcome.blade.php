@@ -11,7 +11,7 @@
     $img = DB::table('image_web')->where('id','=',1)->first();
     @endphp
     <!-- Favicons -->
-    <link href="{{url('storage/images/web_foto/'.$img->favicon)}}" rel="icon">
+    <link href="{{asset('images/foto/web/'.$img->favicon)}}" rel="icon">
     <link href="{{asset('')}}theme/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->

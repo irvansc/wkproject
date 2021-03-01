@@ -43,7 +43,7 @@ class User extends Authenticatable
         if (!$this->image) {
             return asset('images/default.png');
         }
-        return url('storage/images/' . $this->image);
+        return asset('images/foto/user/' . $this->image);
     }
     function posts()
     {

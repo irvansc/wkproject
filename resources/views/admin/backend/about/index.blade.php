@@ -28,7 +28,7 @@
                     </p>
                     <div class="collapse" id="Visi">
                         <div class="card card-body">
-                            <img src="{{url('storage/images/'.$about->photo)}}" alt="" style="width: 200px">
+                            <img src="{{asset('images/'.$about->photo)}}" alt="" style="width: 200px">
                         </div>
                     </div>
                     <div class="collapse" id="Misi">

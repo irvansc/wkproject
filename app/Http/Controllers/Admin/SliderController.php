@@ -38,30 +38,14 @@ class SliderController extends Controller
             $post->title = $request->title;
             $post->deskripsi = $request->deskripsi;
 
-            if ($request->file('img')) {
-                // Get file from request
+            if ($request->hasFile('img')) {
                 $file = $request->file('img');
-                // Get filename with extension
-                $filenameWithExt = $file->getClientOriginalName();
-                // Get file path
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                // Remove unwanted characters
-                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-                $filename = preg_replace("/\s+/", '-', $filename);
-                // Get the original image extension
-                $extension = $file->getClientOriginalExtension();
-                // Create unique file name
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                // Resize image
-                $resize = Image::make($file)->resize(1920, 1080, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->encode('jpg');
-                $image = $fileNameToStore;
-                // Put image to storage
-                $save = Storage::put("public/images/web_foto/{$fileNameToStore}", $resize->__toString());
-                $post->img = $image;
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $image_resize = Image::make($file->getRealPath());
+                $image_resize->resize(1920, 1080);
+                $image_resize->save('images/foto/web/' . $filename);
             }
-
+            $post->img = $filename;
             $post->save();
             Session::flash('sukses', 'Slider created successfully');
         } catch (\Exception $e) {
@@ -70,23 +54,11 @@ class SliderController extends Controller
         return redirect()->route('slider.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Slider  $slider
-     * @return \Illuminate\Http\Response
-     */
     public function show(Slider $slider)
     {
-        //
+        abort(404);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Slider  $slider
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $title = 'edit Slider';
@@ -94,32 +66,19 @@ class SliderController extends Controller
         return view('admin.backend.slider.edit', compact('title', 'a'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Slider  $slider
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         try {
             $sldier = Slider::findOrFail($id);
             if ($request->file('img')) {
-                Storage::disk('local')->delete('public/images/web_foto/' . $sldier->img);
+                File::delete('images/foto/web/' . $sldier->img);
                 $file = $request->file('img');
-                $filenameWithExt = $file->getClientOriginalName();
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-                $filename = preg_replace("/\s+/", '-', $filename);
-                $extension = $file->getClientOriginalExtension();
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                $resize = Image::make($file)->resize(1920, 1080, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->encode('jpg');
-                $image = $fileNameToStore;
-                $save = Storage::put("public/images/web_foto/{$fileNameToStore}", $resize->__toString());
-                $sldier->img = $image;
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $image_resize = Image::make($file->getRealPath());
+                $image_resize->resize(1920, 1080);
+                $image_resize->save('images/foto/web/' . $filename);
+                $sldier->img = $filename;
             }
             $sldier->title = $request->title;
             $sldier->deskripsi = $request->deskripsi;
@@ -134,7 +93,8 @@ class SliderController extends Controller
     public function delete($id)
     {
         $avatar = Slider::where('id', $id)->first();
-        Storage::disk('local')->delete('public/images/web_foto/' . $avatar->img);
+        File::delete('images/foto/web/' . $avatar->img);
+
         $avatar->delete();
         return redirect()->back()->with('sukses', 'slider Berhasil Dihapus');
     }

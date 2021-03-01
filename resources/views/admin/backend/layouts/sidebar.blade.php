@@ -3,14 +3,14 @@
         @php
         $img = DB::table('image_web')->where('id','=',2)->first();
         @endphp
-        <img src="{{url('storage/images/web_foto/'.$img->favicon)}}" alt="" srcset=""> <br>
+        <img src="{{asset('images/foto/web/'.$img->favicon)}}" alt="" srcset=""> <br>
         <a href="index.html">SMk W-SCHOOL</a>
     </div>
     <div class="sidebar-brand sidebar-brand-sm">
         @php
         $img = DB::table('image_web')->where('id','=',2)->first();
         @endphp
-        <img src="{{url('storage/images/web_foto/'.$img->favicon)}}" style="width: 50px"> <br>
+        <img src="{{asset('images/foto/web/'.$img->favicon)}}" style="width: 50px"> <br>
         {{-- <a href="index.html">SMK</a> --}}
     </div>
     <ul class="sidebar-menu">
@@ -68,7 +68,7 @@
                 <li><a class="nav-link" href="{{route('testimoni.index')}}">Testimonial</a></li>
                 <li><a class="nav-link" href="{{route('vm.index')}}">Visi-Misi</a></li>
                 <li><a class="nav-link" href="{{route('sejarah.index')}}">Sejarah</a></li>
-                <li><a class="nav-link" href="{{route('aabout.index')}}">About</a></li>
+                <li><a class="nav-link" href="{{route('aabout.index')}}">Sambutan</a></li>
             </ul>
         </li>
         @endcan

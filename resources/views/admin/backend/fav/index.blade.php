@@ -20,7 +20,7 @@ $w = DB::table('image_web')->first();
         dengan menggunakan tools Adobe Ilustrator/Potoshop atau yang lainnya <br>
         jika tidak maka gambar yang anda unggah tidak akan sesuai dengan tampilan website, <br>
         Download File Dibawah ini :
-        <a href="{{url('storage/images/web_foto/'.$w->favicon)}}" class="btn btn-primary btn-sm" download><i
+        <a href="{{asset('images/foto/web/'.$w->favicon)}}" class="btn btn-primary btn-sm" download><i
                 class="fas fa-file-download"></i> Download</a>
     </div>
 </div>
@@ -34,7 +34,7 @@ $w = DB::table('image_web')->first();
                 </div>
                 <div class="pricing-padding">
                     <div class="pricing-price">
-                        <img src="{{url('storage/images/web_foto/'.$r->favicon)}}" alt="" srcset="">
+                        <img src="{{asset('images/foto/web/'.$r->favicon)}}" alt="" srcset="">
                     </div>
                     <div class="pricing-details">
 

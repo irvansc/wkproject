@@ -35,7 +35,8 @@
                                     <td>{{$a->title}}</td>
                                     <td><a href="{{$a->url_video}}">{{str_limit($a->url_video,30)}}</a></td>
                                     <td>
-                                        <img src="{{url('storage/images/foto/'.$a->gbr)}}" alt="" style="width:80px;">
+                                        <img src="{{asset('images/foto/album/fotos/'.$a->gbr)}}" alt=""
+                                            style="width:80px;">
                                     </td>
                                     <td>
                                         {{$a->album->nama}}
@@ -143,7 +144,7 @@
                     <div class="form-group">
                         <label for="">Foto old</label>
                         <br>
-                        <img src="{{url('storage/images/foto/'.$d->gbr)}}" style="width: 100px" alt="">
+                        <img src="{{asset('images/foto/album/fotos/'.$d->gbr)}}" style="width: 100px" alt="">
                     </div>
 
                     <div class="form-group">

@@ -42,28 +42,13 @@ class FotoController extends Controller
             $foto->user_id = Auth::id();
 
             if ($request->file('gbr')) {
-                // Get file from request
                 $file = $request->file('gbr');
-                // Get filename with extension
-                $filenameWithExt = $file->getClientOriginalName();
-                // Get file path
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                // Remove unwanted characters
-                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-                $filename = preg_replace("/\s+/", '-', $filename);
-                // Get the original image extension
-                $extension = $file->getClientOriginalExtension();
-                // Create unique file name
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                // Resize image
-                $resize = Image::make($file)->resize(500, 400, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->encode('jpg');
-                $image = $fileNameToStore;
-                // Put image to storage
-                $save = Storage::put("public/images/foto/{$fileNameToStore}", $resize->__toString());
-                $foto->gbr = $image;
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $image_resize = Image::make($file->getRealPath());
+                $image_resize->resize(600, 600);
+                $image_resize->save('images/foto/album/fotos/' . $filename);
             }
+            $foto->gbr = $filename;
             $foto->save();
             Session::flash('sukses', 'Photo added successfully');
         } catch (\Exception $e) {
@@ -91,20 +76,13 @@ class FotoController extends Controller
                 'gbr' => 'image|mimes:png,jpg,jpeg'
             ]);
             if ($request->file('gbr')) {
-                Storage::disk('local')->delete('public/images/foto/' . $foto->gbr);
+                File::delete('images/foto/album/fotos/' . $foto->gbr);
                 $file = $request->file('gbr');
-                $filenameWithExt = $file->getClientOriginalName();
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-                $filename = preg_replace("/\s+/", '-', $filename);
-                $extension = $file->getClientOriginalExtension();
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                $resize = Image::make($file)->resize(500, 400, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->encode('jpg');
-                $image = $fileNameToStore;
-                $save = Storage::put("public/images/foto/{$fileNameToStore}", $resize->__toString());
-                $foto->gbr = $image;
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $image_resize = Image::make($file->getRealPath());
+                $image_resize->resize(600, 600);
+                $image_resize->save('images/foto/album/fotos/' . $filename);
+                $foto->gbr = $filename;
             }
             $foto->title = $request->title;
             $foto->album_id = $request->album;
@@ -120,7 +98,8 @@ class FotoController extends Controller
     public function delete($id)
     {
         $avatar = Foto::where('id', $id)->first();
-        Storage::disk('local')->delete('public/images/foto/' . $avatar->gbr);
+        File::delete('images/foto/album/fotos/' . $avatar->gbr);
+
         $avatar->delete();
         return redirect()->back()->with('sukses', 'Photo deleted successfully');
     }

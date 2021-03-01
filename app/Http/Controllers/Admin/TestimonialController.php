@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -35,28 +36,13 @@ class TestimonialController extends Controller
             $testimoni->ket = $request->ket;
             $testimoni->pesan = $request->pesan;
             if ($request->file('foto')) {
-                // Get file from request
                 $file = $request->file('foto');
-                // Get filename with extension
-                $filenameWithExt = $file->getClientOriginalName();
-                // Get file path
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                // Remove unwanted characters
-                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-                $filename = preg_replace("/\s+/", '-', $filename);
-                // Get the original image extension
-                $extension = $file->getClientOriginalExtension();
-                // Create unique file name
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                // Resize image
-                $resize = Image::make($file)->resize(400, 400, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->encode('jpg');
-                $image = $fileNameToStore;
-                // Put image to storage
-                $save = Storage::put("public/images/testimoni/{$fileNameToStore}", $resize->__toString());
-                $testimoni->foto = $image;
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $image_resize = Image::make($file->getRealPath());
+                $image_resize->resize(400, 400);
+                $image_resize->save('images/foto/testi/' . $filename);
             }
+            $testimoni->foto = $filename;
             $testimoni->save();
             Session::flash('sukses', 'Testimonial successfully created');
         } catch (\Exception $e) {
@@ -80,20 +66,13 @@ class TestimonialController extends Controller
                 'foto' => 'image|mimes:jpg,jpeg,png,tif,svg'
             ]);
             if ($request->file('foto')) {
-                Storage::disk('local')->delete('public/images/testimoni/' . $testimoni->foto);
+                File::delete('images/foto/testi/' . $testimoni->foto);
                 $file = $request->file('foto');
-                $filenameWithExt = $file->getClientOriginalName();
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-                $filename = preg_replace("/\s+/", '-', $filename);
-                $extension = $file->getClientOriginalExtension();
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                $resize = Image::make($file)->resize(400, 400, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->encode('jpg');
-                $image = $fileNameToStore;
-                $save = Storage::put("public/images/testimoni/{$fileNameToStore}", $resize->__toString());
-                $testimoni->foto = $image;
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $image_resize = Image::make($file->getRealPath());
+                $image_resize->resize(400, 400);
+                $image_resize->save('images/foto/testi/' . $filename);
+                $testimoni->foto = $filename;
             }
             $testimoni->nama = $request->nama;
             $testimoni->ket = $request->ket;
@@ -108,7 +87,7 @@ class TestimonialController extends Controller
     public function delete($id)
     {
         $avatar = Testimonial::where('id', $id)->first();
-        Storage::disk('local')->delete('public/images/testimoni/' . $avatar->foto);
+        File::delete('images/foto/testi/' . $avatar->foto);
         $avatar->delete();
         return redirect()->back()->with('sukses', 'Testimoni Berhasil Dihapus');
     }

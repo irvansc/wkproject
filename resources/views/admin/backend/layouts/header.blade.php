@@ -9,7 +9,7 @@
     @php
     $img = DB::table('image_web')->where('id','=',2)->first();
     @endphp
-    <link href="{{url('storage/images/web_foto/'.$img->favicon)}}" rel="icon">
+    <link href="{{asset('images/foto/web/'.$img->favicon)}}" rel="icon">
     <!-- General CSS Files -->
     <link rel="stylesheet" rel="stylesheet" href="{{ url('') }}/assets/modules/datatables/datatables.min.css">
     <link rel="stylesheet" rel="stylesheet" href="{{ url('') }}/assets/modules/bootstrap/css/bootstrap.min.css">
@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ url('') }}/assets/modules/sweetalert2/dist/sweetalert2.min.css">
     <link href="{{asset('')}}assets/modules/toastr/build/toastr.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('')}}assets/modules/summernote-0.8.18-dist/summernote.min.css">
+    <link rel="stylesheet" href="{{asset('')}}assets/modules/chart/Chart.min.css">
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ url('') }}/assets/css/style.css">
     <link rel="stylesheet" href="{{ url('') }}/assets/css/components.css">

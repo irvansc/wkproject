@@ -58,7 +58,6 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('adownload', 'Admin\DownloadController')->middleware('can:download');
         Route::get('adownload/delete/{id}', 'Admin\DownloadController@delete');
-        Route::get('adownload/file/{data}', 'Admin\DownloadController@File')->name('getfile');
 
         Route::resource('apengumuman', 'Admin\PengumumanController')->middleware('can:apengumuman');
         Route::get('apengumuman/delete/{id}', 'Admin\PengumumanController@delete');

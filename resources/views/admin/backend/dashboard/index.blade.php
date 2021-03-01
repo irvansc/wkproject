@@ -67,6 +67,79 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Jumlah Guru Berdasarkan Jenis Kelamin</h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="myChart1"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Jumlah Siswa Berdasarkan Jenis Kelamin</h4>
+                </div>
+                <div class="card-body">
+                    <canvas id="myChart2"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>
 @endsection
+@push('js')
+<script>
+    $(document).ready(function(){
+        var ctx = document.getElementById("myChart1").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                datasets: [{
+                data: [{!! json_encode($jenisG->Laki) !!},{!! json_encode($jenisG->Perempuan) !!}],
+                backgroundColor: [
+                    '#ffa426',
+                    '#6777ef',
+                ]
+                }],
+                labels: [
+                'Perempuan',
+                'Laki Laki'
+                ],
+            },
+            options: {
+                responsive: true,
+                legend: {
+                position: 'left',
+                },
+            }
+        });
+        var ctx = document.getElementById("myChart2").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                datasets: [{
+                data: [{!! json_encode($jenisI->Laki) !!},{!! json_encode($jenisI->Perempuan) !!}],
+                backgroundColor: [
+                    '#ffa426',
+                    '#6777ef',
+                ]
+                }],
+                labels: [
+                'Perempuan',
+                'Laki Laki'
+                ],
+            },
+            options: {
+                responsive: true,
+                legend: {
+                position: 'left',
+                },
+            }
+        });
+    })
+</script>
+@endpush

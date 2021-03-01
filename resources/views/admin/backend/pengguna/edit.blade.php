@@ -34,7 +34,7 @@
                                 <div class="row mt-4">
                                     <div class="col-lg-3 order-lg-2">
                                         <div class="card-profile-image">
-                                            <img src="{{url('storage/images/'.$user->image)}}" class="img">
+                                            <img src="{{asset('images/foto/user/'.$user->image)}}" class="img">
                                         </div>
                                     </div>
                                 </div>

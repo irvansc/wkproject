@@ -10,6 +10,7 @@
 <script src="{{ url('') }}/assets/js/stisla.js"></script>
 
 <!-- JS Libraies -->
+<script src="{{asset('')}}assets/modules/chart/Chart.min.js"></script>
 <script src="{{asset('')}}assets/modules/toastr/build/toastr.min.js"></script>
 <script src="{{ asset('') }}assets/modules/sweetalert2/dist/sweetalert2.min.js"></script>
 <script src="{{asset('assets/modules/summernote-0.8.18-dist/summernote.min.js')}}"></script>

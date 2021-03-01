@@ -27,21 +27,13 @@ class FavController extends Controller
         try {
             $fav = Fav::findOrFail($id);
             if ($request->file('favicon')) {
-                Storage::disk('local')->delete('public/images/web_foto/' . $fav->favicon);
                 $file = $request->file('favicon');
-                $filenameWithExt = $file->getClientOriginalName();
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-                $filename = preg_replace("/\s+/", '-', $filename);
-                $extension = $file->getClientOriginalExtension();
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                $resize = Image::make($file)->resize(134, 134, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->encode('Png');
-                $image = $fileNameToStore;
-                $save = Storage::put("public/images/web_foto/{$fileNameToStore}", $resize->__toString());
-                $fav->favicon = $image;
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $image_resize = Image::make($file->getRealPath());
+                $image_resize->resize(134, 134);
+                $image_resize->save('images/foto/web/' . $filename);
             }
+            $fav->favicon = $filename;
             $fav->title = $request->title;
             $fav->save();
             Session::flash('sukses', 'Favicon successfully updated');

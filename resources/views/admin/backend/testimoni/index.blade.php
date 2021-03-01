@@ -32,7 +32,7 @@
                                 <tr>
                                     <td>{{$e+1}}</td>
                                     <td>
-                                        <img src="{{url('storage/images/testimoni/'.$a->foto)}}" alt="" width="100px">
+                                        <img src="{{asset('images/foto/testi/'.$a->foto)}}" alt="" width="100px">
                                     </td>
                                     <td>{{$a->nama}}</td>
                                     <td>{{str_limit($a->pesan, 50)}}</td>
@@ -103,7 +103,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Testimoni</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Edit Testimoni</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -120,14 +120,15 @@
                         <label for="">Keterangan</label>
                         <input type="text" name="ket" value="{{$r->ket}}" class="form-control">
                     </div>
-                    <div class="form-group">
-                        <label for="">Testimoni</label>
-                        <textarea name="pesan" class="form-control" id="" cols="30" rows="10">{{$r->pesan}}</textarea>
-                    </div>
+
                     <div class="form-group">
                         <label for="">Foto</label>
                         <input type="file" name="foto" class="form-control">
                         <small class="text-danger">Foto akan otomatis di Risize ukuran 400 x 400 px</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Testimoni</label>
+                        <textarea name="pesan" class="form-control">{{$r->pesan}}</textarea>
                     </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary float-right"><i class="ni ni-send"></i> Save

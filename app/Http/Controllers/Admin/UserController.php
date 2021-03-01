@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePasswordRequest;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -41,28 +42,13 @@ class UserController extends Controller
             $user['telp'] = $request->telp;
             $user['alamat'] = $request->alamat;
             if ($request->file('image')) {
-                // Get file from request
                 $file = $request->file('image');
-                // Get filename with extension
-                $filenameWithExt = $file->getClientOriginalName();
-                // Get file path
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                // Remove unwanted characters
-                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-                $filename = preg_replace("/\s+/", '-', $filename);
-                // Get the original image extension
-                $extension = $file->getClientOriginalExtension();
-                // Create unique file name
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                // Resize image
-                $resize = Image::make($file)->resize(500, 500, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->encode('jpg');
-                $image = $fileNameToStore;
-                // Put image to storage
-                $save = Storage::put("public/images/{$fileNameToStore}", $resize->__toString());
-                $user->image = $image;
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $image_resize = Image::make($file->getRealPath());
+                $image_resize->resize(500, 500);
+                $image_resize->save('images/foto/user/' . $filename);
             }
+            $user->image = $filename;
             $user->save();
             $user->roles()
                 ->sync($request->role);
@@ -109,20 +95,13 @@ class UserController extends Controller
                 'image' => 'image|mimes:png,jpg,jpeg'
             ]);
             if ($request->file('image')) {
-                Storage::disk('local')->delete('public/images/' . $user->image);
+                File::delete('images/foto/user/' . $user->image);
                 $file = $request->file('image');
-                $filenameWithExt = $file->getClientOriginalName();
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-                $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-                $filename = preg_replace("/\s+/", '-', $filename);
-                $extension = $file->getClientOriginalExtension();
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                $resize = Image::make($file)->resize(500, 500, function ($constraint) {
-                    $constraint->aspectRatio();
-                })->encode('jpg');
-                $image = $fileNameToStore;
-                $save = Storage::put("public/images/{$fileNameToStore}", $resize->__toString());
-                $user->image = $image;
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $image_resize = Image::make($file->getRealPath());
+                $image_resize->resize(500, 500);
+                $image_resize->save('images/foto/user/' . $filename);
+                $user->image = $filename;
             }
 
             if ($user->email != $request->email) {
@@ -158,7 +137,7 @@ class UserController extends Controller
     public function delete($id)
     {
         $avatar = User::where('id', $id)->first();
-        Storage::disk('local')->delete('public/images/' . $avatar->image);
+        File::delete('images/foto/user/' . $avatar->image);
         $avatar->delete();
         return redirect('/pengguna')->with('sukses', 'User Deleted Successfully');
     }

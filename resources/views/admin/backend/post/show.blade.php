@@ -20,7 +20,7 @@
 
                         <div class="article-header">
                             <div class="col-md-5">
-                                <img src="{{url('storage/artikel/'.$post->img)}}" alt="">
+                                <img src="{{asset('images/foto/post/'.$post->img)}}" alt="">
                             </div>
                         </div>
                         <div class="article-details">
