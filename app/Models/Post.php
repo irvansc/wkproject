@@ -17,10 +17,10 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
-    // public function comments()
-    // {
-    //     return $this->morphMany(Comments::class, 'commentable');
-    // }
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
     public function getCreatedAtAttribute()
     {
         \Carbon\Carbon::setLocale('id');
@@ -32,5 +32,12 @@ class Post extends Model
     {
         return \Carbon\Carbon::parse($this->attributes['updated_at'])
             ->diffForHumans();
+    }
+    public function getImage()
+    {
+        if (!$this->image) {
+            return asset('images/foto/post/noimage.jpg');
+        }
+        return asset('images/foto/post/' . $this->image);
     }
 }

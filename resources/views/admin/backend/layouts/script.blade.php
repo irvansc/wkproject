@@ -14,13 +14,17 @@
 <script src="{{asset('')}}assets/modules/toastr/build/toastr.min.js"></script>
 <script src="{{ asset('') }}assets/modules/sweetalert2/dist/sweetalert2.min.js"></script>
 <script src="{{asset('assets/modules/summernote-0.8.18-dist/summernote.min.js')}}"></script>
+<script src="{{asset('assets/modules/summernote-0.8.18-dist/summernote-bs4.js')}}"></script>
 <!-- Page Specific JS File -->
 <!-- Template JS File -->
 <script src="{{ url('') }}/assets/js/scripts.js"></script>
 <script src="{{ url('') }}/assets/js/custom.js"></script>
 @stack('js')
 @yield(' js') <script>
-    $('#summernote').summernote();
+    $('#summernote').summernote({
+        tabsize: 2,
+        height: 100
+    });
     @if (Session::has('sukses'))
     const Toast = Swal.mixin({
         toast: true,

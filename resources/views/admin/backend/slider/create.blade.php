@@ -29,7 +29,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="">deskripsi</label>
+                            <label for="">deskripsi <strong style="color: red">* Maksimal 30 kata
+                                    disarankan</strong></label>
                             <textarea id="summernote" name="deskripsi"
                                 class="form-control @error('deskripsi') is-invalid @enderror"> </textarea>
                             @error('deskripsi')

@@ -8,10 +8,10 @@ use Illuminate\Support\Carbon;
 class Comment extends Model
 {
     protected $guarded = ['id'];
-    // function post()
-    // {
-    //     return $this->belongsTo(Post::class);
-    // }
+    function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
     // public function childs()
     // {
     //     return $this->hasMany(Comments::class, 'parent_id');

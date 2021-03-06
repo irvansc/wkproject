@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ url('') }}/assets/modules/sweetalert2/dist/sweetalert2.min.css">
     <link href="{{asset('')}}assets/modules/toastr/build/toastr.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('')}}assets/modules/summernote-0.8.18-dist/summernote.min.css">
+    <link rel="stylesheet" href="{{asset('')}}assets/modules/summernote-0.8.18-dist/summernote-bs4.css">
     <link rel="stylesheet" href="{{asset('')}}assets/modules/chart/Chart.min.css">
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ url('') }}/assets/css/style.css">

@@ -23,11 +23,7 @@
                             <input type="text" name="title" class="form-control" value="{{$a->title}}">
                         </div>
 
-                        <div class="form-group">
-                            <label for="">deskripsi</label>
-                            <textarea id="summernote" name="deskripsi"
-                                class="form-control">{{$a->deskripsi}} </textarea>
-                        </div>
+
                         <div class="form-group">
                             <label for="">Foto old</label>
                             <img src="{{asset('images/foto/web/'.$a->img)}}" alt="" style="width: 200px">
@@ -35,6 +31,14 @@
                         <div class="form-group">
                             <label for="">Foto</label>
                             <input type="file" name="img" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">deskripsi <strong style="color: red">* Maksimal 30 kata
+                                    disarankan</strong></label>
+                            <textarea id="summernote" name="deskripsi" style="width:auto; height:300px;"
+                                class="form-control">
+                                {{$a->deskripsi}}
+                            </textarea>
                         </div>
                         <button class="btn btn-primary" type="submit"><i class="fas fa-send"></i> Save</button>
                     </form>

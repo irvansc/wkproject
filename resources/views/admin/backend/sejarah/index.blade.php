@@ -17,6 +17,10 @@
                             aria-expanded="false" aria-controls="collapseExample">
                             Sejarah
                         </button>
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#foto"
+                            aria-expanded="false" aria-controls="collapseExample">
+                            Foto
+                        </button>
                     </p>
                     <div class="collapse" id="Visi">
                         <div class="card card-body">
@@ -25,6 +29,11 @@
                                 <br>
                                 {!!$sj->deskripsi!!}
                             </center>
+                        </div>
+                    </div>
+                    <div class="collapse" id="foto">
+                        <div class="card card-body">
+                            <img src="{{asset('images/'.$sj->foto)}}" alt="" style="width: 200px">
                         </div>
                     </div>
                 </div>
@@ -47,9 +56,17 @@
                     </center>
                     <div class="collapse" id="Edit">
                         <div class="card card-body">
-                            <form action="{{route('sejarah.update',$sj->id)}}" method="POST">
+                            <form action="{{route('asejarah.update',$sj->id)}}" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
+                                <div class="form-group">
+                                    <center>
+                                        <img src="{{url('storage/images/'.$sj->foto)}}" alt="" id="showgambar"
+                                            width="200px">
+                                    </center>
+                                    <input name="foto" class="form-control" type="file" id="inputgambar">
+                                </div>
                                 <div class="form-group">
                                     <center>
                                         <h2>Title</h2>
@@ -73,3 +90,24 @@
     </div>
 </div>
 @endsection
+@push('js')
+<script>
+    $(document).ready(function () {
+        function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#showgambar').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#inputgambar").change(function () {
+        readURL(this);
+    });
+    })
+</script>
+@endpush

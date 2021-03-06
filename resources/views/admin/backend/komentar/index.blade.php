@@ -8,13 +8,13 @@
     <div class="col-md-10">
         <div class="card shadow mb-5">
             <div class="card-header py-3">
-                <div class="row">
-                    <h6 class="font-weight-bold text-primary">Komentar</h6>
-                </div>
+                <h6 class="font-weight-bold text-primary">Komentar Masuk</h6>
+                <a href="{{route('balas.admin')}}" class="btn btn-outline-primary ml-auto">Lihat Komentar
+                    Balasan</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table tab-bordered">
+                    <table class="table tab-bordered" id="data">
                         <thead>
                             <tr>
                                 <th width="20px">No</th>
@@ -31,7 +31,7 @@
                                 <td>{{$e+1}}</td>
                                 <td>{{$c->name}}</td>
                                 <td>{{str_limit($c->body,50)}}</td>
-                                <td>{{$c->commentable_id}}</td>
+                                <td>{{$c->commentable->title}}</td>
                                 <td>
                                     @if ($c->status == 'n')
                                     <span class="badge badge-warning">Menungu Persetujuan</span>
@@ -41,16 +41,16 @@
                                 </td>
                                 <td>
                                     @if ($c->status == 'n')
-                                    <a title="Publish" href="{{url('comments/pub',$c->id)}}" class="btn btn-primary "><i
-                                            class="ni ni-send"></i>
+                                    <a title="Publish" href="{{url('komentar/pub',$c->id)}}" class="btn btn-primary "><i
+                                            class="fas fa-paper-plane"></i>
                                     </a>
                                     @else
                                     <button title="Balas" class="btn btn-success" data-toggle="modal"
-                                        data-target="#balas{{$c->id}}"><i class=" fa fa-reply"></i>
+                                        data-target="#balas{{$c->id}}"><i class="fas fa-reply"></i>
                                     </button>
                                     @endif
-                                    <button title="Detail" href="" class="btn btn-info " data-toggle="modal"
-                                        data-target="#detail{{$c->id}}"><i class="fa fa-eye"></i>
+                                    <button title="Detail" class="btn btn-info " data-toggle="modal"
+                                        data-target="#show{{$c->id}}"><i class="fas fa-eye"></i>
                                     </button>
                                     <button title="Delete" class="btn btn-danger delete" id="{{$c->id}}"
                                         name="{{$c->name}}" title="Delete"><i class="fas fa-trash"></i>
@@ -70,7 +70,6 @@
 @endsection
 @section('modal')
 @foreach ($comment as $cek)
-
 <div class="modal fade" id="balas{{$cek->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -82,7 +81,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{url('comments/balas',$cek->id)}}" method="POST">
+                <form action="{{url('komentar/balas',$cek->id)}}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="">Komentar Reply</label>
@@ -91,7 +90,7 @@
                         <textarea cols="30" rows="10" class="form-control" name="body"></textarea>
                     </div>
                     <button type="submit" class="btn btn-warning" data-dismiss="modal"> Batal</button>
-                    <button type="submit" class="btn btn-primary float-right"><i class="ni ni-send"></i>
+                    <button type="submit" class="btn btn-primary float-right"><i class="fas fa-paper-plane"></i>
                         Reply</button>
                 </form>
 
@@ -100,34 +99,113 @@
     </div>
 </div>
 @endforeach
+
+@foreach ($comment as $cek)
+<div class="modal fade" id="show{{$cek->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Show</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row mb-3">
+                        <label for="colFormLabel" class="col-sm-2 col-form-label">Nama</label>
+                        <div class="col-sm-10">
+                            <span class="form-control">{{$cek->name}}</span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="colFormLabel" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            <span class="form-control">{{$cek->email}}</span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="colFormLabel" class="col-sm-2 col-form-label">Komentar</label>
+                        <div class="col-sm-10">
+                            <span class="form-control">{{$cek->body}}</span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="colFormLabel" class="col-sm-2 col-form-label">Komentar untuk</label>
+                        <div class="col-sm-10">
+                            <span class="form-control">
+
+                                {{$cek->commentable->title}}
+
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="colFormLabel" class="col-sm-2 col-form-label">Komentar tanggal</label>
+                        <div class="col-sm-10">
+                            <span class="form-control">
+
+                                {{$cek->created_at}}
+
+                            </span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-warning" data-dismiss="modal"> Close</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
 @endsection
-@section('js')
+@push('js')
 <script>
     $(document).ready(function(){
-
-    $('body').on('click','.delete',function(){
-            var mhs_id = $(this).attr('id');
-            var mhs_name = $(this).attr('name');
-            swal({
-                title: "Yakin?",
-                text: "Mau Mengahapus "+ mhs_name +" ??",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
+            $('body').on('click','.delete',function(){
+        var id = $(this).attr('id');
+    var name = $(this).attr('name');
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
             })
-            .then((willDelete) => {
-                console.log(willDelete);
-                if (willDelete) {
-                    window.location = "/komentar/delete/"+mhs_id;
-                    // swal("Data siswa dengan name "+ siswa_name +" telah berhasil dihapus!", {
-                    // icon: "success",
-                    // });
 
-                } else {
-                    swal("Batal Menghapus  "+ mhs_name);
-                }
-            });
+            swalWithBootstrapButtons.fire({
+            title: 'Yakin ? ',
+            text: "Mau menghapus Komentar "+ name +" ??",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes !',
+            cancelButtonText: 'No !',
+            reverseButtons: true
+            }).then((result) => {
+            if (result.isConfirmed) {
+                window.location = "/komentar/delete/"+id;
+                // swalWithBootstrapButtons.fire(
+                //   'Deleted!',
+                //   'Your file has been deleted.',
+                //   'success'
+                // )
+            } else if (
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                'Batal',
+                'Menghapus Komentar ' + name ,
+                'error'
+                )
+            }
+            })
+        });
+                $('#data').DataTable({
+            "pageLength": 5,
+            "lengthMenu": [[ 5,10, 25, 50, 100], [5,10, 25, 50, 'semua']],
+            "bLengthChange": true,
         });
 })
 </script>
-@endsection
+@endpush

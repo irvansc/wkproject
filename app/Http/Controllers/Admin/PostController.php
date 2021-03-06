@@ -111,8 +111,6 @@ class PostController extends Controller
             $post->title = $request->title;
             $post->content = $request->content;
             $post->alias = Str::slug($request->title);
-
-
             $post->save();
             $post->categories()
                 ->sync($request->category);

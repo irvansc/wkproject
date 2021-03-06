@@ -179,21 +179,21 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('vm-create', function ($user) {
             return $user->permission('vm-create');
         });
-        //sejarah
-        Gate::define('sejarah', function ($user) {
-            return $user->permission('sejarah');
+        //asejarah
+        Gate::define('asejarah', function ($user) {
+            return $user->permission('asejarah');
         });
-        Gate::define('sejarah-edit', function ($user) {
-            return $user->permission('sejarah-edit');
+        Gate::define('asejarah-edit', function ($user) {
+            return $user->permission('asejarah-edit');
         });
-        Gate::define('sejarah-delete', function ($user) {
-            return $user->permission('sejarah-delete');
+        Gate::define('asejarah-delete', function ($user) {
+            return $user->permission('asejarah-delete');
         });
-        Gate::define('sejarah-update', function ($user) {
-            return $user->permission('sejarah-update');
+        Gate::define('asejarah-update', function ($user) {
+            return $user->permission('asejarah-update');
         });
-        Gate::define('sejarah-create', function ($user) {
-            return $user->permission('sejarah-create');
+        Gate::define('asejarah-create', function ($user) {
+            return $user->permission('asejarah-create');
         });
         //aabout
         Gate::define('aabout', function ($user) {
@@ -463,6 +463,38 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('profiles-create', function ($user) {
             return $user->permission('profiles-create');
+        });
+        //ekstra
+        Gate::define('ekstra', function ($user) {
+            return $user->permission('ekstra');
+        });
+        Gate::define('ekstra-edit', function ($user) {
+            return $user->permission('ekstra-edit');
+        });
+        Gate::define('ekstra-update', function ($user) {
+            return $user->permission('ekstra-update');
+        });
+        Gate::define('ekstra-create', function ($user) {
+            return $user->permission('ekstra-create');
+        });
+        Gate::define('ekstra-delete', function ($user) {
+            return $user->permission('ekstra-delete');
+        });
+        //sambutan
+        Gate::define('sambutan', function ($user) {
+            return $user->permission('sambutan');
+        });
+        Gate::define('sambutan-edit', function ($user) {
+            return $user->permission('sambutan-edit');
+        });
+        Gate::define('sambutan-update', function ($user) {
+            return $user->permission('sambutan-update');
+        });
+        Gate::define('sambutan-create', function ($user) {
+            return $user->permission('sambutan-create');
+        });
+        Gate::define('sambutan-delete', function ($user) {
+            return $user->permission('sambutan-delete');
         });
     }
 }

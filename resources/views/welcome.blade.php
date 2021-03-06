@@ -1,230 +1,301 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>ComingSoon - W-School</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
-    @php
-    $img = DB::table('image_web')->where('id','=',1)->first();
-    @endphp
-    <!-- Favicons -->
-    <link href="{{asset('images/foto/web/'.$img->favicon)}}" rel="icon">
-    <link href="{{asset('')}}theme/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-    <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i"
-        rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="{{asset('')}}theme/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{asset('')}}theme/vendor/icofont/icofont.min.css" rel="stylesheet">
-
-    <!-- Template Main CSS File -->
-    <link href="{{asset('')}}theme/css/style.css" rel="stylesheet">
-
-    <!-- =======================================================
-  * Template Name: ComingSoon - v2.2.1
-  * Template URL: https://bootstrapmade.com/comingsoon-free-html-bootstrap-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-</head>
+@include('frontend.layouts.header')
 
 <body>
+    @include('frontend.layouts.headnav')
+    <!-- ======= Hero Section ======= -->
+    <section id="hero" class="hero d-flex align-items-center">
+        <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @php
+                $slider = DB::table('slider')->get();
+                @endphp
+                @foreach ($slider as $key=>$s)
+                <div class="carousel-item {{$key == 0 ? 'active' : '' }}" data-bs-interval="10000">
+                    <img src="{{asset('images/foto/web/'.$s->img)}}" class="d-block w-100" alt="..." />
+                    <div class="carousel-caption d-md-block">
+                        <div class="slider_title">
+                            <h1>{{$s->title}}</h1>
+                            <h4>
+                                {!!$s->deskripsi!!}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
 
-    <!-- ======= Header ======= -->
-    <header id="header" class="d-flex align-items-center">
-        <div class="container d-flex flex-column align-items-center">
-
-            <h1>ComingSoon</h1>
-            <h2>FrontEnd Website Sedang Dalam Pengembangan</h2>
-            <div class="countdown d-flex justify-content-center" data-count="2021/03/25">
-                <div>
-                    <h3>%D</h3>
-                    <h4>Days</h4>
-                </div>
-                <div>
-                    <h3>%H</h3>
-                    <h4>Hours</h4>
-                </div>
-                <div>
-                    <h3>%M</h3>
-                    <h4>Minutes</h4>
-                </div>
-                <div>
-                    <h3>%S</h3>
-                    <h4>Seconds</h4>
-                </div>
             </div>
-
-            <div class="subscribe">
-                <h4>Login Here!</h4>
-                <a href="/login" class="btn btn-primary">Login</a>
-            </div>
-
-            <div class="social-links text-center">
-                <a href="https://www.twitter.com/irvansc" class="twitter"><i class="icofont-twitter"></i></a>
-                <a href="#" class="https://www.facebook.com/irvhan.cievhan"><i class="icofont-facebook"></i></a>
-                <a href="#" class="https://www.instagram.com/irvansc"><i class="icofont-instagram"></i></a>
-                <a href="https://www.yputube.com/c/BangDevanz" class="linkedin"><i class="icofont-linkedin"></i></a>
-            </div>
-
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-    </header><!-- End #header -->
+    </section>
+    <!-- End Hero -->
 
     <main id="main">
-
-        {{-- <!-- ======= About Us Section ======= -->
+        <!-- ======= About Section ======= -->
         <section id="about" class="about">
-            <div class="container">
-
-                <div class="row content">
-                    <div class="col-lg-6">
-                        <h2>Eum ipsam laborum deleniti velitena</h2>
-                        <h3>Voluptatem dignissimos provident quasi corporis voluptates sit assum perenda sruen jonee
-                            trave</h3>
+            <div class="container" data-aos="fade-up">
+                <div class="row gx-0">
+                    <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up"
+                        data-aos-delay="200">
+                        @php
+                        $ab = DB::table('sambutan')->first();
+                        @endphp
+                        <div class="content">
+                            <h3>{{$ab->title}}</h3>
+                            <p>
+                                {!!$ab->deskripsi!!}
+                            </p>
+                            <div class="text-center text-lg-start">
+                                <a href="#" class="btn-read-more d-inline-flex align-items-center
+                    justify-content-center align-self-center">
+                                    <span>Read More</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-6 pt-4 pt-lg-0">
-                        <p>
-                            Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate
-                            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                            proident, sunt in
-                            culpa qui officia deserunt mollit anim id est laborum
-                        </p>
-                        <ul>
-                            <li><i class="icofont-check"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequa
-                            </li>
-                            <li><i class="icofont-check"></i> Duis aute irure dolor in reprehenderit in voluptate velit
-                            </li>
-                            <li><i class="icofont-check"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                Duis aute irure dolor in reprehenderit in</li>
-                        </ul>
-                        <p class="font-italic">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore
-                            magna aliqua.
-                        </p>
+
+                    <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
+                        <img src="{{asset('images/'.$ab->photo)}}" class="img-fluid" alt="" />
                     </div>
                 </div>
+            </div>
+        </section>
+        <!-- End About Section -->
+        <!-- ======= Recent Blog Posts Section ======= -->
+        <section id="recent-blog-posts" class="recent-blog-posts">
+            <div class="container" data-aos="fade-up">
+                <header class="section-header">
+                    <h2>Blog</h2>
+                    <p>Recent posts form our Blog</p>
+                </header>
+                @php
+                $posts = DB::table('posts')->orderBy('created_at', 'DESC')->take(3)->get();
+                @endphp
+                <div class="row">
+                    @foreach ($posts as $p)
+                    <div class="col-lg-4">
+                        <div class="post-box">
+                            <div class="post-img">
+                                <img @if ($p->img != null)
+                                src="{{asset('images/foto/post/'.$p->img)}}"
+                                @else
+                                src="{{asset('images/foto/post/noimage.jpg')}}"
+                                @endif class="img-fluid" alt="{{ $p->title }}" />
+                            </div>
+                            <span class="post-date">{{date("d M Y", strtotime($p->created_at))}}</span>
+                            <h3 class="post-title">
+                                {{$p->title}}
+                            </h3>
+                            <a href="blog-singe.html" class="readmore stretched-link mt-auto"><span>Read More</span><i
+                                    class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    @endforeach
+
+                </div>
+            </div>
+        </section>
+        <!-- End Recent Blog Posts Section -->
+        <!-- ======= Counts Section ======= -->
+        <section id="counts" class="counts">
+            <div class="container" data-aos="fade-up">
+                <div class="row gy-4">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="count-box">
+                            <i class="bi bi-person-bounding-box"></i>
+                            <div>
+                                @php
+                                $g = DB::table('guru')->count();
+                                @endphp
+                                <span data-purecounter-start="0" data-purecounter-end="{{$g}}"
+                                    data-purecounter-duration="1" class="purecounter"></span>
+                                <p>Guru</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="count-box">
+                            <i class="bi bi-people"></i>
+                            <div>
+                                @php
+                                $g = DB::table('siswa')->count();
+                                @endphp
+                                <span data-purecounter-start="0" data-purecounter-end="{{$g}}"
+                                    data-purecounter-duration="1" class="purecounter"></span>
+                                <p>Siswa</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="count-box">
+                            <i class="bi bi-megaphone"></i>
+                            <div>
+                                @php
+                                $g = DB::table('pengumuman')->count();
+                                @endphp
+                                <span data-purecounter-start="0" data-purecounter-end="{{$g}}"
+                                    data-purecounter-duration="1" class="purecounter"></span>
+                                <p>Pengumuan</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="count-box">
+                            <i class="bi bi-calendar-check"></i>
+                            <div>
+                                @php
+                                $g = DB::table('agenda')->count();
+                                @endphp
+                                <span data-purecounter-start="0" data-purecounter-end="{{$g}}"
+                                    data-purecounter-duration="1" class="purecounter"></span>
+                                <p>Agenda</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Counts Section -->
+        <!-- ======= Pengumuan Section ======= -->
+        <section id="services" class="services">
+            <div class="container" data-aos="fade-up">
+                <header class="section-header">
+                    <h2>Pengumuman</h2>
+                    <p>Pengumuman</p>
+                </header>
+                @php
+                $peng = DB::table('pengumuman')->orderBy('tanggal', 'DESC')->take(3)->get();
+                @endphp
+                <div class="row gy-4">
+                    @foreach ($peng as $p)
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                        <div class="service-box blue">
+                            <i class="icofont-megaphone-alt icon"></i>
+                            <h3>{{$p->title}}</h3>
+                            <p>
+                                {!!Str::limit($p->body, 150, '...')!!}
+                            </p>
+                            <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+        <section id="services" class="services">
+            <div class="container" data-aos="fade-up">
+                <header class="section-header">
+                    <h2>Agenda</h2>
+                    <p>Agenda</p>
+                </header>
+                @php
+                $ag = DB::table('agenda')->orderBy('tanggal', 'DESC')->take(3)->get();
+                @endphp
+                <div class="row gy-4">
+                    @foreach ($ag as $a)
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+                        <div class="service-box purple">
+                            <i class="icofont-tasks-alt icon"></i>
+                            <h3>{{$a->name}}</h3>
+                            <p>
+                                {!!Str::limit($a->deskripsi,200,'...')!!}
+                            </p>
+                            <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+        <!-- End Services Section -->
+        <!-- ======= Features Section ======= -->
+        <section id="features" class="features">
+            <div class="container" data-aos="fade-up">
+                <header class="section-header">
+                    <h2>Ekstrakulikuler</h2>
+                    <p>Ekstrakulikuler</p>
+                </header>
+                @php
+                $ekstra = DB::table('ektras')->orderBy('tanggal','DESC')->take(4)->get();
+                @endphp
+                <div class="row">
+                    <div class="col-lg-6">
+                        <img src="{{asset('')}}theme/img/12.png" class="img-fluid" alt="" />
+                    </div>
+
+                    <div class="col-lg-6 mt-5 mt-lg-0 d-flex">
+                        <div class="row align-self-center gy-4">
+                            @foreach ($ekstra as $e)
+                            <div class="col-md-6" data-aos="zoom-out" data-aos-delay="200">
+                                <div class="feature-box d-flex align-items-center">
+                                    <i class="bi bi-check"></i>
+                                    <h3>{{$e->nama}}</h3>
+                                </div>
+                            </div>
+                            @endforeach
+
+                        </div>
+                    </div>
+                </div>
+                <!-- / row -->
+
 
             </div>
-        </section><!-- End About Us Section --> --}}
-
-        {{-- <!-- ======= Contact Us Section ======= -->
-        <section id="contact" class="contact">
-            <div class="container">
-
-                <div class="section-title">
-                    <h2>Contact Us</h2>
-                </div>
-
-                <div class="row justify-content-center">
-
-                    <div class="col-lg-10">
-
-                        <div class="info-wrap">
-                            <div class="row">
-                                <div class="col-lg-4 info">
-                                    <i class="icofont-google-map"></i>
-                                    <h4>Location:</h4>
-                                    <p>A108 Adam Street<br>New York, NY 535022</p>
-                                </div>
-
-                                <div class="col-lg-4 info mt-4 mt-lg-0">
-                                    <i class="icofont-envelope"></i>
-                                    <h4>Email:</h4>
-                                    <p>info@example.com<br>contact@example.com</p>
-                                </div>
-
-                                <div class="col-lg-4 info mt-4 mt-lg-0">
-                                    <i class="icofont-phone"></i>
-                                    <h4>Call:</h4>
-                                    <p>+1 5589 55488 51<br>+1 5589 22475 14</p>
+        </section>
+        <!-- End Features Section -->
+        <!-- ======= Testimonials Section ======= -->
+        <section id="testimonials" class="testimonials">
+            <div class="container" data-aos="fade-up">
+                <header class="section-header">
+                    <p>Testimonials</p>
+                </header>
+                @php
+                $testi = DB::table('testimoni')->orderBy('tanggal','DESC')->get();
+                @endphp
+                <div class="testimonials-slider swiper-container" data-aos="fade-up" data-aos-delay="200">
+                    <div class="swiper-wrapper">
+                        @foreach ($testi as $t)
+                        <div class="swiper-slide">
+                            <div class="testimonial-item">
+                                <p>
+                                    {!!$t->pesan!!}.
+                                </p>
+                                <div class="profile mt-auto">
+                                    <img src="{{asset('images/foto/testi/'.$t->foto)}}" class="testimonial-img"
+                                        alt="" />
+                                    <h3>{{$t->nama}}</h3>
+                                    <h4>{{$t->ket}}</h4>
                                 </div>
                             </div>
                         </div>
+                        <!-- End testimonial item -->
+                        @endforeach
 
                     </div>
-
+                    <div class="swiper-pagination"></div>
                 </div>
-
-                <div class="row  justify-content-center">
-                    <div class="col-lg-10">
-                        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-                            <div class="form-row">
-                                <div class="col-md-6 form-group">
-                                    <input type="text" name="name" class="form-control" id="name"
-                                        placeholder="Your Name" data-rule="minlen:4"
-                                        data-msg="Please enter at least 4 chars" />
-                                    <div class="validate"></div>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <input type="email" class="form-control" name="email" id="email"
-                                        placeholder="Your Email" data-rule="email"
-                                        data-msg="Please enter a valid email" />
-                                    <div class="validate"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="subject" id="subject"
-                                    placeholder="Subject" data-rule="minlen:4"
-                                    data-msg="Please enter at least 8 chars of subject" />
-                                <div class="validate"></div>
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" name="message" rows="5" data-rule="required"
-                                    data-msg="Please write something for us" placeholder="Message"></textarea>
-                                <div class="validate"></div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="loading">Loading</div>
-                                <div class="error-message"></div>
-                                <div class="sent-message">Your message has been sent. Thank you!</div>
-                            </div>
-                            <div class="text-center"><button type="submit">Send Message</button></div>
-                        </form>
-                    </div>
-
-                </div>
-
             </div>
-        </section><!-- End Contact Us Section --> --}}
+        </section>
+        <!-- End Testimonials Section -->
 
-    </main><!-- End #main -->
+    </main>
+    <!-- End #main -->
+    @include('frontend.layouts.footer')
 
-    <!-- ======= Footer ======= -->
-    <footer id="footer">
-        <div class="container">
-            <div class="copyright">
-                &copy; Copyright <strong><span>W-SCHOOL</span></strong>. All Rights Reserved
-            </div>
-            <div class="credits">
-                <!-- All the links in the footer should remain intact. -->
-                <!-- You can delete the links only if you purchased the pro version. -->
-                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/comingsoon-free-html-bootstrap-template/ -->
-                by <a href="">BootstrapMade</a>
-            </div>
-        </div>
-    </footer><!-- End #footer -->
-
-    <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
-    <script src="{{asset('')}}theme/vendor/jquery/jquery.min.js"></script>
-    <script src="{{asset('')}}theme/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="{{asset('')}}theme/vendor/jquery.easing/jquery.easing.min.js"></script>
-    <script src="{{asset('')}}theme/vendor/php-email-form/validate.js"></script>
-    <script src="{{asset('')}}theme/vendor/jquery-countdown/jquery.countdown.min.js"></script>
-
-    <!-- Template Main JS File -->
-    <script src="{{asset('')}}theme/js/main.js"></script>
-
-</body>
-
-</html>
+    @include('frontend.layouts.script')

@@ -1,0 +1,73 @@
+.welcome_about .content {
+    background-color: #f6f9ff;
+    padding: 40px;
+}
+.pi {
+    margin-bottom: 20px;
+}
+.typed {
+    border-bottom: 2px solid #0275d8;
+}
+
+.typed-cursor {
+    opacity: 1;
+    animation: blink 0.7s infinite;
+}
+.services-option {
+    padding-bottom: 50px;
+}
+
+.so-item {
+    margin-bottom: 42px;
+}
+
+.so-item .so-title {
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.so-item .so-title .so-number {
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 600;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    background: #4154f1;
+    float: left;
+    margin-right: 20px;
+}
+
+.so-item .so-title h5 {
+    font-size: 20px;
+    color: #111111;
+    font-weight: 700;
+    text-transform: uppercase;
+    overflow: hidden;
+    line-height: 36px;
+}
+.so-item .so-title h6 {
+    font-size: 15px;
+    color: #4154f1;
+    font-weight: 700;
+    text-transform: uppercase;
+    overflow: hidden;
+    line-height: 20px;
+    margin-left: 55px;
+}
+
+.so-item p {
+    color: #666666;
+    margin-bottom: 0;
+}
+.so-item h6 {
+    color: #4154f1;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+.blog-icons .blog-share_block {
+    text-align: right;
+    overflow: hidden;
+    margin-top: 10px;
+}

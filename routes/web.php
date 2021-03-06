@@ -22,6 +22,25 @@ Route::get('keluar', function () {
     Auth::logout();
     return redirect('/');
 });
+// Depan
+Route::resource('blog', 'BlogController');
+Route::get('kategori/{alias}', 'CategoryController@index');
+Route::post('comment/{id}', 'CommentController@store')->name('comment');
+Route::post('/comment/addComment/{post}', 'CommentController@addComment')->name('addComment');
+Route::resource('agenda', 'AgendafrontController');
+Route::resource('pengumuman', 'PengumumanController');
+Route::resource('guru', 'GuruController');
+Route::resource('siswa', 'SiswaController');
+Route::resource('download', 'DownloadController');
+Route::resource('galery', 'GaleryController');
+Route::get('galery-kategori/{id}', 'GaleryController@kate');
+Route::resource('about', 'AboutController');
+Route::resource('video', 'VideoController');
+Route::resource('visi', 'VisiController');
+Route::resource('sejarah', 'SejarahController');
+Route::resource('contact', 'ContactController');
+Route::resource('testimonial', 'TestimoniController');
+
 
 Auth::routes();
 
@@ -41,6 +60,10 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('komentar', 'Admin\CommentController');
         Route::get('komentar/delete/{id}', 'Admin\CommentController@delete');
+        Route::get('komentar/balasan/delete/{id}', 'Admin\CommentController@deleteBalasan');
+        Route::get('komentar/pub/{id}', 'Admin\CommentController@publikasi');
+        Route::post('komentar/balas/{comment}', 'Admin\CommentController@replyComment');
+        Route::get('komentar/balasan/admin', 'Admin\CommentController@balasanAdmin')->name('balas.admin');
         Route::resource('permissions', 'Admin\PermissionController')->middleware('can:permissions');
         Route::resource('roles', 'Admin\RoleController')->middleware('can:roles');
         Route::match(['get', 'post'], 'roles/{id}/add', 'Admin\RoleController@add')->name('roles.add');
@@ -69,9 +92,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('testimoni/delete/{id}', 'Admin\TestimonialController@delete');
 
         Route::resource('vm', 'Admin\VmController')->middleware('can:vm');
-        Route::resource('sejarah', 'Admin\SejarahController')->middleware('can:sejarah');
+        Route::resource('asejarah', 'Admin\SejarahController')->middleware('can:asejarah');
+
         Route::resource('aabout', 'Admin\AboutController')->middleware('can:aabout');
         Route::get('aabout/delete/{id}', 'Admin\AboutController@delete');
+
+        Route::resource('sambutan', 'Admin\SambutanController')->middleware('can:sambutan');
+        Route::get('sambutan/delete/{id}', 'Admin\SambutanController@delete');
 
         Route::resource('albums', 'Admin\AlbumController')->middleware('can:albums');
         Route::get('albums/delete/{id}', 'Admin\AlbumController@delete');
@@ -98,5 +125,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('inbox', 'Admin\KontakController')->middleware('can:inbox');
         Route::get('inbox/delete/{id}', 'Admin\KontakController@delete');
+
+        Route::resource('ekstra', 'Admin\EkstraController')->middleware('can:ekstra');
+        Route::get('ekstra/delete/{id}', 'Admin\EkstraController@delete');
     });
 });
