@@ -45,13 +45,16 @@ class ContactController extends Controller
             'nama' => 'required',
             'email' => 'required|email',
             'telp' => 'required',
-            'pesan' => 'required'
+            'pesan' => 'required',
+            'captcha' => 'required|captcha'
         ], [
             'nama.required' => 'Nama wajib diisi',
             'email.required' => 'Email wajib diisi',
             'telp.required' => 'Telphone wajib diisi',
             'pesan.required' => 'Pesan wajib diisi',
-            'email.email' => 'Email tidak valid'
+            'email.email' => 'Email tidak valid',
+            'captcha.required' => 'Captcha Wajib diisi',
+            'captcha.captcha' => 'Captcha tidak valid, reload captcha',
         ]);
 
         if ($validator->fails()) {
@@ -67,7 +70,10 @@ class ContactController extends Controller
             // return response()->json(['success' => 'Terimakasih Pesan berhasil dikirim, kami akan segera menghubungi anda']);
         }
     }
-
+    public function reloadCaptcha()
+    {
+        return response()->json(['captcha' => captcha_img()]);
+    }
     /**
      * Display the specified resource.
      *

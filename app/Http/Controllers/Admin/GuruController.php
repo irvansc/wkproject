@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
+use App\Imports\GuruImport;
 use App\Models\Guru;
 use App\Models\Kelas;
 use Illuminate\Http\Request;
@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GuruController extends Controller
 {
@@ -27,19 +28,19 @@ class GuruController extends Controller
         $orderBy = 'guru.id';
         switch ($request->input('order.0.dir')) {
 
-            case "1":
+            case "2":
                 $orderBy = 'guru.nip';
                 break;
-            case "2":
+            case "3":
                 $orderBy = 'guru.nama_guru';
                 break;
-            case "3":
+            case "4":
                 $orderBy = 'guru.jenkel';
                 break;
-            case "4":
+            case "5":
                 $orderBy = 'guru.mapel';
                 break;
-            case "5":
+            case "6":
                 $orderBy = 'kelas.nama_kelas';
                 break;
         }
@@ -113,6 +114,9 @@ class GuruController extends Controller
             $guru->tmp_lahir = $request->tmp_lahir;
             $guru->tgl_lahir = $request->tgl_lahir;
             $guru->mapel = $request->mapel;
+            $guru->fb = $request->fb;
+            $guru->ig = $request->ig;
+            $guru->twitter = $request->twitter;
             if ($request->file('photo')) {
                 $file = $request->file('photo');
                 $filename = time() . '.' . $file->getClientOriginalExtension();
@@ -174,6 +178,9 @@ class GuruController extends Controller
             $siswa->tmp_lahir = $request->tmp_lahir;
             $siswa->tgl_lahir = $request->tgl_lahir;
             $siswa->mapel = $request->mapel;
+            $siswa->fb = $request->fb;
+            $siswa->ig = $request->ig;
+            $siswa->twitter = $request->twitter;
             $siswa->save();
             Session::flash('sukses', 'Teacher Successfully Updated');
         } catch (\Exception $e) {
@@ -188,5 +195,26 @@ class GuruController extends Controller
         File::delete('images/foto/guru/' . $avatar->photo);
         $avatar->delete();
         return redirect()->back()->with('sukses', 'Teacher Successfully Removed');
+    }
+    public function deleteMultiple(Request $request)
+    {
+        $ids = $request->ids;
+        $avatar = Guru::whereIn('id', explode(",", $ids))->first();
+        File::delete('images/foto/guru/' . $avatar->photo);
+        $avatar->delete();
+        return response()->json(['status' => true, 'message' => "Teacher deleted successfully."]);
+    }
+    public function guruimport(Request $request)
+    {
+        try {
+            $request->validate([
+                'data_guru' => 'mimes:xlsx,csv,xls'
+            ]);
+            Excel::import(new GuruImport, $request->file('data_guru'));
+            Session::flash('sukses', 'Import data Guru berhasil');
+        } catch (\Exception $e) {
+            Session::flash('error', $e->getMessage());
+        }
+        return response()->json(['success' => 'Import data Guru berhasil']);
     }
 }

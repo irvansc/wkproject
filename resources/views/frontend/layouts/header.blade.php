@@ -2,9 +2,10 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>W-School</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WK-School</title>
     @php
     $met = DB::table('meta')->first();
     @endphp
@@ -15,29 +16,26 @@
     $img = DB::table('image_web')->where('id','=',1)->first();
     @endphp
     <link href="{{asset('images/foto/web/'.$img->favicon)}}" rel="icon" />
-    <link href="{{asset('images/foto/web/'.$img->favicon)}}" rel="apple-touch-icon" />
-
-    <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet" />
-    <!-- Vendor CSS Files -->
-    <link href="{{asset('')}}theme/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="{{asset('')}}theme/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
-    <link href="{{asset('')}}theme/vendor/aos/aos.css" rel="stylesheet" />
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{asset('')}}theme/vendor/fontawesome/css/all.css" type="text/css">
-    <link href="{{asset('')}}theme/vendor/remixicon/remixicon.css" rel="stylesheet" />
-    <link href="{{asset('')}}theme/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
-    <link href="{{asset('')}}theme/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
-    <link href="{{asset('')}}theme/vendor/icofont/icofont.min.css" rel="stylesheet">
-    <!-- Template Main CSS File -->
-    <link href="{{asset('')}}theme/css/jssocials.css" rel="stylesheet">
-    <link href="{{asset('')}}theme/css/jssocials-theme-flat.css" rel="stylesheet">
-    <link href="{{asset('')}}theme/css/style.css" rel="stylesheet" />
-    <link href="{{asset('')}}theme/css/custom.css" rel="stylesheet" />
-    <link rel="stylesheet" href="{{ asset('') }}theme/vendor/sweetalert2/dist/sweetalert2.min.css">
-    <link href="{{asset('')}}theme/vendor/toastr/build/toastr.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700i" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('')}}theme/vendor/owl-carousel/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="{{asset('')}}theme/vendor/owl-carousel/assets/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="{{asset('')}}theme/vendor/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="{{asset('')}}theme/css/animate.min.css">
+    <link rel="stylesheet" href="{{asset('')}}theme/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{asset('')}}theme/vendor/fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="{{asset('')}}theme/css/style.css" id="style1">
+    <link href="{{asset('')}}theme/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <!-- <link id="dark-theme-style" rel="stylesheet" /> -->
+    <link rel="stylesheet" href="{{asset('')}}theme/css/component-custom-switch.css">
+    <link rel="stylesheet" type="text/css" href="{{asset('')}}theme/css/utils.css">
+    @stack('head')
+    <link rel="stylesheet" href="{{asset('')}}theme/vendor/icofont/icofont.min.css">
+    <link rel="stylesheet" href="{{asset('')}}theme/vendor/share/shareon.min.css">
+    <link rel="stylesheet" href="{{asset('')}}assets/modules/sweetalert2/dist/sweetalert2.min.css">
+    <link href="{{asset('')}}assets/modules/toastr/build/toastr.css" rel="stylesheet" />
     <link rel="stylesheet" rel="stylesheet" href="{{ asset('') }}assets/modules/datatables/datatables.min.css">
+    <link rel="stylesheet" href="{{asset('')}}theme/vendor/fancy/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="{{asset('')}}theme/vendor/slick/slick.css">
+    <link rel="stylesheet" href="{{asset('')}}theme/vendor/slick/slick-theme.css">
 
-</head>
+<body>

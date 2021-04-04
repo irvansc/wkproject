@@ -14,17 +14,15 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        $title = 'Guru';
+        $title = 'Siswa';
 
         $siswas = Siswa::paginate(8);
         return view('frontend.siswa.index', compact('title', 'siswas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function kelasX()
+    {
+    }
     public function create()
     {
         abort(404);

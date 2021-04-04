@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <label for="">deskripsi <strong style="color: red">* Maksimal 30 kata
                                     disarankan</strong></label>
-                            <textarea id="summernote" name="deskripsi" style="width:auto; height:300px;"
+                            <textarea id="editor" name="deskripsi" style="width:auto; height:300px;"
                                 class="form-control">
                                 {{$a->deskripsi}}
                             </textarea>
@@ -48,3 +48,9 @@
     </div>
 </div>
 @endsection
+@push('js')
+<script>
+    CKEDITOR.replace( 'editor' );
+
+</script>
+@endpush

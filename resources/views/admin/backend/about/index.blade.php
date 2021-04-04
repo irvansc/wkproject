@@ -69,7 +69,7 @@
                                 @method('PUT')
                                 <div class="form-group">
                                     <center>
-                                        <img src="{{url('storage/images/'.$about->photo)}}" alt="" id="showgambar"
+                                        <img src="{{url('images/'.$about->photo)}}" alt="" id="showgambar"
                                             width="200px">
                                     </center>
                                     <input name="photo" class="form-control" type="file" id="inputgambar">
@@ -85,7 +85,7 @@
                                     <center>
                                         <h2>Deskripsi</h2>
                                     </center>
-                                    <textarea name="deskripsi" id="summernote"
+                                    <textarea name="deskripsi" id="editor"
                                         class="form-control">{!!$about->deskripsi!!}</textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary"><i class="ni ni-send"></i> Submit</button>
@@ -116,6 +116,7 @@
     $("#inputgambar").change(function () {
         readURL(this);
     });
+    CKEDITOR.replace( 'editor' );
     })
 </script>
 @endpush

@@ -1,109 +1,87 @@
 @extends('frontend.layouts.master')
+@push('head')
+
+@endpush
 @section('content')
-<!-- ======= Breadcrumbs ======= -->
-<section class="breadcrumbs">
-</section><!-- End Breadcrumbs -->
-<!-- ======= Breadcrumbs ======= -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card-img">
-                <img src="{{asset('theme/img/ct.png')}}" class="card-img" alt="...">
-            </div>
-        </div>
-    </div>
-</div>
-<!-- ======= Contact Section ======= -->
-<section id="contact" class="contact">
-    <div class="container" data-aos="fade-up">
-        <header class="section-header">
-            <h2>Contact</h2>
-            @if ($message = Session::get('pesan'))
-            <div class="alert alert-success alert-block">
-                <strong>{{ $message }}</strong>
-            </div>
-            @endif
-        </header>
-        <div class="row gy-4">
-            <div class="col-lg-6">
-                <div class="row gy-4">
-                    <div class="col-md-6">
-                        <div class="info-box">
-                            <i class="bi bi-geo-alt"></i>
-                            <h3>Alamat</h3>
-                            <p>{{$p->alamat}}</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="info-box">
-                            <i class="bi bi-telephone"></i>
-                            <h3>Telphone</h3>
-                            <p>{{$p->phone}}</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="info-box">
-                            <i class="bi bi-envelope"></i>
-                            <h3>Email</h3>
-                            <p>{{$p->email}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <form action="{{route('contact.store')}}" method="post" id="main_form">
-                    @csrf
-                    <div class="row gy-4">
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Name" name="nama">
-                            <span class="text-danger error-text nama_error"></span>
-                        </div>
-
-                        <div class="col-md-6">
-                            <input type="email" class="form-control" placeholder="Email" name="email">
-                            <span class="text-danger error-text email_error"></span>
-
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control " placeholder="Phone" name="telp">
-                            <span class="text-danger error-text telp_error"></span>
-
-                        </div>
-
-                        <div class="col-md-12">
-                            <textarea placeholder="Message" class="form-control" name="pesan" rows="5"></textarea>
-                            <span class="text-danger error-text pesan_error"></span>
-
-                        </div>
-                        <div class="col-md-12 text-center">
-                            <button type="submit" class="btn btn-primary"><i class="icofont-paper-plane"></i> Send
-                                Message</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <hr>
-        <div class="row gy-4">
-            <div class="col-lg-6">
-                <div class="row gy-4">
-                    <div class="col-md-6">
-                        <img src="{{asset('theme/img/maps.png')}}" alt="" width="500">
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="row gy-4">
-                    <iframe src="{{$p->maps}}" width="600" height="450" style="border:0;" allowfullscreen=""
-                        loading="lazy"></iframe>
+<section id="abc">
+    <div class="container" id="ab">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="abou" id="abou">
+                    <img src="{{asset('')}}theme/img/ct.png" alt="" class="light">
+                    <img src="{{asset('')}}theme/img/darkcontact.png" alt="" class="dark">
                 </div>
             </div>
         </div>
     </div>
 </section>
-</main><!-- End #main -->
+<!-- ======= Contact Section ======= -->
+<section id="contact">
+    @if ($message = Session::get('pesan'))
+    <div class="alert alert-success alert-block">
+        <strong>{{ $message }}</strong>
+    </div>
+    @endif
+    <div class="container-contact100">
+        <div class="wrap-contact100">
+            <form class="contact100-form validate-form" id="main_form" action="{{route('contact.store')}}"
+                method="POST">
+                @csrf
+                <span class="contact100-form-title">
+                    Send Us A Message
+                </span>
+
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="nama" placeholder="Full Name">
+                    <span class="focus-input100"></span>
+                    <span class="text-danger error-text nama_error"></span>
+
+                </div>
+
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="email" name="email" placeholder="E-mail">
+                    <span class="focus-input100"></span>
+                    <span class="text-danger error-text nama_error"></span>
+
+                </div>
+
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="telp" placeholder="Phone">
+                    <span class="focus-input100"></span>
+                    <span class="text-danger error-text nama_error"></span>
+
+                </div>
+
+                <div class="wrap-input100 validate-input">
+                    <textarea class="input100" name="pesan" placeholder="Your Message"></textarea>
+                    <span class="focus-input100"></span>
+                    <span class="text-danger error-text nama_error"></span>
+
+                </div>
+                <div class="wrap-input">
+                    <div class="captcha text-center mb-1">
+                        <span>{!! captcha_img() !!}</span>
+                        <button type="button" class="btn btn-primary" class="reload" id="reload" style="color: red">
+                            ↻
+                        </button>
+                    </div>
+                    <div class="wrap-input100">
+                        <input id="captcha" type="text" class="input100" placeholder="Enter Captcha" name="captcha">
+                        <span class="focus-input100"></span>
+
+                        <span class="text-danger error-text captcha_error"></span>
+                    </div>
+                </div>
+                <div class="container-contact100-form-btn">
+                    <button class="contact100-form-btn">
+                        <i class="fa fa-paper-plane  mr-1"></i>
+                        Send
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
 
 @endsection
 @push('jsf')
@@ -144,17 +122,23 @@
                                     icon: 'success',
                                     title: 'Pesan berhasil dikirim ! kami akan segera menghubungi anda'
                                 })
-                            //     Swal.fire(
-                            //     'Pesan berhasil dikirim !',
-                            //     'kami akan segera menghubungi anda',
-                            //     'success',
-
-                            // );
 
                           }
                       }
                   });
               });
+              $('.js-tilt').tilt({
+            scale: 1.1
+        })
           });
+          $('#reload').click(function () {
+            $.ajax({
+            type: 'GET',
+            url: 'reload-captcha',
+            success: function (data) {
+                $(".captcha span").html(data.captcha);
+            }
+        });
+    });
 </script>
 @endpush

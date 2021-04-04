@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Str;
 
 class UserController extends Controller
 {
@@ -41,6 +42,8 @@ class UserController extends Controller
             $user['jenkel'] = $request->jenkel;
             $user['telp'] = $request->telp;
             $user['alamat'] = $request->alamat;
+            $user['email_verified_at'] = now();
+            $user['remember_token'] = Str::random(10);
             if ($request->file('image')) {
                 $file = $request->file('image');
                 $filename = time() . '.' . $file->getClientOriginalExtension();

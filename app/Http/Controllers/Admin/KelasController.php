@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Kelas;
 use Illuminate\Http\Request;
+use Str;
 
 class KelasController extends Controller
 {
@@ -28,6 +29,7 @@ class KelasController extends Controller
         $kelas = new Kelas;
         $kelas->nama_kelas = $request->nama_kelas;
         $kelas->keterangan = $request->keterangan;
+        $kelas->alias = Str::slug($request->nama_kelas);
         $kelas->save();
         return redirect()->back()->with('sukses', 'Kelas berhasil dibuat');
     }

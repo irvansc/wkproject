@@ -8,11 +8,9 @@
         <div class="col">
             <div class="card shadow mb-5">
                 <div class="card-header py-3">
-                    <div class="row">
-                        <h3 class="">Show Roles {{$role->id}}</h3>
-                        <a href="{{ route('roles.index') }}" class="btn btn-primary ml-auto"> <i
-                                class="ni ni-bold-left"></i> Batal</a>
-                    </div>
+                    <h3 class="">Show Roles {{$role->id}}</h3>
+                    <a href="{{ route('roles.index') }}" class="btn btn-warning ml-auto"><i
+                            class="fas fa-arrow-circle-left"></i> Batal</a>
                 </div>
                 <div class="card-body">
                     @if (session('status'))

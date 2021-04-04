@@ -10,7 +10,6 @@
             <div class="card shadow mb-5">
                 <div class="card-header py-3">
                     <h6 class="font-weight-bold text-primary">Edit Pengumuman</h6>
-
                 </div>
                 <div class="card-body">
                     <form action="{{route('apengumuman.update',$p->id)}}" method="POST">
@@ -22,7 +21,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Pengumuman Deskripsi</label>
-                            <textarea name="body" id="summernote" class="form-control">{{$p->body}}</textarea>
+                            <textarea name="body" id="editor" class="form-control">{{$p->body}}</textarea>
                         </div>
                         <div class="form-group">
                             <a href="{{route('apengumuman.index')}}" class="btn btn-warning">
@@ -31,7 +30,6 @@
                             <button type="submit" class="btn btn-primary float-right"><i class="ni ni-send"></i>
                                 Submit</button>
                         </div>
-
                     </form>
                 </div>
             </div>
@@ -39,3 +37,8 @@
     </div>
 </div>
 @endsection
+@push('js')
+<script>
+    CKEDITOR.replace( 'editor' );
+</script>
+@endpush

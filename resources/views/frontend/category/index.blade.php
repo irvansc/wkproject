@@ -24,7 +24,7 @@
             <div class="col-lg-8 entries">
                 @if ($_GET['search'] ?? null)
                 @if ($posts->isNotEmpty())
-                <span class="badge badge-primary">Results: {{ count($posts) }}</span>
+                <span class="badge badge-primary ">Results: {{ count($posts) }}</span>
                 @else
                 <div class="alert alert-danger alert-block">
                     <strong>Not Found</strong>

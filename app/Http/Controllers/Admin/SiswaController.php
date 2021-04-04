@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\SiswaImport;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SiswaController extends Controller
 {
@@ -21,21 +22,39 @@ class SiswaController extends Controller
         $kelas = Kelas::get();
         return view('admin.backend.siswa.index', compact('title', 'siswass', 'kelas'));
     }
+    public function filter(Request $request)
+    {
+        $kelas = Kelas::get();
+        $siswass = Siswa::get();
+        // $siswa = DB::table('siswa')->select('kelas_id')->distinct()->get()->pluck('nama_kelas')->sort();
+
+        $data = Siswa::query();
+        if ($request->filled('kelas_id')) {
+            $data->where('kelas_id', $request->kelas_id);
+        }
+        return view('admin.backend.siswa.index', [
+            // 'siswa' => $siswa,
+            'siswass' => $siswass,
+            'kelas' => $kelas,
+            'data' => $data->get()
+
+        ]);
+    }
     public function data(Request $request)
     {
         $orderBy = 'siswa.id';
         switch ($request->input('order.0.dir')) {
 
-            case "1":
+            case "2":
                 $orderBy = 'siswa.nis';
                 break;
-            case "2":
+            case "3":
                 $orderBy = 'siswa.nama';
                 break;
-            case "3":
+            case "4":
                 $orderBy = 'siswa.jenkel';
                 break;
-            case "4":
+            case "5":
                 $orderBy = 'kelas.nama_kelas';
                 break;
         }
@@ -100,6 +119,7 @@ class SiswaController extends Controller
             $siswa->jenkel = $request->jenkel;
             $siswa->alamat = $request->alamat;
             $siswa->telp = $request->telp;
+            $siswa->tgl_lahir = $request->tgl_lahir;
             if ($request->file('photo')) {
                 $file = $request->file('photo');
                 $filename = time() . '.' . $file->getClientOriginalExtension();
@@ -160,6 +180,7 @@ class SiswaController extends Controller
             $siswa->jenkel = $request->jenkel;
             $siswa->alamat = $request->alamat;
             $siswa->telp = $request->telp;
+            $siswa->tgl_lahir = $request->tgl_lahir;
 
             $siswa->save();
             Session::flash('sukses', 'Student updated successfully');
@@ -169,12 +190,31 @@ class SiswaController extends Controller
         return redirect()->route('asiswa.index');
     }
 
-
     public function delete($id)
     {
         $avatar = Siswa::where('id', $id)->first();
         File::delete('images/foto/siswa/' . $avatar->photo);
         $avatar->delete();
         return redirect()->back()->with('sukses', 'Student deleted successfully');
+    }
+
+    public function deleteMultiple(Request $request)
+    {
+        $ids = $request->ids;
+        Siswa::whereIn('id', explode(",", $ids))->delete();
+        return response()->json(['status' => true, 'message' => "Student deleted successfully."]);
+    }
+    public function siswaimport(Request $request)
+    {
+        try {
+            $request->validate([
+                'data_siswa' => 'mimes:xlsx,csv,xls'
+            ]);
+            Excel::import(new SiswaImport, $request->file('data_siswa'));
+            Session::flash('sukses', 'Import data siswa berhasil');
+        } catch (\Exception $e) {
+            Session::flash('error', $e->getMessage());
+        }
+        return response()->json(['success' => 'Import data siswa berhasil']);
     }
 }

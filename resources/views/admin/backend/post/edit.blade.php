@@ -50,8 +50,8 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleFormControlTextarea1">Content</label>
-                            <textarea class="form-control" id="summernote" name="content"
-                                id="exampleFormControlTextarea1" rows="3">
+                            <textarea class="form-control" id="editor" name="content" id="exampleFormControlTextarea1"
+                                rows="3">
                             {!!$post->content!!}
                             </textarea>
                         </div>
@@ -81,5 +81,6 @@
     $("#inputgambar").change(function () {
         readURL(this);
     });
+    CKEDITOR.replace( 'editor' );
 </script>
 @endpush

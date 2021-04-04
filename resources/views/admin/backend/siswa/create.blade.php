@@ -56,6 +56,10 @@
                                 <option value="P">Perempuan</option>
                             </select>
                         </div>
+                        <div class="form-group ">
+                            <label for="">Tanggal Lahir <strong class="text-danger">*</strong></label>
+                            <input type="text" name="tgl_lahir" class="form-control" id="datepicker">
+                        </div>
                         <div class="form-group">
                             <label for="">Alamat</label>
                             <textarea name="alamat" id="" cols="30" rows="10" class="form-control"></textarea>

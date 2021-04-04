@@ -5,7 +5,7 @@
 </div>
 <div class="section-body">
     <div class="row">
-        <div class="col">
+        <div class="col-md-5">
             <div class="card shadow mb-5">
                 <div class="card-header py-3">
                     <h6 class="font-weight-bold text-primary">List Role</h6>
@@ -16,10 +16,8 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-
                         @if ($roles->isNotEmpty() )
                         <div class="card-body">
-
                             <table class="table align-items-center table-flush">
                                 <thead class="thead-light">
                                     <tr>
@@ -35,32 +33,21 @@
                                         <td>{{$e+1}}</td>
                                         <td>{{$role->id}}</td>
                                         <td>
-                                            <a href="{{ route('roles.show', $role->id) }}" class="text-dark">
+                                            <a href="{{ route('roles.show', $role->id) }}">
                                                 {{ $role->name }}
                                             </a>
-                                            @if ($role->permissions->isNotEmpty())
-                                            <div>
-                                                @foreach ($role->permissions as $permission)
-                                                <span class="badge badge-primary mb-2">{{ $permission->name }}</span>
-
-                                                @endforeach
-                                            </div>
-                                            @endif
                                         </td>
                                         <td>
-                                            <div class="d-flex justify-content-center my-2">
-                                                <a href="{{ route('roles.edit', $role->id) }}"
-                                                    class="btn btn-sm btn-warning mr-2">Edit</a>
-                                                <form action="{{ route('roles.destroy', $role->id) }}" method="POST">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                                </form>
-                                            </div>
+                                            <a href="{{ route('roles.edit', $role->id) }}"
+                                                class="btn btn-sm btn-warning mr-2">Edit</a>
+                                            <form action="{{ route('roles.destroy', $role->id) }}" method="POST">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                            </form>
                                         </td>
                                     </tr>
                                     @endforeach
-
                                 </tbody>
                             </table>
                         </div>
@@ -71,7 +58,6 @@
                         @else
                         <span class="text-danger">Not found</span>
                         @endif
-
                     </div>
                 </div>
             </div>

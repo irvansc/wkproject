@@ -133,4 +133,12 @@ class PostController extends Controller
         $avatar->delete();
         return redirect()->back()->with('sukses', 'Data Berhasil Dihapus');
     }
+    public function deleteMultiple(Request $request)
+    {
+        $ids = $request->ids;
+        $avatar = Post::whereIn('id', explode(",", $ids))->first();
+        File::delete('images/foto/post/' . $avatar->img);
+        $avatar->delete();
+        return response()->json(['status' => true, 'message' => "Post deleted successfully."]);
+    }
 }

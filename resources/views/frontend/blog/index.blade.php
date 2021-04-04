@@ -1,27 +1,28 @@
 @extends('frontend.layouts.master')
 @section('content')
-<!-- ======= Breadcrumbs ======= -->
-<section class="breadcrumbs">
-</section><!-- End Breadcrumbs -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card-img">
-                <img src="{{asset('theme/img/bg.png')}}" class="card-img" alt="...">
+<section id="abc">
+    <div class="container" id="ab">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="abou" id="abou">
+                    <img src="{{asset('')}}theme/img/blog.png" alt="" class="light">
+                    <img src="{{asset('')}}theme/img/darkblog.png" alt="" class="dark">
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- ======= Blog Section ======= -->
-<section id="blog" class="blog">
-    <div class="container" data-aos="fade-up">
-        @if ($message = Session::get('pesan'))
-        <div class="alert alert-danger alert-block">
-            <strong>{{ $message }}</strong>
-        </div>
-        @endif
+</section>
+
+<!-- Blog -->
+<section class="blog" id="blog">
+    <div class="container">
         <div class="row">
-            <div class="col-lg-8 entries">
+            @if ($message = Session::get('pesan'))
+            <div class="alert alert-danger alert-block">
+                <strong>{{ $message }}</strong>
+            </div>
+            @endif
+            <div class="col-md-8 hov" id="posts">
                 @if ($_GET['search'] ?? null)
                 @if ($posts->isNotEmpty())
                 <span class="badge badge-primary">Results: {{ count($posts) }}</span>
@@ -34,113 +35,126 @@
                 @if ($posts->isEmpty())
                 {{-- <span>Not Found</span> --}}
                 @else
-                @foreach ($posts as $p)
-                <article class="entry">
+                <div class="row row-cols-1 row-cols-md-2 post">
+                    @foreach ($posts as $p)
+                    <div class="col mb-4">
+                        <div class="card">
+                            <img src="{{$p->getImage()}}" class="card-img-top" alt="{{$p->title}}">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="{{route('blog.show',$p->alias)}}">{{$p->title}}</a></h5>
+                                <p class="card-text"> {!! Str::limit($p->content, 250, '...') !!}</p>
+                                <div class="entry-meta">
+                                    <ul>
+                                        <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
+                                                href="blog-single.html">John
+                                                Doe</a></li>
+                                        <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
+                                                href="blog-single.html"><time datetime="2020-01-01">Jan
+                                                    1, 2020</time></a>
+                                        </li>
+                                        <li class="d-flex
+                                                    align-items-center"><i class="bi
+                                                        bi-chat-dots"></i>
+                                            <a href="blog-single.html">{{$p->comments()->where('status','=','y')->count()}}
+                                                Comments</a>
+                                        </li>
 
-                    <div class="entry-img">
-                        <img src="{{$p->getImage()}}" alt="" class="img-fluid">
-                    </div>
-
-                    <h2 class="entry-title">
-                        <a href="{{route('blog.show',$p->alias)}}">{{$p->title}}</a>
-                    </h2>
-
-                    <div class="entry-meta">
-                        <ul>
-                            <li class="d-flex align-items-center"><i class="bi
-                    bi-person"></i> <a href="blog-single.html">{{$p->user->name}}</a></li>
-                            <li class="d-flex align-items-center"><i class="bi
-                    bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">{{$p->created_at}}</time></a>
-                            </li>
-                            <li class="d-flex align-items-center">
-                                <i class="bi bi-eye"></i>
-                                <a href="blog-single.html">{{$p->views}}</a>
-                            </li>
-                            <li class="d-flex align-items-center">
-                                <i class="bi bi-chat-dots"></i>
-                                <a href="blog-single.html">13 Comments</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="entry-content">
-                        <p>
-                            {!! Str::limit($p->content, 500, '...') !!}
-                        </p>
-                        <div class="read-more">
-                            <a href="{{route('blog.show',$p->alias)}}">Read More</a>
-                        </div>
-                        <div class="entry-footer">
-
-                            <i class="bi bi-folder"></i>
-                            <ul class="cats">
-                                @if ($p->categories->isNotEmpty())
-                                @foreach ($p->categories as $key=>$kate)
-                                <li><a href="#">{{$kate->name}}|</a></li>
-                                @endforeach
-                                @endif
+                                    </ul>
+                                </div>
+                                <a href="{{route('blog.show',$p->alias)}}" class="btn btn-utama">Read More
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                                <div class="card-footer mt-1" style="display: flex">
+                                    @if ($p->categories->isNotEmpty())
+                                    @foreach ($p->categories as $key=>$kate)
+                                    <i class="bi bi-folder ml-1"> <a href="#"> {{$kate->name}} </a></i>
+                                    @endforeach
+                                    @endif
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                </article><!-- End blog entry -->
-                @endforeach
-
-                <div class="blog-pagination">
-                    <ul class="justify-content-center">
-                        <li><a href="#">1</a></li>
-                        <li class="active"><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                    </ul>
+                    @endforeach
+                </div>
+                @endif
+                @if($posts->hasMorePages() == 1)
+                <div class="text-center mb-1">
+                    <button id="load" class="btn btn-utama" data-url="{{ $posts->nextPageUrl() }}">Load
+                        More</button>
                 </div>
                 @endif
 
-            </div><!-- End blog entries list -->
-
-            <div class="col-lg-4">
-
-                <div class="sidebar">
-
-                    <h3 class="sidebar-title">Search</h3>
-                    <div class="sidebar-item search-form">
-                        <form action="{{route('blog.index')}}" method="GET">
-                            <input type="text" name="search" placeholder="Cari apa ?">
-                            <button type="submit"><i class="bi bi-search"></i></button>
-                        </form>
-                    </div><!-- End sidebar search formn-->
-
-                    <h3 class="sidebar-title">Categories</h3>
-                    <div class="sidebar-item categories">
-                        <ul>
-
+            </div>
+            <div class="col-md-4 sid">
+                <div class="card mb-2">
+                    <div class="card-header">
+                        Search
+                    </div>
+                    <div class="card-body">
+                        <div class="sidebar-item search-form">
+                            <form action="">
+                                <input type="text">
+                                <button type="submit"><i class="bi bi-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        Categories
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
                             @foreach ($categories as $kate)
-                            <li><a href="{{url('kategori',$kate->alias)}}">{{$kate->name}}
-                                    <span>({{$kate->post->count()}})</span></a></li>
+                            <a href="{{url('kategori',$kate->alias)}}" class="btn btn-outline-primary ml-1 mb-1">
+                                {{$kate->name}}
+                                <span class="badge badge-light">({{$kate->post->count()}})</span>
+                            </a>
                             @endforeach
-
-                        </ul>
-                    </div><!-- End sidebar categories-->
-
-                    <h3 class="sidebar-title">Recent Posts</h3>
-                    <div class="sidebar-item recent-posts">
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-3">
+                    <div class="card-header">
+                        Recent Post
+                    </div>
+                    <div class="card-body">
+                        <style>
+                            .g img {
+                                max-width: 80px;
+                            }
+                        </style>
                         @if ($postsWeek->isNotEmpty())
                         @foreach ($postsWeek as $post)
-                        <div class="post-item clearfix">
-                            <img src="{{$post->getImage()}}" alt="">
-                            <h4><a href="{{route('blog.show',$post->alias)}}">{{$post->title}}</a></h4>
-                            <time datetime="2020-01-01">{{$post->created_at}}</time>
+                        <div class="media g">
+                            <img src="{{$post->getImage()}}" class="mr-3" alt="...">
+                            <div class="media-body recent">
+                                <h5 class="mt-0"><a href="{{route('blog.show',$post->alias)}}">{{$post->title}}</a></h5>
+                                <h6>{!!Str::limit($post->content,50,'...')!!}</h6>
+                            </div>
                         </div>
                         @endforeach
                         @endif
-                    </div><!-- End sidebar recent posts-->
-
-
-                </div><!-- End sidebar -->
-
-            </div><!-- End blog sidebar -->
-
+                    </div>
+                </div>
+            </div>
         </div>
-
     </div>
-</section><!-- End Blog Section -->
-
+</section>
+<!-- End Blog -->
 @endsection
+@push('jsf')
+<script>
+    $(document).ready(function(){
+        $(document).on('click', '#load', function(){
+            $("<div>").load($(this).data("url") + "#posts", function() {
+            $("#posts").append($(this).find("#posts").html());
+        });
+
+        $(this).parent().remove();
+
+        });
+    });
+</script>
+
+@endpush

@@ -7,7 +7,7 @@
 </div>
 <div class="secction-body">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <!-- Light table -->
             <div class="card shadow mb-5">
                 <div class="card-header py-3">
@@ -21,8 +21,10 @@
                             <thead class="thead-light">
                                 <tr>
                                     <th width="20px">No</th>
+                                    <th>Image</th>
                                     <th>Nama Ekstrakulikuler</th>
                                     <th>Keterangan</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -30,8 +32,13 @@
                                 @foreach ($ektra as $e=>$row)
                                 <tr>
                                     <td>{{$e+1}}</td>
+                                    <td>
+                                        <img src="{{asset('images/foto/ekstra/'.$row->img)}}" style="max-width: 100px"
+                                            alt="">
+                                    </td>
                                     <td>{{$row->nama}}</td>
                                     <td>{{$row->keterangan}}</td>
+                                    <td><span class="badge badge-primary">{{$row->status}}</span></td>
                                     <td>
                                         <a href="" class="btn btn-warning btn-sm" data-toggle="modal"
                                             data-target="#edit{{$row->id}}"><i class="fas fa-pencil-alt"></i></a>
@@ -46,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card">
                 <!-- Card header -->
                 <div class="card-header text-blue">
@@ -55,7 +62,7 @@
                 <!-- Light table -->
                 <div class="card-body">
                     <div class="col">
-                        <form action="{{route('ekstra.store')}}" method="POST">
+                        <form action="{{route('ekstra.store')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label for="">Nama Ekstrakulikuler</label>
@@ -67,9 +74,21 @@
                                 @enderror
                             </div>
                             <div class="form-group">
+                                <label for="">Status</label>
+                                <select name="status" id="" class="form-control">
+                                    <option value="">--Pilih Status--</option>
+                                    <option value="wajib">wajib</option>
+                                    <option value="pilihan">pilihan</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="">Keterangan</label>
                                 <input type="text" name="keterangan" class="form-control">
 
+                            </div>
+                            <div class="form-group">
+                                <label for="">Image</label>
+                                <input type="file" name="img" class="form-control">
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary float-right"><i class="ni ni-send"></i>
@@ -97,7 +116,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{route('ekstra.update',$kate->id)}}" method="POST">
+                <form action="{{route('ekstra.update',$kate->id)}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
@@ -110,12 +129,23 @@
                         </span>
                         @enderror
                     </div>
+
+                    <div class="form-group">
+                        <label for="">Status</label>
+                        <select name="status" id="" class="form-control">
+                            <option value="">Pilih Status</option>
+                            <option value="wajib" @if ($kate=='wajib' ) selected @endif>Wajib</option>
+                            <option value="pilihan" @if ($kate=='pilihan' ) selected @endif>Pilihan</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="">Keterangan</label>
                         <input type="text" name="keterangan" class="form-control" value="{{$kate->keterangan}}">
-
                     </div>
-
+                    <div class="form-group">
+                        <label for="">Image</label>
+                        <input type="file" name="img" class="form-control">
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>

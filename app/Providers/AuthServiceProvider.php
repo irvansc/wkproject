@@ -387,21 +387,21 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('inbox-create', function ($user) {
             return $user->permission('inbox-create');
         });
-        //kelas
-        Gate::define('kelas', function ($user) {
-            return $user->permission('kelas');
+        //akelas
+        Gate::define('akelas', function ($user) {
+            return $user->permission('akelas');
         });
-        Gate::define('kelas-edit', function ($user) {
-            return $user->permission('kelas-edit');
+        Gate::define('akelas-edit', function ($user) {
+            return $user->permission('akelas-edit');
         });
-        Gate::define('kelas-delete', function ($user) {
-            return $user->permission('kelas-delete');
+        Gate::define('akelas-delete', function ($user) {
+            return $user->permission('akelas-delete');
         });
-        Gate::define('kelas-update', function ($user) {
-            return $user->permission('kelas-update');
+        Gate::define('akelas-update', function ($user) {
+            return $user->permission('akelas-update');
         });
-        Gate::define('kelas-create', function ($user) {
-            return $user->permission('kelas-create');
+        Gate::define('akelas-create', function ($user) {
+            return $user->permission('akelas-create');
         });
         //siswa
         Gate::define('siswa', function ($user) {
@@ -495,6 +495,54 @@ class AuthServiceProvider extends ServiceProvider
         });
         Gate::define('sambutan-delete', function ($user) {
             return $user->permission('sambutan-delete');
+        });
+        //sarana
+        Gate::define('sarana', function ($user) {
+            return $user->permission('sarana');
+        });
+        Gate::define('sarana-edit', function ($user) {
+            return $user->permission('sarana-edit');
+        });
+        Gate::define('sarana-update', function ($user) {
+            return $user->permission('sarana-update');
+        });
+        Gate::define('sarana-create', function ($user) {
+            return $user->permission('sarana-create');
+        });
+        Gate::define('sarana-delete', function ($user) {
+            return $user->permission('sarana-delete');
+        });
+        //aosis
+        Gate::define('aosis', function ($user) {
+            return $user->permission('aosis');
+        });
+        Gate::define('aosis-edit', function ($user) {
+            return $user->permission('aosis-edit');
+        });
+        Gate::define('aosis-update', function ($user) {
+            return $user->permission('aosis-update');
+        });
+        Gate::define('aosis-create', function ($user) {
+            return $user->permission('aosis-create');
+        });
+        Gate::define('aosis-delete', function ($user) {
+            return $user->permission('aosis-delete');
+        });
+        //ajurusan
+        Gate::define('ajurusan', function ($user) {
+            return $user->permission('ajurusan');
+        });
+        Gate::define('ajurusan-edit', function ($user) {
+            return $user->permission('ajurusan-edit');
+        });
+        Gate::define('ajurusan-update', function ($user) {
+            return $user->permission('ajurusan-update');
+        });
+        Gate::define('ajurusan-create', function ($user) {
+            return $user->permission('ajurusan-create');
+        });
+        Gate::define('ajurusan-delete', function ($user) {
+            return $user->permission('ajurusan-delete');
         });
     }
 }

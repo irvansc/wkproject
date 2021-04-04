@@ -77,7 +77,7 @@
                                     <center>
                                         <h2>Deskripsi</h2>
                                     </center>
-                                    <textarea name="deskripsi" id="summernote"
+                                    <textarea name="deskripsi" id="editor"
                                         class="form-control">{!!$sj->deskripsi!!}</textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary"><i class="ni ni-send"></i> Submit</button>
@@ -109,5 +109,7 @@
         readURL(this);
     });
     })
+    CKEDITOR.replace( 'editor' );
+
 </script>
 @endpush

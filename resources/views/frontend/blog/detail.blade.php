@@ -1,88 +1,76 @@
 @extends('frontend.layouts.master')
 @section('content')
-<!-- ======= Breadcrumbs ======= -->
-<section class="breadcrumbs">
-</section><!-- End Breadcrumbs -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card-img">
-                <img src="{{asset('theme/img/bg.png')}}" class="card-img" alt="...">
+<!-- navigatin End -->
+<section id="abc">
+    <div class="container" id="ab">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="abou" id="abou">
+                    <img src="{{asset('')}}theme/img/blog.png" alt="" class="light">
+                    <img src="{{asset('')}}theme/img/darkblog.png" alt="" class="dark">
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- ======= Blog Single Section ======= -->
-<section id="blog" class="blog">
-    <div class="container" data-aos="fade-up">
+</section>
 
+<!-- Blog -->
+<section class="blog" id="blog">
+    <div class="container">
         <div class="row">
-
-            <div class="col-lg-8 entries">
-
-                <article class="entry entry-single">
-
-                    <div class="entry-img">
-                        <img src="{{asset('')}}theme/img/blog/blog-1.jpg" alt="" class="img-fluid">
-                    </div>
-
-                    <h2 class="entry-title">
-                        <a href="blog-single.html">{{$post->title}}</a>
-                    </h2>
-
-                    <div class="entry-meta">
-                        <ul>
-                            <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
-                                    href="blog-single.html">{{$post->user->name}}</a></li>
-                            <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
-                                    href="blog-single.html"><time datetime="2020-01-01">{{$post->created_at}}</time></a>
-                            </li>
-                            <li class="d-flex align-items-center">
-                                <i class="bi bi-eye"></i>
-                                <a href="blog-single.html">{{$post->views}}</a>
-                            </li>
-                            <li class="d-flex align-items-center">
-                                <i class="bi bi-chat-dots"></i>
-                                <a href="blog-single.html">13 Comments</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="entry-content">
-                        <p>
+            <div class="col-md-8 hov">
+                <div class="card mb-2 post">
+                    <img src="{{$post->getImage()}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="">{{$post->title}}</a></h5>
+                        <div class="entry-meta">
+                            <ul>
+                                <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a
+                                        href="blog-single.html">{{$post->user->name}}</a></li>
+                                <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a
+                                        href="blog-single.html"><time
+                                            datetime="2020-01-01">{{$post->created_at}}</time></a>
+                                </li>
+                                <li class="d-flex
+                                            align-items-center"><i class="bi
+                                                bi-chat-dots"></i>
+                                    <a href="blog-single.html">12
+                                        Comments</a>
+                                </li>
+                                <li class="d-flex
+                                            align-items-center"><i class="bi
+                                                bi-eye"></i>
+                                    <a href="blog-single.html">{{$post->views}} Views</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <p class="card-text">
                             {!!$post->content!!}
                         </p>
-                    </div>
-                    <div class="entry-footer">
-                        <i class="bi bi-folder"></i>
-                        <ul class="cats">
-                            @if ($post->categories->isNotEmpty())
-                            @foreach ($post->categories as $key=>$kate)
-                            <li><a href="#">{{$kate->name}}|</a></li>
-                            @endforeach
-                            @endif
-
-                        </ul>
-
-                        <div class="icon-s mt-2 mr-auto">
-                            <h5>#Share to :</h5>
-                            <div class="addthis_inline_share_toolbox" id="addthis_inline_share_toolbox">
-                            </div>
+                        <div class="entry-footer">
+                            <i class="bi bi-folder"></i>
+                            <ul class="cats">
+                                @if ($post->categories->isNotEmpty())
+                                @foreach ($post->categories as $key=>$kate)
+                                <li><a href="#">{{$kate->name}}|</a></li>
+                                @endforeach
+                                @endif
+                            </ul>
                         </div>
+                        <div class="shareon">
+                            <a class="facebook"></a>
+                            <a class="messenger"></a>
+                            <a class="pinterest"></a>
+                            <a class="whatsapp"></a>
+                            <a class="twitter"></a>
+                        </div>
+                        <button class="btn btn-utama float-right" id="btn-komentar-utama"><i
+                                class="bi bi-pencil-square"></i>
+                            Tinggalkan Komentar</button>
                     </div>
-                    <style>
-                        .rep {
-                            margin-left: 80%;
-                            width: 40%;
-                        }
-                    </style>
-                    <div class="rep">
-                        <button class="btn btn-outline-primary but" id="btn-komentar-utama"><i
-                                class="bi bi-reply-fill"></i>
-                            Reply</button>
-                    </div>
-                </article><!-- End blog entry -->
 
+
+                </div>
                 <div class="blog-comments">
                     @if ($message = Session::get('pesan'))
                     <div class="alert alert-info alert-block">
@@ -90,44 +78,30 @@
                     </div>
                     @endif
                     <div class="reply-form" style="margin-top: 10px; display:none" id="komentar-utama">
-                        <form action="{{ route('addComment', $post->id) }}" method="POST">
+                        <form action="{{ route('addComment', $post->id) }}" method="POST" id="komentar">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6 form-group">
-                                    <input name="name" type="text"
-                                        class="form-control @error('name') is-invalid @enderror" name="name"
+                                    <input name="name" type="text" class="form-control" name="name"
                                         placeholder=" Your Name*">
-                                    @error('name')
-                                    <span class="invalid-feedback" role="alert" style="color: red">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                    <span class="text-danger error-text name_error"></span>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <input name="email" type="text"
-                                        class="form-control @error('email') is-invalid @enderror"
-                                        placeholder="Your Email*">
-                                    @error('email')
-                                    <span class="invalid-feedback" role="alert" style="color: red">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                    <input name="email" type="text" class="form-control " placeholder="Your Email*">
+                                    <span class="text-danger error-text email_error"></span>
+
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col form-group">
-                                    <textarea name="body" class="form-control @error('body') is-invalid @enderror"
-                                        placeholder="Your Comment*"></textarea>
-                                    @error('body')
-                                    <span class="invalid-feedback" role="alert" style="color: red">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                    <textarea name="body" class="form-control " placeholder="Your Comment*"></textarea>
+                                    <span class="text-danger error-text body_error"></span>
+
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Post
                                 Comment</button>
-                            <strong style="margin-left: 50%"><small> *Berkomentarlah yang baik dan
+                            <strong><small> *Berkomentarlah yang baik dan
                                     santun</small></strong>
                         </form>
                     </div>
@@ -137,8 +111,8 @@
 
                     <div id="comment-2" class="comment">
                         <div class="d-flex">
-                            <div class="comment-img"><img src="{{asset('')}}theme/img/blog/default.png" alt=""></div>
-                            <div>
+                            <div class="comment-img"><img src="{{asset('')}}theme/img/default.png" alt=""></div>
+                            <div class="komen">
                                 <h5><a href="">{{$com->name}}</a> </h5>
                                 <time datetime="2020-01-01">{{$com->created_at}}</time>
                                 <p>
@@ -149,7 +123,7 @@
                         @forelse ($com->comment()->orderBy('created_at','desc')->get() as $reply)
                         <div id="comment-reply-1" class="comment comment-reply">
                             <div class="d-flex">
-                                <div class="comment-img"><img src="{{asset('')}}theme/img/blog/admin.png" alt="">
+                                <div class="comment-img"><img src="{{asset('')}}theme/img/admin.png" alt="">
                                 </div>
                                 <div>
                                     <h5>{{$reply->name}} | <strong class="text-primary">Admin</strong>
@@ -165,59 +139,118 @@
 
                         @endforelse
                     </div><!-- End comment #2-->
-
-
                     @endforeach
-
                 </div><!-- End blog comments -->
-            </div><!-- End blog entries list -->
-            <div class="col-lg-4">
-
-                <div class="sidebar">
-
-                    <h3 class="sidebar-title">Search</h3>
-                    <div class="sidebar-item search-form">
-                        <form action="{{route('blog.index')}}" method="GET">
-                            <input type="text" name="search" placeholder="Cari apa ?">
-                            <button type="submit"><i class="bi bi-search"></i></button>
-                        </form>
-                    </div><!-- End sidebar search formn-->
-
-                    <h3 class="sidebar-title">Categories</h3>
-
-                    <div class="sidebar-item categories">
-                        <ul>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-2">
+                    <div class="card-header">
+                        Search
+                    </div>
+                    <div class="card-body">
+                        <div class="sidebar-item search-form">
+                            <form action="{{route('blog.index')}}" method="GET">
+                                <input type="text" name="search" placeholder="Cari apa ?">
+                                <button type="submit"><i class="bi bi-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        Categories
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
                             @foreach ($kategori as $kate)
-                            <li><a href="{{url('kategori',$kate->alias)}}">{{$kate->name}}
-                                    <span>({{$kate->post->count()}})</span></a></li>
+                            <a href="{{url('kategori',$kate->alias)}}" class="btn
+                                        btn-outline-primary ml-1 mb-1">
+                                {{$kate->name}} <span class="badge
+                                            badge-light">{{$kate->post->count()}}</span>
+                            </a>
                             @endforeach
-                        </ul>
-                    </div><!-- End sidebar categories-->
-
-                    <h3 class="sidebar-title">Recent Posts</h3>
-                    <div class="sidebar-item recent-posts">
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-3">
+                    <div class="card-header">
+                        Recent Post
+                    </div>
+                    <div class="card-body">
                         @if ($postsWeek->isNotEmpty())
                         @foreach ($postsWeek as $post)
-                        <div class="post-item clearfix">
-                            <img src="{{$post->getImage()}}" alt="">
-                            <h4><a href="{{route('blog.show',$post->alias)}}">{{$post->title}}</a></h4>
-                            <time datetime="2020-01-01">{{$post->created_at}}</time>
+                        <style>
+                            .media img {
+                                max-width: 70px;
+                            }
+                        </style>
+                        <div class="media">
+
+                            <img src="{{$post->getImage()}}" class="mr-3" alt="...">
+                            <div class="media-body recent">
+                                <h5 class="mt-0"><a href="{{route('blog.show',$post->alias)}}">{{$post->title}}</a>
+                                </h5>
+                                <h6>{!!Str::limit($post->content, 50, '...')!!}</h6>
+                            </div>
                         </div>
                         @endforeach
                         @endif
-                    </div><!-- End sidebar recent posts-->
-                </div><!-- End sidebar -->
-            </div><!-- End blog sidebar -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</section><!-- End Blog Single Section -->
+</section>
+<!-- End Blog -->
 @endsection
 @push('jsf')
 <script>
     $(document).ready(function(){
+
+        $("#komentar").on('submit', function(e){
+                  e.preventDefault();
+
+                  $.ajax({
+                      url:$(this).attr('action'),
+                      method:$(this).attr('method'),
+                      data:new FormData(this),
+                      processData:false,
+                      dataType:'json',
+                      contentType:false,
+                      beforeSend:function(){
+                          $(document).find('span.error-text').text('');
+                      },
+                      success:function(data){
+                          if(data.status == 0){
+                              $.each(data.error, function(prefix, val){
+                                  $('span.'+prefix+'_error').text(val[0]);
+                              });
+                          }else{
+                              $('#komentar')[0].reset();
+                              const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'bottom-right',
+                                    showConfirmButton: true,
+                                    // timer: 3000,
+                                    // timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                })
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'Komentar terkirim, Menunggu Moderasi'
+                                })
+
+                          }
+                      }
+                  });
+              });
         $("#btn-komentar-utama").click(function(){
             $('#komentar-utama').toggle('slide');
         });
+
     });
 </script>
 @endpush

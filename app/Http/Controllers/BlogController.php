@@ -46,7 +46,7 @@ class BlogController extends Controller
                 ->where('title', 'like', '%' . $request->search . '%')
                 ->orWhere('content', 'like', '%' . $request->search . '%')
                 ->orderBy('created_at', 'desc')
-                ->paginate(5)
+                ->paginate(6)
                 ->appends($request->query());
 
             return view('frontend.blog.index', compact(
@@ -62,7 +62,7 @@ class BlogController extends Controller
         // All posts
         $posts = Post::with(['user', 'categories'])
             ->orderBy('created_at', 'desc')
-            ->paginate(5);
+            ->paginate(2);
         $post = Post::with('categories')->get();
         $categories = Category::all();
         return view('frontend.blog.index', compact(
@@ -71,7 +71,7 @@ class BlogController extends Controller
             'post',
             'categories',
             'postsWeek',
-            'interestingPosts'
+            'interestingPosts',
         ));
     }
 

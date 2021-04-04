@@ -4,49 +4,67 @@
 <!-- ======= Breadcrumbs ======= -->
 <section class="breadcrumbs">
 </section><!-- End Breadcrumbs -->
-<div class="container">
+<div class="container" id="do">
     <div class="row">
         <div class="col-md-12">
             <div class="card-img">
-                <img src="{{asset('theme/img/file.png')}}" class="card-img" alt="...">
+                <img src="{{asset('theme/img/file.png')}}" class="light" alt="...">
+                <img src="{{asset('theme/img/darkfile.png')}}" class="dark" alt="...">
             </div>
         </div>
     </div>
 </div>
-<section class="contact">
+<section class="contact" id="download">
     <div class="container">
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-8">
                 <div class="table-responsive">
                     <table class="table table-striped" id="data">
                         <thead>
                             <tr>
-                                <th style="width: 10px">No</th>
-                                <th>Files</th>
+                                <th width="10px">No</th>
+                                <th>File</th>
                                 <th>Keterangan</th>
-                                <th>Tanggal</th>
-                                <th>Oleh</th>
-                                <th>Aksi</th>
+                                <th>Author</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($download as $e=> $d)
-
                             <tr>
                                 <td>{{$e+1}}</td>
                                 <td>{{$d->title}}</td>
                                 <td>{{$d->keterangan}}</td>
-                                <td>{{date('d M Y', strtotime($d->created_at))}}</td>
                                 <td>{{$d->author}}</td>
                                 <td>
-                                    <a class="btn btn-primary button btn-sm" title="Download"
-                                        href="{{asset('images/file/'.$d->data)}}"><i class="fas fa-download"></i></a>
+                                    <a href="{{asset('images/file/'.$d->data)}}" title="Download"
+                                        class="btn btn-utama"><i class="bi bi-download"></i></a>
                                 </td>
                             </tr>
                             @endforeach
 
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <div class="col-md-4 download">
+                <div class="card ">
+                    <div class="card-header">
+                        Recent Post
+                    </div>
+                    <div class="card-body">
+                        @if ($postsWeek->isNotEmpty())
+                        @foreach ($postsWeek as $post)
+                        <div class="media">
+                            <img src="{{$post->getImage()}}" class="mr-3" alt="...">
+                            <div class="media-body recent">
+                                <h5 class="mt-0"><a href="">{{$post->title}}</a></h5>
+                                <h6>{!!Str::limit($post->content , 50 , '..')!!}</h6>
+                            </div>
+                        </div>
+                        @endforeach
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

@@ -14,4 +14,11 @@ class Guru extends Model
     {
         return $this->belongsTo(Kelas::class);
     }
+    public function getGuru()
+    {
+        if (!$this->photo) {
+            return asset('images/default.png');
+        }
+        return asset('images/foto/guru/' . $this->photo);
+    }
 }

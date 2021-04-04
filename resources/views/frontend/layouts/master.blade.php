@@ -1,22 +1,17 @@
 @include('frontend.layouts.header')
-
-<body>
-    @include('frontend.layouts.headnav')
-    <!-- End Header -->
-
-
-    <main id="main">
-        @yield('content')
-
-    </main>
-    <!-- End #main -->
-    <!-- ======= Footer ======= -->
-    @include('frontend.layouts.footer')
-
-    <!-- End Footer -->
-
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+<!-- Navigation star -->
+@include('frontend.layouts.headnav')
+<!-- navigatin End -->
 
 
-    @include('frontend.layouts.script')
+@yield('content')
+
+<!-- ======= Footer ======= -->
+@include('frontend.layouts.footer')
+
+<!-- End Footer -->
+<a href="#" class="ignielToTop"></a>
+<div id="preloader">
+
+</div>
+@include('frontend.layouts.script')

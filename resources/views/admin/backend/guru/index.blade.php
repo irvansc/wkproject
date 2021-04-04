@@ -1,18 +1,27 @@
 @extends('admin.backend.layouts.master')
 
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
 <div class="section-header">
     <h1>Guru</h1>
 </div>
 <div class="section-body">
     <div class="row">
-        <div class="col">
+        <div class="col-md-8">
             <div class="card shadow mb-5">
                 <div class="card-header py-3">
                     <h6 class="font-weight-bold text-primary">List Guru</h6>
-                    <a href="{{route('aguru.create')}}" class="btn btn-primary ml-auto"> <i
-                            class="fas fa-plus-circle"></i> Tambah
-                        Guru</a>
+                    <div class="ml-auto">
+                        <a href="{{route('aguru.create')}}" class="btn btn-primary "> <i class="fas fa-plus-circle"></i>
+                            Tambah
+                            Guru</a>
+                        <button type="button" class="btn btn-info btn-xs mb-1" data-toggle="modal" data-target="#guru">
+                            <i class="bi bi-arrow-bar-up"></i> Import Guru
+                        </button>
+                        <button class="btn btn-danger btn-xs delete-all " data-url="">Delete
+                            All</button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="col-md-8">
@@ -33,6 +42,7 @@
                         <table class="table table-bordered" id="data">
                             <thead class="thead-light">
                                 <tr>
+                                    <th><input type="checkbox" id="check_all"></th>
                                     <th width="3%">No</th>
                                     <th>Nip</th>
                                     <th>Nama</th>
@@ -50,12 +60,138 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4">
+            <style>
+                @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css");
+
+                #accordion .panel-title>a:before {
+                    float: right !important;
+                    font-family: FontAwesome;
+                    content: "\f068";
+                    padding-right: 5px;
+                }
+
+                #accordion .panel-title>a.collapsed:before {
+                    float: right !important;
+                    content: "\f067";
+                }
+
+                #accordion .panel-title>a:hover,
+                #accordion .panel-title>a:active,
+                #accordion .panel-title>a:focus {
+                    text-decoration: none;
+                }
+            </style>
+            <div id="accordion">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                    <h5 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                                            aria-expanded="true" aria-controls="collapseOne">
+                                            <i class="bi bi-megaphone-fill"></i> Information
+                                        </a>
+                                    </h5>
+
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                                    aria-labelledby="headingOne">
+                                    <div class="panel-body">
+                                        Sebelum melakukan Import Data Guru, terlebih dahulu harus mendownload File
+                                        dibawah ini,
+                                        dan lihat video dokumentasi untuk penjelasannya. <br>
+                                        <a href="{{asset('images/file/dataguru.xlsx')}}" download
+                                            class="btn btn-primary btn-sm"><i class="bi bi-download"></i>
+                                            Download</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+@section('modal')
+<style>
+    .progress {
+        position: relative;
+        width: 100%;
+    }
+
+    .bar {
+        background-color: #2320f1;
+        width: 0%;
+        height: 30px;
+    }
+
+    .percent {
+        position: absolute;
+        display: inline-block;
+        left: 50%;
+        color: #ffffff;
+    }
+</style>
+<!-- Modal -->
+<div class="modal fade" id="guru" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Import Guru</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {!! Form::open(['route' => 'guru.import', 'class' => 'form-horizontal','enctype'=>
+                'multipart/form-data']) !!}
+                {!! Form::file('data_guru') !!}
+                <br>
+                <small><strong class="text-danger">Upload file dengan extension | xlsx</strong></small>
+                <br>
+
+                <div class="progress">
+                    <div class="bar">
+                        <div class="percent">
+                            0%
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input class="btn btn-success" type="submit" value="Kirim">
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
 @push('js')
 <script>
     $(document).ready(function(){
+
+    var bar = $('.bar');
+            var percent = $('.percent');
+      $('form').ajaxForm({
+        beforeSend: function() {
+            var percentVal = '0%';
+            bar.width(percentVal)
+            percent.html(percentVal);
+        },
+        uploadProgress: function(event, position, total, percentComplete) {
+            var percentVal = percentComplete + '%';
+            bar.width(percentVal)
+            percent.html(percentVal);
+        },
+        complete: function(xhr) {
+            // alert("File Uploaded Successfully");
+            window.location = "/aguru";
+        }
+      });
     let kelas = $("#filter-kelas").val();
     // let semester = $("#filter-semester").val();
     const table = $('#data').DataTable({
@@ -81,46 +217,56 @@
         "targets": 0,
         "sortable":false,
         "render": function(data, type, row, meta){
-            return meta.row + meta.settings._iDisplayStart + 1;
+            let tampilan = `
+            <input type="checkbox" class="checkbox" data-id="${row.id}">
+       `;
+          return tampilan;
         }
       },
-      {
+    {
         "targets": 1,
-        "class":"text-nowrap",
+        "sortable":false,
         "render": function(data, type, row, meta){
-          return row.nip
+            return meta.row + meta.settings._iDisplayStart + 1;
         }
       },
       {
         "targets": 2,
         "class":"text-nowrap",
         "render": function(data, type, row, meta){
-          return row.nama_guru
+          return row.nip
         }
       },
       {
         "targets": 3,
         "class":"text-nowrap",
         "render": function(data, type, row, meta){
-          return row.jenkel
+          return row.nama_guru
         }
       },
       {
         "targets": 4,
         "class":"text-nowrap",
         "render": function(data, type, row, meta){
-          return row.mapel
+          return row.jenkel
         }
       },
       {
         "targets": 5,
         "class":"text-nowrap",
         "render": function(data, type, row, meta){
-          return row.kelas
+          return row.mapel
         }
       },
       {
         "targets": 6,
+        "class":"text-nowrap",
+        "render": function(data, type, row, meta){
+          return row.kelas
+        }
+      },
+      {
+        "targets": 7,
         "sortable":false,
         "render": function(data, type, row, meta){
             let tampilan = `
@@ -177,7 +323,78 @@
         })
         });
 
+        $('#check_all').on('click', function (e) {
+            if ($(this).is(':checked', true)) {
+                $(".checkbox").prop('checked', true);
+            } else {
+                $(".checkbox").prop('checked', false);
+            }
+        });
+        $('.checkbox').on('click', function () {
+            if ($('.checkbox:checked').length == $('.checkbox').length) {
+                $('#check_all').prop('checked', true);
+            } else {
+                $('#check_all').prop('checked', false);
+            }
+        });
+        $('.delete-all').on('click', function (e) {
+            var idsArr = [];
+            $(".checkbox:checked").each(function () {
+                idsArr.push($(this).attr('data-id'));
+            });
+            if (idsArr.length <= 0)
+            {
+                alert("Pilih setidaknya satu data untuk dihapus.");
+            } else {
+                if (confirm("Anda yakin ingin menghapus Guru yang dipilih?")) {
+                    var strIds = idsArr.join(",");
+                    $.ajax({
+                        url: "{{ route('guru.multiple-delete') }}",
+                        type: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: 'ids=' + strIds,
+                        success: function (data) {
+                            if (data['status'] == true) {
+                                $(".checkbox:checked").each(function () {
 
+                                    $(this).parents("tr").remove();
+                                });
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                })
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'Guru deleted successfully!'
+                                })
+                            } else {
+                                alert('Whoops Something went wrong!!');
+                            }
+                        },
+                        error: function (data) {
+                            alert(data.responseText);
+                        }
+                    });
+                }
+            }
+        });
+
+        $('[data-toggle=confirmation]').confirmation({
+            rootSelector: '[data-toggle=confirmation]',
+            onConfirm: function (event, element) {
+                element.closest('form').submit();
+            }
+        });
 })
 </script>
 @endpush
+{{-- // https://forms.gle/fSXE8RPnq1qWjTYWA --}}

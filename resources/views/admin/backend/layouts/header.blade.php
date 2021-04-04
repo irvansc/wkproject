@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>Admin &mdash; W-school</title>
-    <!-- Favicons -->
     @php
     $img = DB::table('image_web')->where('id','=',2)->first();
     @endphp
@@ -13,6 +12,7 @@
     <!-- General CSS Files -->
     <link rel="stylesheet" rel="stylesheet" href="{{ url('') }}/assets/modules/datatables/datatables.min.css">
     <link rel="stylesheet" rel="stylesheet" href="{{ url('') }}/assets/modules/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" rel="stylesheet" href="{{ url('') }}/assets/modules/bootstrap/css/bootstrap-date.min.css">
     <link rel="stylesheet" href="{{ url('') }}/assets/modules/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="{{asset('')}}assets/modules/@fortawesome/fontawesome-free/css/all.min.css"
         type="text/css">
@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="{{ url('') }}/assets/css/components.css">
     <!-- Start GA -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
+    @stack('header')
     <script>
         window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -34,4 +35,5 @@
   gtag('config', 'UA-94034622-3');
     </script>
     <!-- /END GA -->
+
 </head>

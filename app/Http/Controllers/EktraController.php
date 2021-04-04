@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Ektra;
+use App\Models\Ektra;
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class EktraController extends Controller
 {
@@ -14,7 +16,14 @@ class EktraController extends Controller
      */
     public function index()
     {
-        //
+        $title = 'Ekstrakulikuler';
+        $ekstra = Ektra::paginate(2);
+        $postsWeek = Post::with('categories')
+            ->where('updated_at', '>=', Carbon::now()->startOfWeek())
+            ->orderBy('weekly_views', 'desc')
+            ->limit(4)
+            ->get();
+        return view('frontend.ekstra.index', compact('title', 'ekstra', 'postsWeek'));
     }
 
     /**

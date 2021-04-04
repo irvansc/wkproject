@@ -1,74 +1,48 @@
 @extends('frontend.layouts.master')
 @section('content')
 
-<section class="breadcrumbs">
-</section><!-- End Breadcrumbs -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card-img">
-                <img src="{{asset('theme/img/galery.png')}}" class="card-img" alt="...">
+<section id="abc">
+    <div class="container" id="ab">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="abou" id="abou">
+                    <img src="{{asset('')}}theme/img/galery.png" alt="" class="light">
+                    <img src="{{asset('')}}theme/img/darkgalery.png" alt="" class="dark">
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-<section class="our-teachers">
+</section>
+<section class="galery" id="galfot">
+    <!-- Page Content -->
     <div class="container">
-        <div class="row">
-            <div class="col-md-12 ">
-                <h3 class="typid text-center mb-3">
-                    <span id="typed" class="typed" data-typed-items="Galery Kami"></span></h3>
-                @if ($message = Session::get('pesan'))
-                <div class="alert alert-danger alert-block">
-                    <strong>{{ $message }}</strong>
-                </div>
-                @endif
-            </div>
-        </div>
         <div class="row">
             @foreach ($galery as $row)
 
-            <div class="col-xs-12 col-sm-6 col-md-3">
-                <div class="admission_insruction">
-                    @if (empty($row->cover))
-                    <img src="{{asset('images/noimage.jpg')}}" class="img-fluid" alt="#">
-                    @else
-                    <img src="{{asset('images/foto/album/'.$row->cover)}}" class="img-fluid" alt="#">
-                    <center>
-                        <a href="{{url('galery-kategori',$row->id)}}" class="btn btn-primary btn-sm mt-2">
-                            Jumlah Foto <span class="badge bg-secondary">{{$row->foto->count()}}</span>
-                        </a>
-                    </center>
-                    @endif
-                    <a href="{{url('galery-kategori',$row->id)}}">
-                        <p class="text-center mt-3"><span>{{$row->nama}}</span>
-                    </a>
-                    <br>
+            <div class="col-lg-3 col-md-4 col-6">
+                <a href="" class="h-100">
+                    <div class="galeri">
+                        @if (empty($row->cover))
+                        <img src="{{asset('images/noimage.jpg')}}" alt="">
+                        @else
+                        <img src="{{asset('images/foto/album/'.$row->cover)}}" alt="">
 
-                </div>
+                        <div class="team-content">
+                            <h3 class="title"><a href="{{url('galery-kategori',$row->id)}}">{{$row->nama}}</a></h3>
+                        </div>
+                        @endif
+
+                    </div>
+                </a>
+                <a href="{{url('galery-kategori',$row->id)}}" class="btn btn-utama mt-2" style="align-items: center;">
+                    Foto <span class="badge badge-light">{{$row->foto->count()}}</span>
+                </a>
             </div>
             @endforeach
-        </div>
-        <!-- End row -->
-        <nav>
-            {{-- {{ $galery->links() }} --}}
-        </nav>
-    </div>
-</section>
-@include('frontend.layouts.ct')
-@endsection
-@push('jsf')
-<script>
-    var typed_strings = $(".typed").data('typed-items');
-    typed_strings = typed_strings.split(',')
-    new Typed('.typed', {
-      strings: typed_strings,
-      loop: true,
-      typeSpeed: 100,
-      backSpeed: 50,
-      backDelay: 2000
-    });
 
-</script>
-@endpush
+        </div>
+
+    </div>
+
+</section>
+@endsection

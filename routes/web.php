@@ -30,7 +30,10 @@ Route::post('/comment/addComment/{post}', 'CommentController@addComment')->name(
 Route::resource('agenda', 'AgendafrontController');
 Route::resource('pengumuman', 'PengumumanController');
 Route::resource('guru', 'GuruController');
+
 Route::resource('siswa', 'SiswaController');
+Route::resource('kelas', 'KelasController');
+
 Route::resource('download', 'DownloadController');
 Route::resource('galery', 'GaleryController');
 Route::get('galery-kategori/{id}', 'GaleryController@kate');
@@ -40,7 +43,12 @@ Route::resource('visi', 'VisiController');
 Route::resource('sejarah', 'SejarahController');
 Route::resource('contact', 'ContactController');
 Route::resource('testimonial', 'TestimoniController');
-
+Route::get('reload-captcha', 'ContactController@reloadCaptcha');
+Route::get('reload-captchalogin', 'Auth\LoginController@reloadCaptcha');
+Route::resource('sarpras', 'SaranaController');
+Route::resource('jurusan', 'JurusanController');
+Route::resource('ekstrakulikuler', 'EktraController');
+Route::resource('osis', 'OsisController');
 
 Auth::routes();
 
@@ -55,6 +63,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('profiles', 'Admin\ProfileController')->middleware('can:profiles');
         Route::resource('post', 'Admin\PostController')->middleware('can:posts');
         Route::get('post/delete/{id}', 'Admin\PostController@delete');
+        Route::delete('delete-multiple-post', ['as' => 'post.multiple-delete', 'uses' => 'Admin\PostController@deleteMultiple']);
+
+
         Route::resource('kategori', 'Admin\CategoryController')->middleware('can:categories');
         Route::get('kategori/delete/{id}', 'Admin\CategoryController@delete');
 
@@ -68,16 +79,23 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('roles', 'Admin\RoleController')->middleware('can:roles');
         Route::match(['get', 'post'], 'roles/{id}/add', 'Admin\RoleController@add')->name('roles.add');
 
-        Route::resource('kelas', 'Admin\KelasController')->middleware('can:kelas');
+        Route::resource('akelas', 'Admin\KelasController')->middleware('can:akelas');
         Route::get('kelas/delete/{id}', 'Admin\KelasController@delete');
 
         Route::resource('asiswa', 'Admin\SiswaController')->middleware('can:siswa');
         Route::any('/asiswa/data', 'Admin\SiswaController@data');
         Route::get('asiswa/delete/{id}', 'Admin\SiswaController@delete');
+        Route::get('kelas/{id}', 'Admin\SiswaController@filter');
+        Route::delete('delete-multiple-siswa', ['as' => 'siswa.multiple-delete', 'uses' => 'Admin\SiswaController@deleteMultiple']);
+        //impor excel
+        Route::post('siswa/import/', 'Admin\SiswaController@siswaimport')->name('siswa.import');
 
         Route::resource('aguru', 'Admin\GuruController')->middleware('can:guru');
         Route::any('/aguru/data', 'Admin\GuruController@data');
         Route::get('aguru/delete/{id}', 'Admin\GuruController@delete');
+        Route::delete('delete-multiple-guru', ['as' => 'guru.multiple-delete', 'uses' => 'Admin\GuruController@deleteMultiple']);
+        //impor excel
+        Route::post('guru/import/', 'Admin\GuruController@guruimport')->name('guru.import');
 
         Route::resource('adownload', 'Admin\DownloadController')->middleware('can:download');
         Route::get('adownload/delete/{id}', 'Admin\DownloadController@delete');
@@ -128,5 +146,15 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('ekstra', 'Admin\EkstraController')->middleware('can:ekstra');
         Route::get('ekstra/delete/{id}', 'Admin\EkstraController@delete');
+
+        Route::resource('sarana', 'Admin\SaranaController')->middleware('can:sarana');
+        Route::get('sarana/delete/{id}', 'Admin\SaranaController@delete');
+        Route::delete('delete-multiple-category', ['as' => 'category.multiple-delete', 'uses' => 'Admin\SaranaController@deleteMultiple']);
+        Route::resource('aosis', 'Admin\OsisController')->middleware('can:aosis');
+        Route::get('osis/delete/{id}', 'Admin\OsisController@delete');
+
+
+        Route::resource('ajurusan', 'Admin\JurusanController')->middleware('can:ajurusan');
+        Route::get('ajurusan/delete/{id}', 'Admin\JurusanController@delete');
     });
 });

@@ -24,4 +24,11 @@ class Ektra extends Model
         return \Carbon\Carbon::parse($this->attributes['updated_at'])
             ->diffForHumans();
     }
+    public function getEkstra()
+    {
+        if (!$this->img) {
+            return asset('images/noimage.jpg');
+        }
+        return asset('images/foto/ekstra/' . $this->img);
+    }
 }

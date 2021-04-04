@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Download;
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class DownloadController extends Controller
 {
@@ -11,7 +13,12 @@ class DownloadController extends Controller
     {
         $title = 'Download File';
         $download = Download::get();
-        return view('frontend.download.index', compact('title', 'download'));
+        $postsWeek = Post::with('categories')
+            ->where('updated_at', '>=', Carbon::now()->startOfWeek())
+            ->orderBy('weekly_views', 'desc')
+            ->limit(4)
+            ->get();
+        return view('frontend.download.index', compact('title', 'download', 'postsWeek'));
     }
 
 

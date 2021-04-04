@@ -1,63 +1,84 @@
 @extends('frontend.layouts.master')
 @section('content')
 
-<!-- ======= Breadcrumbs ======= -->
-<section class="breadcrumbs">
-</section><!-- End Breadcrumbs -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card-img">
-                <img src="{{asset('theme/img/visi.png')}}" class="card-img" alt="...">
+<section id="abc">
+    <div class="container" id="ab">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="abou" id="abou">
+                    <img src="{{asset('')}}theme/img/visi.png" alt="" class="light">
+                    <img src="{{asset('')}}theme/img/darkvisi.png" alt="" class="dark">
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- ======= Features Section ======= -->
-<section id="features" class="features">
-    <div class="container" data-aos="fade-up">
-        <div class="row feture-tabs mt-5" data-aos="fade-up">
-            <div class="col-lg-6">
-                <!-- Tabs -->
-                <ul class="nav nav-pills mb-3">
-                    <li>
-                        <a class="nav-link active" data-bs-toggle="pill" href="#tab1">Visi</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" data-bs-toggle="pill" href="#tab2">Misi</a>
-                    </li>
-                    <li>
-                        <a class="nav-link" data-bs-toggle="pill" href="#tab3">Tujuan</a>
-                    </li>
-                </ul><!-- End Tabs -->
+</section>
 
-                <!-- Tab Content -->
-                <div class="tab-content">
-
-                    <div class="tab-pane fade show active" id="tab1">
-                        <p>{!!$vm->visi!!}
-                        </p>
-                    </div><!-- End Tab 1 Content -->
-
-                    <div class="tab-pane fade show" id="tab2">
-                        <p>{!!$vm->misi!!}</p>
-                    </div><!-- End Tab 2 Content -->
-
-                    <div class="tab-pane fade show" id="tab3">
-                        <p>{!!$vm->tujuan!!}</p>
-
-                    </div><!-- End Tab 3 Content -->
-
+<section class="aboutme" id="aboutme">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="content">
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h2 class="mb-0">
+                                    <button type="button" class="btn
+                                                btn-utama" data-toggle="collapse" data-target="#collapseOne"><i
+                                            class="fa fa-plus"></i>
+                                        visi</button>
+                                </h2>
+                            </div>
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <p>{!!$vm->visi!!}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h2 class="mb-0">
+                                    <button type="button" class="btn
+                                                btn-utama collapsed" data-toggle="collapse"
+                                        data-target="#collapseTwo"><i class="fa fa-plus"></i>
+                                        Misi</button>
+                                </h2>
+                            </div>
+                            <div id="collapseTwo" class="collapse
+                                        show" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <p>{!!$vm->misi!!}</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingThree">
+                                <h2 class="mb-0">
+                                    <button type="button" class="btn
+                                                btn-utama collapsed" data-toggle="collapse"
+                                        data-target="#collapseThree"><i class="fa fa-plus"></i>
+                                        Tujuan</button>
+                                </h2>
+                            </div>
+                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <p>{!!$vm->tujuan!!}</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
-
-            <div class="col-lg-4 float-right">
-                <center><img src="{{asset('theme/img/smk.png')}}" class="img-fluid" alt="" width="250px"></center>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="{{asset('images/1614938111.jpg')}}" alt="">
+                </div>
             </div>
-
-        </div><!-- End Feature Tabs -->
+        </div>
     </div>
 </section>
-@include('frontend.layouts.ct')
 @endsection

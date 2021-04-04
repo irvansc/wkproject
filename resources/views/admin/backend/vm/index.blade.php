@@ -71,21 +71,19 @@
                                     <center>
                                         <h2>Visi</h2>
                                     </center>
-                                    <textarea name="visi" id="summernote1"
-                                        class="form-control">{!!$vm->visi!!}</textarea>
+                                    <textarea name="visi" id="editor" class="form-control">{!!$vm->visi!!}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <center>
                                         <h2>Misi</h2>
                                     </center>
-                                    <textarea name="misi" id="summernote2"
-                                        class="form-control">{!!$vm->misi!!}</textarea>
+                                    <textarea name="misi" id="editor1" class="form-control">{!!$vm->misi!!}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <center>
                                         <h2>Tujuan | <small class="text-danger">Opsional</small></h2>
                                     </center>
-                                    <textarea name="tujuan" id="summernote3"
+                                    <textarea name="tujuan" id="editor2"
                                         class="form-control">{!!$vm->tujuan!!}</textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary"><i class="ni ni-send"></i> Submit</button>
@@ -100,8 +98,8 @@
 @endsection
 @push('js')
 <script>
-    $('#summernote1').summernote();
-    $('#summernote2').summernote();
-    $('#summernote3').summernote();
+    CKEDITOR.replace('editor');
+    CKEDITOR.replace('editor1');
+    CKEDITOR.replace('editor2');
 </script>
 @endpush

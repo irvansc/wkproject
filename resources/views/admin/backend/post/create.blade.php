@@ -44,7 +44,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Content</label>
-                        <textarea class="form-control" id="summernote" name="content"
+                        <textarea class="form-control" id="editor" name="content"
                             id="exampleFormControlTextarea1"></textarea>
                     </div>
                     <a href="{{route('post.index')}}" class="btn btn-warning">
@@ -57,7 +57,8 @@
     </div>
 </div>
 @endsection
-@section('js')
+@push('js')
+
 <script type="text/javascript">
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -73,5 +74,9 @@
     $("#inputgambar").change(function () {
         readURL(this);
     });
+   $(document).ready(function(){
+    CKEDITOR.replace( 'editor' );
+   })
+
 </script>
-@stop
+@endpush

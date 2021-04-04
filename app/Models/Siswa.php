@@ -13,4 +13,11 @@ class Siswa extends Model
     {
         return $this->belongsTo(Kelas::class);
     }
+    public function getSiswa()
+    {
+        if (!$this->photo) {
+            return asset('images/default_siswa.png');
+        }
+        return asset('images/foto/siswa/' . $this->photo);
+    }
 }

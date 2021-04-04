@@ -10,7 +10,8 @@
             <div class="card shadow mb-5">
                 <div class="card-header py-3">
                     <h3 class="">Add the {{ $role->name }}</h3>
-
+                    <a href="{{ route('roles.show', $role->id) }}" class="btn btn-warning ml-auto">
+                        <i class="fas fa-arrow-circle-left"></i> Batal</a>
                 </div>
                 <div class="card-body">
                     <!-- Errors -->
@@ -30,8 +31,7 @@
                             <label for="name">Username</label>
                             <input type="text" class="form-control" id="name" name="name">
                         </div>
-                        <a href="{{ route('roles.show', $role->id) }}" class="btn btn-primary ">
-                            <i class="fas fa-arrow-circle-left"></i> Batal</a>
+
                         <button type="submit" class="btn btn-lg btn-block btn-primary">Submit</button>
                     </form>
                 </div>

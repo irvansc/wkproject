@@ -1,44 +1,55 @@
 @extends('frontend.layouts.master')
 
 @section('content')
-<!-- ======= Breadcrumbs ======= -->
-<section class="breadcrumbs">
-</section><!-- End Breadcrumbs -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card-img">
-                <img src="{{asset('theme/img/siswa.png')}}" class="card-img" alt="...">
-            </div>
-        </div>
-    </div>
-</div>
-<section id="team" class="team">
-    <div class="container" data-aos="fade-up">
-        <header class="section-header">
-            <p>Siswa Kami</p>
-        </header>
-
-        <div class="row gy-4">
-            @foreach ($siswas as $s)
-
-            <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-                <div class="member">
-                    <div class="member-img">
-                        <img src="{{asset('images/foto/siswa/'.$s->photo)}}" class="img-fluid" alt="" />
-                    </div>
-                    <div class="member-info">
-                        <h4>{{$s->nama}}</h4>
-                        <span>{{$s->kelas->nama_kelas}}</span>
-
-                    </div>
+<section id="abc">
+    <div class="container" id="ab">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="abou" id="abou">
+                    <img src="{{asset('')}}theme/img/siswa.png" alt="" class="light">
+                    <img src="{{asset('')}}theme/img/darksiswa.png" alt="" class="dark">
                 </div>
             </div>
-            @endforeach
-
         </div>
-        <nav> {{ $siswas->links() }}
-        </nav>
     </div>
+</section>
+<section class="galery">
+    <style>
+        .siswa {
+            border-radius: 25px;
+        }
+    </style>
+    <!-- Page Content -->
+    <div class="container">
+        <div class="siswa">
+            @if ($siswas->isNotEmpty())
+            <button type="button" class="btn btn-utama mb-2 siswa ">
+                Total Siswa: <span class="badge badge-light">{{ count($siswas) }}</span>
+            </button>
+            @else
+            <div class="alert alert-danger alert-block">
+                <strong>Tidak ada data</strong>
+            </div>
+            @endif
+        </div>
+        <div class="row">
+
+            @foreach ($siswas as $s)
+            <div class="col-lg-3 col-md-4 col-6 mb-1">
+                <a href="" class="h-100">
+                    <div class="siswa">
+                        <img src="{{$s->getSiswa()}}" alt="">
+                        <div class="team-content">
+                            <h3 class="title">{{$s->nama}}</h3>
+                            <span class="post">{{$s->kelas->nama_kelas}}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            @endforeach
+        </div>
+
+    </div>
+
 </section>
 @endsection

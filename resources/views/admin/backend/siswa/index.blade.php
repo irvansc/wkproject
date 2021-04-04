@@ -6,13 +6,22 @@
 </div>
 <div class="section-body">
     <div class="row">
-        <div class="col">
+        <div class="col-md-8">
             <div class="card shadow mb-5">
                 <div class="card-header py-3">
                     <h6 class="font-weight-bold text-primary">List Siswa</h6>
-                    <a href="{{route('asiswa.create')}}" class="btn btn-primary ml-auto"> <i
-                            class="fas fa-plus-circle"></i> Tambah
-                        Siswa</a>
+                    <div class="ml-auto">
+                        <a href="{{route('asiswa.create')}}" class="btn btn-primary ml-auto mb-1"> <i
+                                class="fas fa-plus-circle"></i> Tambah
+                            Siswa</a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-info btn-xs mb-1" data-toggle="modal"
+                            data-target="#exampleModal">
+                            <i class="bi bi-arrow-bar-up"></i> Import Siswa
+                        </button>
+                        <button class="btn btn-danger btn-xs delete-all mb-1" data-url="">Delete
+                            All Selected</button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="col-md-8">
@@ -26,58 +35,165 @@
                                     @endforeach
                                 </select>
                             </div>
-                            {{-- <div class="col-md-4 mt-1">
-                                <select id="filter-semester" class="form-control filter">
-                                    <option value="">Pilih Semester</option>
-                                    @foreach ($semester as $smt)
-                                    <option value="{{$smt->id}}">{{$smt->nama}}</option>
-                            @endforeach
-                            </select>
-                        </div> --}}
+
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="data">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th width="3%"><input type="checkbox" id="check_all"></th>
+                                    <th width="3%">No</th>
+                                    <th>Nis</th>
+                                    <th>Nama</th>
+                                    <th>Jenis Kelamin</th>
+                                    <th>kelas</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="data">
-                        <thead class="thead-light">
-                            <tr>
-                                <th width="3%">No</th>
-                                <th>Nis</th>
-                                <th>Nama</th>
-                                <th>Jenis Kelamin</th>
-                                <th>kelas</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{-- @foreach ($siswass as $e=>$k)
-                                <tr>
-                                    <td>{{$e+1}}</td>
-                            <td>{{$k->nis}}</td>
-                            <td>{{$k->nama}}</td>
-                            <td>{{$k->jenkel}}</td>
-                            <td>{{$k->kelas->nama_kelas}}</td>
-                            <td>
-                                <a href="{{route('asiswa.edit',$k->id)}}" class="btn btn-warning btn-sm"><i
-                                        class="fas fa-user-edit"></i></a>
-                                <button class="btn btn-danger btn-sm delete" name="{{$k->nama}}" id="{{$k->id}}"><i
-                                        class="fas fa-trash"></i></button>
-                            </td>
-                            </tr>
-                            @endforeach --}}
-                        </tbody>
-                    </table>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <style>
+                @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css");
+
+                #accordion .panel-title>a:before {
+                    float: right !important;
+                    font-family: FontAwesome;
+                    content: "\f068";
+                    padding-right: 5px;
+                }
+
+                #accordion .panel-title>a.collapsed:before {
+                    float: right !important;
+                    content: "\f067";
+                }
+
+                #accordion .panel-title>a:hover,
+                #accordion .panel-title>a:active,
+                #accordion .panel-title>a:focus {
+                    text-decoration: none;
+                }
+            </style>
+            <div id="accordion">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                    <h5 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                                            aria-expanded="true" aria-controls="collapseOne">
+                                            <i class="bi bi-megaphone-fill"></i> Information
+                                        </a>
+                                    </h5>
+
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                                    aria-labelledby="headingOne">
+                                    <div class="panel-body">
+                                        Sebelum melakukan Import Data Siswa, terlebih dahulu harus mendownload File
+                                        dibawah ini,
+                                        dan lihat video dokumentasi untuk penjelasannya. <br>
+                                        <a href="{{asset('images/file/datasiswa.xlsx')}}" download
+                                            class="btn btn-primary btn-sm"><i class="bi bi-download"></i>
+                                            Download</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-
             </div>
         </div>
     </div>
 </div>
+
+@endsection
+@section('modal')
+<style>
+    .progress {
+        position: relative;
+        width: 100%;
+    }
+
+    .bar {
+        background-color: #2320f1;
+        width: 0%;
+        height: 30px;
+    }
+
+    .percent {
+        position: absolute;
+        display: inline-block;
+        left: 50%;
+        color: #ffffff;
+    }
+</style>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Import Siswa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {!! Form::open(['route' => 'siswa.import', 'class' => 'form-horizontal','enctype'=>
+                'multipart/form-data']) !!}
+                {!! Form::file('data_siswa') !!}
+                <br>
+                <small><strong class="text-danger">Upload file dengan extension | xlsx</strong></small>
+                <br>
+
+                <div class="progress">
+                    <div class="bar">
+                        <div class="percent">
+                            0%
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input class="btn btn-success" type="submit" value="Kirim">
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
 @push('js')
+{{-- <script src="{{asset('')}}js/ddtf.js"></script> --}}
 <script>
     $(document).ready(function(){
+
+        var bar = $('.bar');
+            var percent = $('.percent');
+      $('form').ajaxForm({
+        beforeSend: function() {
+            var percentVal = '0%';
+            bar.width(percentVal)
+            percent.html(percentVal);
+        },
+        uploadProgress: function(event, position, total, percentComplete) {
+            var percentVal = percentComplete + '%';
+            bar.width(percentVal)
+            percent.html(percentVal);
+        },
+        complete: function(xhr) {
+            // alert("File Uploaded Successfully");
+            window.location = "/aguru";
+        }
+      });
     let kelas = $("#filter-kelas").val();
     // let semester = $("#filter-semester").val();
     const table = $('#data').DataTable({
@@ -98,44 +214,51 @@
       }
       },
       columnDefs: [
-    {targets: '_all', visible:true},
+
     {
         "targets": 0,
+        "sortable":false,
+        "render": function(data, type, row, meta){
+            return `<input type="checkbox" class="checkbox" data-id="${row.id}">`;
+        }
+      },
+    {
+        "targets": 1,
         "sortable":false,
         "render": function(data, type, row, meta){
             return meta.row + meta.settings._iDisplayStart + 1;
         }
       },
       {
-        "targets": 1,
+        "targets": 2,
         "class":"text-nowrap",
         "render": function(data, type, row, meta){
           return row.nis
         }
       },
       {
-        "targets": 2,
+        "targets": 3,
         "class":"text-nowrap",
         "render": function(data, type, row, meta){
           return row.nama
         }
       },
       {
-        "targets": 3,
+        "targets": 4,
         "class":"text-nowrap",
         "render": function(data, type, row, meta){
           return row.jenkel
         }
       },
       {
-        "targets": 4,
+        "targets": 5,
         "class":"text-nowrap",
         "render": function(data, type, row, meta){
           return row.kelas
         }
       },
       {
-        "targets": 5,
+        "targets": 6,
         "sortable":false,
         "render": function(data, type, row, meta){
             let tampilan = `
@@ -152,6 +275,7 @@
     kelas = $("#filter-kelas").val()
     table.ajax.reload(null,false)
   });
+
     $('body').on('click','.delete',function(){
         var id = $(this).attr('id');
         var name = $(this).attr('name');
@@ -174,11 +298,7 @@
         }).then((result) => {
         if (result.isConfirmed) {
             window.location = "/asiswa/delete/"+id;
-            // swalWithBootstrapButtons.fire(
-            //   'Deleted!',
-            //   'Your file has been deleted.',
-            //   'success'
-            // )
+
         } else if (
             result.dismiss === Swal.DismissReason.cancel
         ) {
@@ -191,7 +311,77 @@
         })
         });
 
+        $('#check_all').on('click', function (e) {
+            if ($(this).is(':checked', true)) {
+                $(".checkbox").prop('checked', true);
+            } else {
+                $(".checkbox").prop('checked', false);
+            }
+        });
+        $('.checkbox').on('click', function () {
+            if ($('.checkbox:checked').length == $('.checkbox').length) {
+                $('#check_all').prop('checked', true);
+            } else {
+                $('#check_all').prop('checked', false);
+            }
+        });
+        $('.delete-all').on('click', function (e) {
+            var idsArr = [];
+            $(".checkbox:checked").each(function () {
+                idsArr.push($(this).attr('data-id'));
+            });
+            if (idsArr.length <= 0)
+            {
+                alert("Please select atleast one record to delete.");
+            } else {
+                if (confirm("Are you sure, you want to delete the selected Student?")) {
+                    var strIds = idsArr.join(",");
+                    $.ajax({
+                        url: "{{ route('siswa.multiple-delete') }}",
+                        type: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: 'ids=' + strIds,
+                        success: function (data) {
+                            if (data['status'] == true) {
+                                $(".checkbox:checked").each(function () {
 
+                                    $(this).parents("tr").remove();
+                                });
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                })
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: 'Student deleted successfully!'
+                                })
+                            } else {
+                                alert('Whoops Something went wrong!!');
+                            }
+                        },
+                        error: function (data) {
+                            alert(data.responseText);
+                        }
+                    });
+                }
+            }
+        });
+
+        $('[data-toggle=confirmation]').confirmation({
+            rootSelector: '[data-toggle=confirmation]',
+            onConfirm: function (event, element) {
+                element.closest('form').submit();
+            }
+        });
 })
 </script>
 @endpush

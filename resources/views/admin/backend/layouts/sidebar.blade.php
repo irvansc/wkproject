@@ -50,23 +50,33 @@
                 @endcan
             </ul>
         </li>
-        @can('kelas')
+        @can('akelas')
         <hr>
-        <li class="dropdown {{ Request::path() == 'kelas'||Request::path() == 'aguru'
-            ||Request::path() == 'asiswa'||Request::path() == 'ekstra'
-            ||Request::path() == 'adownload'||Request::path() == '' ? 'active' : '' }}">
+        <li class="dropdown
+        {{ Request::path() == 'akelas'
+            ||Request::path() == 'aguru'
+            ||Request::path() == 'asiswa'
+            ||Request::path() == 'ekstra'
+            ||Request::path() == 'aosis'
+            ||Request::path() == 'ajurusan'
+            ||Request::path() == 'adownload'
+            ||Request::path() == '' ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown " data-toggle="dropdown">
                 <i class="fas fa-chalkboard-teacher" style="color: #007bff"></i>
                 <span>Data Akademik</span></a>
             <ul class="dropdown-menu">
-                <li class="{{ Request::path() == 'kelas'|| Request::path() == '' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{route('kelas.index')}}">Kelas</a></li>
+                <li class="{{ Request::path() == 'akelas'|| Request::path() == '' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{route('akelas.index')}}">Kelas</a></li>
                 <li class="{{ Request::path() == 'aguru'|| Request::path() == '' ? 'active' : '' }}">
                     <a class="nav-link" href="{{route('aguru.index')}}">Guru</a></li>
                 <li class="{{ Request::path() == 'asiswa'|| Request::path() == '' ? 'active' : '' }}">
                     <a class="nav-link" href="{{route('asiswa.index')}}">Siswa</a></li>
+                <li class="{{ Request::path() == 'ajurusan'|| Request::path() == '' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{route('ajurusan.index')}}">Jurusan</a></li>
                 <li class="{{ Request::path() == 'ekstra'|| Request::path() == '' ? 'active' : '' }}">
                     <a class="nav-link" href="{{route('ekstra.index')}}">Ekstrakulikuler</a></li>
+                <li class="{{ Request::path() == 'aosis'|| Request::path() == '' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{route('aosis.index')}}">Osis</a></li>
                 <li class="{{ Request::path() == 'adownload'|| Request::path() == '' ? 'active' : '' }}">
                     <a class="nav-link" href="{{route('adownload.index')}}">File Download</a></li>
             </ul>
@@ -82,6 +92,7 @@
         ||Request::path() == 'asejarah'
         ||Request::path() == 'aabout'
         ||Request::path() == 'sambutan'
+        ||Request::path() == 'sarana'
         ||Request::path() == '' ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                 <i class="fas fa-info" style="color: #007bff"></i>
@@ -101,6 +112,8 @@
                     <a class="nav-link" href="{{route('sambutan.index')}}">Sambutan</a></li>
                 <li class="{{ Request::path() == 'aabout'|| Request::path() == '' ? 'active' : '' }}">
                     <a class="nav-link" href="{{route('aabout.index')}}">About</a></li>
+                <li class="{{ Request::path() == 'sarana'|| Request::path() == '' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{route('sarana.index')}}">Sarpras</a></li>
             </ul>
         </li>
         @endcan

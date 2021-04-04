@@ -1,49 +1,43 @@
 @extends('frontend.layouts.master')
 
 @section('content')
-<!-- ======= Breadcrumbs ======= -->
-<section class="breadcrumbs">
-</section><!-- End Breadcrumbs -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card-img">
-                <img src="{{asset('theme/img/guru.png')}}" class="card-img" alt="...">
-            </div>
-        </div>
-    </div>
-</div>
-<section id="team" class="team">
-    <div class="container" data-aos="fade-up">
-        <header class="section-header">
-            <p>Guru Kami</p>
-        </header>
-
-        <div class="row gy-4">
-            @foreach ($gurus as $guru)
-
-            <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-                <div class="member">
-                    <div class="member-img">
-                        <img src="{{asset('images/foto/guru/'.$guru->photo)}}" class="img-fluid" alt="" />
-                        <div class="social">
-                            <a href=""><i class="bi bi-twitter"></i></a>
-                            <a href=""><i class="bi bi-facebook"></i></a>
-                            <a href=""><i class="bi bi-instagram"></i></a>
-                        </div>
-                    </div>
-                    <div class="member-info">
-                        <h4>{{$guru->nama_guru}}</h4>
-                        <span>{{$guru->mapel}}</span>
-
-                    </div>
+<section id="abc">
+    <div class="container" id="ab">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="abou" id="abou">
+                    <img src="{{asset('')}}theme/img/guru.png" alt="" class="light">
+                    <img src="{{asset('')}}theme/img/darkguru.png" alt="" class="dark">
                 </div>
             </div>
-            @endforeach
-
         </div>
-        <nav> {{ $gurus->links() }}
-        </nav>
     </div>
+</section>
+<section class="galery">
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            @foreach ($gurus as $guru)
+            <div class="col-lg-3 col-md-4 col-6 mb-1">
+                <a href="" class="h-100">
+                    <div class="guru">
+                        <img src="{{$guru->getGuru()}}" alt="">
+                        <ul class="social">
+                            <li><a href="{{$guru->fb}}" class="bi bi-facebook"></a></li>
+                            <li><a href="{{$guru->ig}}" class="bi bi-instagram"></a></li>
+                            <li><a href="{{$guru->twitter}}" class="bi bi-twitter"></a></li>
+                        </ul>
+                        <div class="team-content">
+                            <h3 class="title">{{$guru->nama_guru}}</h3>
+                            <span class="post">{{$guru->mapel}}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            @endforeach
+        </div>
+
+    </div>
+
 </section>
 @endsection

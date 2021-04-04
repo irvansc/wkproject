@@ -78,9 +78,9 @@
                             <label for="">Tempat Lahir <strong class="text-danger">*</strong></label>
                             <input type="text" name="tmp_lahir" class="form-control" value="{{$guru->tmp_lahir}}">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group ">
                             <label for="">Tanggal Lahir <strong class="text-danger">*</strong></label>
-                            <input type="text" name="tgl_lahir" class="form-control" placeholder="17 September 2021"
+                            <input type="text" name="tgl_lahir" class="form-control" id="datepicker"
                                 value="{{$guru->tgl_lahir}}">
                         </div>
                         <div class="form-group">
@@ -96,6 +96,18 @@
                             <label for="">Foto </label>
                             <input type="hidden" name="hidden_file" value="{{$guru->photo}}" class="form-control">
                             <input type="file" name="photo" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Facebook</label>
+                            <input type="text" name="fb" class="form-control" value="{{$guru->fb}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Instagram</label>
+                            <input type="text" name="ig" class="form-control" value="{{$guru->ig}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Twitter</label>
+                            <input type="text" name="twitter" class="form-control" value="{{$guru->twitter}}">
                         </div>
                         <span class="float-left">- Tanda <strong class="text-danger">*</strong> wajib diisi, selain itu
                             Opsional</span>

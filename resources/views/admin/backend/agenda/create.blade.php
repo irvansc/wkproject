@@ -21,7 +21,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Agenda Deskripsi</label>
-                            <textarea name="deskripsi" id="summernote" class="form-control"></textarea>
+                            <textarea name="deskripsi" id="editor" class="form-control"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="">Agenda Mulai</label>
@@ -63,3 +63,8 @@
     </div>
 </div>
 @endsection
+@push('js')
+<script>
+    CKEDITOR.replace( 'editor' );
+</script>
+@endpush

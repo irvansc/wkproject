@@ -21,7 +21,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Pengumuman Deskripsi</label>
-                            <textarea name="body" id="summernote" class="form-control" required></textarea>
+                            <textarea name="body" id="editor" class="form-control" required></textarea>
                         </div>
                         <div class="form-group">
                             <a href="{{route('apengumuman.index')}}" class="btn btn-warning">
@@ -38,3 +38,8 @@
     </div>
 </div>
 @endsection
+@push('js')
+<script>
+    CKEDITOR.replace( 'editor' );
+</script>
+@endpush
