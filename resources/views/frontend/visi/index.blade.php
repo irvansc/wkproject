@@ -17,7 +17,7 @@
 <section class="aboutme" id="aboutme">
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-8 text-center">
                 <div class="content">
                     <div class="accordion" id="accordionExample">
                         <div class="card">
@@ -46,7 +46,7 @@
                                 </h2>
                             </div>
                             <div id="collapseTwo" class="collapse
-                                        show" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                        " aria-labelledby="headingTwo" data-parent="#accordionExample">
                                 <div class="card-body">
                                     <p>{!!$vm->misi!!}</a>
                                     </p>
@@ -71,11 +71,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="{{asset('images/1614938111.jpg')}}" alt="">
                 </div>
             </div>
         </div>

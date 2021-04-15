@@ -154,7 +154,7 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -166,7 +166,7 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -177,6 +177,6 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
-        //
+        abort(404);
     }
 }

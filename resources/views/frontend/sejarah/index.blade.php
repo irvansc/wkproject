@@ -16,6 +16,9 @@
 <section class="aboutme" id="aboutme">
     <div class="container">
         <div class="row">
+            @if ($sj == null)
+
+            @else
             <div class="col-md-8">
                 <div class="content">
                     <h1>{{$sj->title}}</h1>
@@ -23,11 +26,10 @@
                     </p>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="{{asset('images/'.$sj->foto)}}" alt="">
-                </div>
+            <div class="col-md-4 imgkotak text-center">
+                <img src="{{asset('images/'.$sj->foto)}}" alt="">
             </div>
+            @endif
         </div>
     </div>
 </section>

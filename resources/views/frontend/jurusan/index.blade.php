@@ -23,10 +23,8 @@
                     </p>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="{{asset('images/foto/jurusan/'.$jurusan->img)}}" alt="">
-                </div>
+            <div class="col-md-4 imgkotak text-center">
+                <img src="{{asset('images/foto/jurusan/'.$jurusan->img)}}" alt="">
             </div>
         </div>
     </div>

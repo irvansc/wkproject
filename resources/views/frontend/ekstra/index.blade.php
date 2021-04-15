@@ -38,7 +38,7 @@
                 @endif
             </div>
 
-            <div class="col-md-4" id="sid">
+            <div class="col-md-4 sid" id="sid">
                 <div class="card mb-2">
                     <div class="card-header">
                         Recent Post

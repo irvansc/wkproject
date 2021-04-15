@@ -98,8 +98,12 @@
                 <i class="fas fa-info" style="color: #007bff"></i>
                 <span>Informasi</span></a>
             <ul class="dropdown-menu">
+                <li class="{{ Request::path() == 'ppdb'|| Request::path() == '' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{route('ppdb.index')}}">PPDB</a></li>
                 <li class="{{ Request::path() == 'apengumuman'|| Request::path() == '' ? 'active' : '' }}">
                     <a class="nav-link" href="{{route('apengumuman.index')}}">Pengumuman</a></li>
+                <li class="{{ Request::path() == 'ph'|| Request::path() == '' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{route('ph.index')}}">Pengumuman Harian</a></li>
                 <li class="{{ Request::path() == 'aagenda'|| Request::path() == '' ? 'active' : '' }}">
                     <a class="nav-link" href="{{route('aagenda.index')}}">Agenda</a></li>
                 <li class="{{ Request::path() == 'testimoni'|| Request::path() == '' ? 'active' : '' }}">

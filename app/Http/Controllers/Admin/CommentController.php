@@ -18,9 +18,9 @@ class CommentController extends Controller
     {
         $title = 'Comment';
         $comment = Comment::all();
-        $comment = Comment::select('Comments.*')
-            ->join('posts', 'posts.id', '=', 'Comments.commentable_id')->where('commentable_type', '=', 'App\Models\Post')
-            ->orderBy('created_at', 'desc')->get();
+        $comment = Comment::select('comments.*')
+            ->join('posts', 'posts.id', '=', 'comments.commentable_id')->where('commentable_type', '=', 'App\Models\Post')
+            ->orderBy('created_at', 'DESC')->get();
         return view('admin.backend.komentar.index', compact('title', 'comment'));
     }
     public function publikasi($id)

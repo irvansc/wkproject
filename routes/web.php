@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,10 @@ Route::get('/', function () {
 });
 Route::get('keluar', function () {
     Auth::logout();
+    return redirect('/');
+});
+Route::get('/cache', function () {
+    $exitCode = Artisan::call('config:cache');
     return redirect('/');
 });
 // Depan
@@ -156,5 +161,11 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('ajurusan', 'Admin\JurusanController')->middleware('can:ajurusan');
         Route::get('ajurusan/delete/{id}', 'Admin\JurusanController@delete');
+
+        Route::resource('ph', 'Admin\PhController')->middleware('can:ph');
+        Route::get('ph/delete/{id}', 'Admin\PhController@delete');
+        Route::resource('ppdb', 'Admin\PpdbController');
+        Route::get('ppdb/status/{id}', 'Admin\PpdbController@statusAktif')->name('status.aktif');
+        Route::get('ppdb/status/non-aktif/{id}', 'Admin\PpdbController@statusNon')->name('status.nonaktif');
     });
 });

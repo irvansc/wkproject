@@ -544,5 +544,37 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('ajurusan-delete', function ($user) {
             return $user->permission('ajurusan-delete');
         });
+        //ph
+        Gate::define('ph', function ($user) {
+            return $user->permission('ph');
+        });
+        Gate::define('ph-edit', function ($user) {
+            return $user->permission('ph-edit');
+        });
+        Gate::define('ph-update', function ($user) {
+            return $user->permission('ph-update');
+        });
+        Gate::define('ph-create', function ($user) {
+            return $user->permission('ph-create');
+        });
+        Gate::define('ph-delete', function ($user) {
+            return $user->permission('ph-delete');
+        });
+        //ppdb
+        Gate::define('ppdb', function ($user) {
+            return $user->permission('ppdb');
+        });
+        Gate::define('ppdb-edit', function ($user) {
+            return $user->permission('ppdb-edit');
+        });
+        Gate::define('ppdb-update', function ($user) {
+            return $user->permission('ppdb-update');
+        });
+        Gate::define('ppdb-create', function ($user) {
+            return $user->permission('ppdb-create');
+        });
+        Gate::define('ppdb-delete', function ($user) {
+            return $user->permission('ppdb-delete');
+        });
     }
 }

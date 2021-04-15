@@ -1466,11 +1466,14 @@ section {
     border-top-right-radius: 25px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
-
+.imgkotak img {
+    width: 300px;
+    height: 300px;
+}
 /* download */
 #download .recent h5 a {
     font-size: 15px;
-    color: #15477a;
+    color: #ffffff;
 }
 #download .recent h5 a:hover {
     color: #f2c808;
@@ -2307,10 +2310,14 @@ input:focus {
     color: #fff;
 }
 
+#slider {
+    height: auto;
+}
 #slider .slick-slide {
     background: #053f5e;
     border: none;
-    padding: 30px;
+    padding: 1.5rem;
+
     color: #fff;
 }
 

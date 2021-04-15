@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agenda;
 use App\Models\Pengumuman;
 use App\Models\Post;
 use Carbon\Carbon;
@@ -24,7 +25,9 @@ class PengumumanController extends Controller
             ->orderBy('weekly_views', 'desc')
             ->limit(4)
             ->get();
-        return view('frontend.pengumuman.index', compact('title', 'pengumuman', 'postsWeek'));
+
+        $agenda = Agenda::all();
+        return view('frontend.pengumuman.index', compact('title', 'pengumuman', 'postsWeek', 'agenda'));
     }
 
     /**

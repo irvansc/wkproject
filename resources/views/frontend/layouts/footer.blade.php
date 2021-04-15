@@ -36,29 +36,29 @@
                     <h4>Main Links</h4>
                     <ul>
                         <li>
-                            <i class="bi bi-chevron-right"></i> <a href="#">Home</a>
+                            <i class="bi bi-chevron-right"></i> <a href="/">Home</a>
                         </li>
                         <li>
-                            <i class="bi bi-chevron-right"></i> <a href="#">About</a>
+                            <i class="bi bi-chevron-right"></i> <a href="{{route('about.index')}}">About</a>
                         </li>
                         <li>
-                            <i class="bi bi-chevron-right"></i> <a href="#">Contact</a>
-                        </li>
-                        <li>
-                            <i class="bi bi-chevron-right"></i>
-                            <a href="#">Visi-Misi</a>
+                            <i class="bi bi-chevron-right"></i> <a href="{{route('contact.index')}}">Contact</a>
                         </li>
                         <li>
                             <i class="bi bi-chevron-right"></i>
-                            <a href="#">Sejarah</a>
+                            <a href="{{route('visi.index')}}">Visi-Misi</a>
                         </li>
                         <li>
                             <i class="bi bi-chevron-right"></i>
-                            <a href="#">Galery</a>
+                            <a href="{{route('sejarah.index')}}">Sejarah</a>
                         </li>
                         <li>
                             <i class="bi bi-chevron-right"></i>
-                            <a href="#">Blog</a>
+                            <a href="{{route('galery.index')}}">Galery</a>
+                        </li>
+                        <li>
+                            <i class="bi bi-chevron-right"></i>
+                            <a href="{{route('blog.index')}}">Blog</a>
                         </li>
                     </ul>
                 </div>
@@ -67,23 +67,36 @@
                     <h4>Akademik</h4>
                     <ul>
                         <li>
-                            <i class="bi bi-chevron-right"></i> <a href="#">Guru</a>
+                            <i class="bi bi-chevron-right"></i> <a href="{{route('guru.index')}}">Guru</a>
                         </li>
                         <li>
                             <i class="bi bi-chevron-right"></i>
-                            <a href="#">Siswa</a>
+                            <a href="{{route('siswa.index')}}">Siswa</a>
                         </li>
                         <li>
                             <i class="bi bi-chevron-right"></i>
-                            <a href="#">Pengumuman</a>
+                            <a href="{{route('pengumuman.index')}}">Pengumuman</a>
                         </li>
                         <li>
-                            <i class="bi bi-chevron-right"></i> <a href="#">Agenda</a>
+                            <i class="bi bi-chevron-right"></i> <a href="{{route('agenda.index')}}">Agenda</a>
                         </li>
                         <li>
                             <i class="bi bi-chevron-right"></i>
-                            <a href="#">Download</a>
+                            <a href="{{route('download.index')}}">Download</a>
                         </li>
+                        @php
+                        $p = DB::table('ppdb')->first();
+                        @endphp
+                        @if ($p->aktif == 1)
+                        <li>
+                            <i class="bi bi-chevron-right"></i>
+                            <a onclick="openInNewTab('{{$p->body}}')">PPDB <span
+                                    class="badge badge-success">DIBUKA!</span>
+                            </a>
+                        </li>
+                        @else
+
+                        @endif
                     </ul>
                 </div>
 

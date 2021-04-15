@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
-use App\Models\Siswa;
+use App\Models\Ppdb;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
+use Str;
 
-class DashboardController extends Controller
+class PpdbController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,38 +17,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $title = 'Dashboard';
-        $siswa = DB::table('siswa')->count();
-        $guru = DB::table('guru')->count();
-        $user = DB::table('users')->count();
-        $post = DB::table('posts')->count();
-        $jenisG = DB::table('guru')
-            ->selectRaw('count(*) as total')
-            ->selectRaw("count(case when jenkel = 'L' then 1 end) as Laki")
-            ->selectRaw("count(case when jenkel = 'P' then 1 end) as Perempuan")
-            ->first();
-        $jenisI = DB::table('siswa')
-            ->selectRaw('count(*) as total')
-            ->selectRaw("count(case when jenkel = 'L' then 1 end) as Laki")
-            ->selectRaw("count(case when jenkel = 'P' then 1 end) as Perempuan")
-            ->first();
-        $postsWeek = Post::with('categories')
-            ->orderBy('views', 'desc')
-            ->limit(3)
-            ->get();
-        $total = Post::sum('views');
-        return view('admin.backend.dashboard.index', compact(
-            'title',
-            'siswa',
-            'guru',
-            'user',
-            'post',
-            'jenisI',
-            'jenisG',
-            'postsWeek',
-            'total',
-
-        ));
+        $title = 'PPDB';
+        $ppdb = Ppdb::get();
+        return view('admin.backend.ppdb.index', compact('ppdb', 'title'));
     }
 
     /**
@@ -70,7 +40,6 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -104,9 +73,29 @@ class DashboardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $ppdb = Ppdb::find($id);
+        $ppdb['title'] = $request->title;
+        $ppdb['alias'] = Str::slug($request->title);
+        $ppdb['body'] = $request->body;
+
+        $ppdb->save();
+        return redirect()->back()->with('sukses', 'PPDB Updated Successfuly');
     }
 
+    public function statusAktif(Request $request, $id)
+    {
+        $publikasi = Ppdb::findorFail($id);
+        $publikasi->aktif = '1';
+        $publikasi->update();
+        return redirect()->back()->with('sukses', 'PPDB Diaktifkan');
+    }
+    public function statusNon(Request $request, $id)
+    {
+        $publikasi = Ppdb::findorFail($id);
+        $publikasi->aktif = '0';
+        $publikasi->update();
+        return redirect()->back()->with('sukses', 'PPDB Di Non-Aktifkan');
+    }
     /**
      * Remove the specified resource from storage.
      *

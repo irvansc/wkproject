@@ -37,6 +37,7 @@ class SliderController extends Controller
             $post = new Slider;
             $post->title = $request->title;
             $post->deskripsi = $request->deskripsi;
+            $post->btn = $request->btn;
 
             if ($request->hasFile('img')) {
                 $file = $request->file('img');
@@ -82,6 +83,7 @@ class SliderController extends Controller
             }
             $sldier->title = $request->title;
             $sldier->deskripsi = $request->deskripsi;
+            $sldier->btn = $request->btn;
             $sldier->save();
             Session::flash('sukses', 'Slider Updated successfully');
         } catch (\Exception $e) {

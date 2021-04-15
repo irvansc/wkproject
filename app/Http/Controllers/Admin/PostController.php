@@ -50,12 +50,12 @@ class PostController extends Controller
                 $image_resize = Image::make($file->getRealPath());
                 $image_resize->resize(1024, 768);
                 $image_resize->save('images/foto/post/' . $filename);
+                $post->img = $filename;
             }
-            $post->img = $filename;
             $post->save();
             $post->categories()
                 ->attach($request->category);
-            Session::flash('sukses', 'Post Uploaded Successfully');
+            Session::flash('sukses', 'Post Created Successfully');
         } catch (\Exception $e) {
             Session::flash('error', $e->getMessage());
         }

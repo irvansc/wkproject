@@ -1017,6 +1017,10 @@ section {
     font-weight: 700;
     color: #15477a;
 }
+.imgkotak img {
+    width: 300px;
+    height: 300px;
+}
 #aboutme .content-about {
     background-color: #f6f9ff;
     padding: 20px;
@@ -1313,6 +1317,10 @@ section {
 }
 #sid a:hover {
     color: #f2c808;
+}
+#sid .card-header {
+    background-color: #15477a;
+    color: #fff;
 }
 #pengumumand .entry-meta {
     margin-bottom: 1rem;
@@ -2389,4 +2397,10 @@ input:focus {
 #slider .slick-next {
     right: 0;
     z-index: 1;
+}
+
+/* paginate */
+.page-item.active .page-link {
+    background-color: #15477a;
+    border-color: #15477a;
 }

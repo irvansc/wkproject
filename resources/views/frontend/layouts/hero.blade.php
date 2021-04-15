@@ -20,7 +20,18 @@
                 </h3>
                 <p class="animated fadeInUp" style="animation-delay: 2s">
                     {!!$slid->deskripsi!!}
+
                 </p>
+                @php
+                $p = DB::table('ppdb')->first();
+                @endphp
+                @if ($slid->btn == 'y')
+                @if ($p->aktif == 1)
+                <div onclick="openInNewTab('{{$p->body}}')" class="btn btn-utama">DAFTAR SEKARANG</div>
+                @else
+                @endif
+                @else
+                @endif
             </div>
         </div>
         @endforeach

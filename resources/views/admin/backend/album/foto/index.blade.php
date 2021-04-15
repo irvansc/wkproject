@@ -77,7 +77,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="">Nama Foto</label>
-                        <input type="text" name="title" class="form-control" required>
+                        <input type="text" name="title" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="">Pilih Album :</label>

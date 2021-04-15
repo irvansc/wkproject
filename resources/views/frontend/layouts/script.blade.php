@@ -28,7 +28,12 @@
  // Preloader
 
 </script>
-
+<script>
+    function openInNewTab(url) {
+  var win = window.open(url, '_blank');
+  win.focus();
+}
+</script>
 <script>
     $(document).ready(function(){
           $(".alert").slideDown(300).delay(5000).slideUp(300);

@@ -50,6 +50,14 @@
         </div>
 
     </div>
-
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3 py-3  d-flex">
+                <ul class="pagination mx-auto">
+                    {{ $siswas->links() }}
+                </ul>
+            </div>
+        </div>
+    </div>
 </section>
 @endsection

@@ -15,10 +15,8 @@
 <section class="about" id="about">
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
-                <div class="card mb-1">
-                    <img src="{{asset('images/foto/osis/'.$osis->img)}}" alt="">
-                </div>
+            <div class="col-md-4 imgkotak text-center mb-2">
+                <img src="{{asset('images/foto/osis/'.$osis->img)}}" alt="">
             </div>
             <div class="col-md-8">
                 <div class="content">

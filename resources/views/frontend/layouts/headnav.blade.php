@@ -11,24 +11,52 @@
 
         <nav class="nav-menu d-none d-lg-block">
             <ul>
-                <li class="active"><a href="/">Home</a></li>
-                <li><a href="{{route('about.index')}}">About</a></li>
-                <li><a href="{{route('contact.index')}}">Contact</a></li>
-                <li><a href="{{route('blog.index')}}">Blog</a></li>
-                <li class="drop-down"><a href="">Profile</a>
+                <li class="{{ Request::path() == '/'|| Request::path() == '' ? 'active' : '' }}">
+                    <a href="/">Home</a>
+                </li>
+                <li class="{{ Request::path() == 'about'|| Request::path() == '' ? 'active' : '' }}">
+                    <a href="{{route('about.index')}}">About</a>
+                </li>
+                <li class="{{ Request::path() == 'contact'|| Request::path() == '' ? 'active' : '' }}">
+                    <a href="{{route('contact.index')}}">Contact</a>
+                </li>
+                <li class="{{ Request::path() == 'blog'|| Request::path() == '' ? 'active' : '' }}">
+                    <a href="{{route('blog.index')}}">Blog</a>
+                </li>
+                <li class="drop-down
+                {{ Request::path() == 'visi'||
+                Request::path() == 'sejarah'||
+                Request::path() == 'sarpras'||
+                Request::path() == '' ? 'active' : '' }}">
+                    <a href="">Profile</a>
                     <ul>
                         <li><a href="{{route('visi.index')}}">Visi-Misi</a></li>
                         <li><a href="{{route('sejarah.index')}}">Sejarah Singkat</a></li>
                         <li><a href="{{route('sarpras.index')}}">Sarana Prasana</a></li>
                     </ul>
                 </li>
-                <li class="drop-down"><a href="">Galery</a>
+                <li class="drop-down
+                {{ Request::path() == 'galery'||
+                Request::path() == 'foto'||
+                Request::path() == 'video'||
+                Request::path() == '' ? 'active' : '' }}
+                "><a href="">Galery</a>
                     <ul>
                         <li><a href="{{route('galery.index')}}">Foto</a></li>
                         <li><a href="{{route('video.index')}}">Video</a></li>
                     </ul>
                 </li>
-                <li class="drop-down"><a href="">Akademik</a>
+                <li class="drop-down
+                {{ Request::path() == 'ekstrakulikuler'||
+                Request::path() == 'kelas'||
+                Request::path() == 'osis'||
+                Request::path() == 'jurusan'||
+                Request::path() == 'guru'||
+                Request::path() == 'pengumuman'||
+                Request::path() == 'agenda'||
+                Request::path() == 'download'||
+                Request::path() == '' ? 'active' : '' }}
+                "><a href="">Akademik</a>
                     <ul>
                         <li><a href="{{route('guru.index')}}">Guru & Staff</a></li>
                         <li class="drop-down"><a href="#">Kesiswaan</a>
@@ -53,9 +81,12 @@
                         </li>
                         @php
                         $jurusan = DB::table('jurusan')->get();
+                        $jurus = DB::table('jurusan')->first();
                         @endphp
 
-                        <li class="drop-down"><a href="#">Jurusan</a>
+                        @if ($jurus == null)
+                        @else
+                        <li class="drop-down"><a>Jurusan</a>
                             <ul>
                                 @foreach ($jurusan as $j)
                                 <li><a href="{{route('jurusan.show',$j->id)}}">{{$j->title}}</a></li>
@@ -63,9 +94,22 @@
 
                             </ul>
                         </li>
+                        @endif
                         <li><a href="{{route('pengumuman.index')}}">Pengumuman</a></li>
                         <li><a href="{{route('agenda.index')}}">Agenda</a></li>
                         <li><a href="{{route('download.index')}}">Download</a></li>
+                        @php
+                        $p = DB::table('ppdb')->first();
+                        @endphp
+                        @if ($p->aktif == 1)
+                        <li>
+                            <a onclick="openInNewTab('{{$p->body}}')">PPDB <span
+                                    class="badge badge-success">DIBUKA!</span>
+                            </a>
+                        </li>
+                        @else
+
+                        @endif
                     </ul>
                 </li>
 

@@ -77,23 +77,14 @@
                         Pengumuman
                     </div>
                     <div class="card-body">
+                        @foreach ($pengumuman as $p)
                         <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1"><a href="">List group item heading</a></h6>
-                            <time datetime="2020-01-01">Jan
-                                1, 2020</time>
+                            <h6 class="mb-1"><a href="">{{$p->title}}</a></h6>
+                            <time datetime="2020-01-01">{{date("d M Y", strtotime($p->tanggal))}}</time>
                         </div>
                         <hr>
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1"><a href="">List group item heading</a></h6>
-                            <time datetime="2020-01-01">Jan
-                                1, 2020</time>
-                        </div>
-                        <hr>
-                        <div class="d-flex w-100 justify-content-between">
-                            <h6 class="mb-1"><a href="">List group item heading</a></h6>
-                            <time datetime="2020-01-01">Jan
-                                1, 2020</time>
-                        </div>
+                        @endforeach
+
                     </div>
                 </div>
             </div>

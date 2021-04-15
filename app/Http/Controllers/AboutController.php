@@ -15,7 +15,7 @@ class AboutController extends Controller
     public function index()
     {
         $title = 'About';
-        $abouts = DB::table('About')->first();
+        $abouts = DB::table('about')->first();
         return view('frontend.about.index', compact('title', 'abouts'));
     }
 

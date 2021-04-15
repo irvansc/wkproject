@@ -4,7 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Login &mdash; Stisla</title>
+    <title>Login &mdash; Page</title>
+    @php
+    $met = DB::table('meta')->first();
+    @endphp
+    <meta content="{{$met->description}}" name="description" />
+    <meta content="{{$met->keywords}}" name="keywords" />
+    <!-- Favicons -->
+    @php
+    $img = DB::table('image_web')->where('id','=',1)->first();
+    @endphp
+    <link href="{{asset('images/foto/web/'.$img->favicon)}}" rel="icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- General CSS Files -->
     <link rel="stylesheet" rel="stylesheet" href="{{ url('') }}/assets/modules/bootstrap/css/bootstrap.min.css">
@@ -20,11 +30,10 @@
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
-        opacity: 1;
     }
 </style>
 
-<body style="background-image: url('{{asset('')}}sekolah/pic1.jpg');" class="cov">
+<body style="background-image: url('{{asset('')}}sekolah/w.svg');" class="cov">
     <div id="app">
         <section class="section">
             <div class="container mt-5">

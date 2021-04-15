@@ -3,7 +3,7 @@
 @section('content')
 <div class="section-header">
     <h1>Profile </h1>
-    <a href="{{route('permissions.index')}}" class="btn btn-warning ml-auto"><i class="fas fa-hand-point-left"></i>
+    <a href="{{route('pengguna.index')}}" class="btn btn-warning ml-auto"><i class="fas fa-hand-point-left"></i>
         Kembali</a>
 </div>
 <div class="section-body">
@@ -97,7 +97,7 @@
                             <div class="card-body">
                                 @if ($posts->IsNotEmpty())
                                 <div class="table-responsive">
-                                    <table class="table table-striped">
+                                    <table class="table table-striped" id="data">
                                         <thead>
                                             <tr>
                                                 <th>Post</th>
@@ -115,11 +115,6 @@
                                         </tbody>
                                     </table>
                                 </div>
-
-                                <!-- Pagination -->
-                                <div class="d-flex justify-content-center">
-                                    {{ $posts->links() }}
-                                </div>
                                 @endif
 
                             </div>
@@ -131,6 +126,11 @@
             @push('js')
             <script>
                 $(document).ready(function(){
+                    $('#data').DataTable({
+            "pageLength": 5,
+    "lengthMenu": [[ 5,10, 25, 50, 100], [5,10, 25, 50, 'semua']],
+    "bLengthChange": true,
+        });
             $('body').on('click','.delete',function(){
         var id = $(this).attr('id');
     var name = $(this).attr('name');

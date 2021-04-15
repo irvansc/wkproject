@@ -1,19 +1,18 @@
 @extends('frontend.layouts.master')
 
 @section('content')
-<!-- ======= Breadcrumbs ======= -->
-<section class="breadcrumbs">
-</section><!-- End Breadcrumbs -->
-<div class="container" id="do">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card-img">
-                <img src="{{asset('theme/img/file.png')}}" class="light" alt="...">
-                <img src="{{asset('theme/img/darkfile.png')}}" class="dark" alt="...">
+<section id="abc">
+    <div class="container" id="ab">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="abou" id="abou">
+                    <img src="{{asset('')}}theme/img/file.png" alt="" class="light">
+                    <img src="{{asset('')}}theme/img/darkfile.png" alt="" class="dark">
+                </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 <section class="contact" id="download">
     <div class="container">
         <div class="row">
