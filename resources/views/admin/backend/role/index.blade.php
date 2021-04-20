@@ -9,10 +9,10 @@
             <div class="card shadow mb-5">
                 <div class="card-header py-3">
                     <h6 class="font-weight-bold text-primary">List Role</h6>
-                    <a href="{{ route('roles.create') }}" class="btn btn-primary ml-auto"> <i
-                            class="fas fa-plus-circle"></i>
-                        Add a
-                        Roles</a>
+                    {{-- <a href="{{ route('roles.create') }}" class="btn btn-primary ml-auto"> <i
+                        class="fas fa-plus-circle"></i>
+                    Add a
+                    Roles</a> --}}
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -38,13 +38,13 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="{{ route('roles.edit', $role->id) }}"
-                                                class="btn btn-sm btn-warning mr-2">Edit</a>
+                                            {{-- <a href="{{ route('roles.edit', $role->id) }}"
+                                            class="btn btn-sm btn-warning mr-2">Edit</a>
                                             <form action="{{ route('roles.destroy', $role->id) }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                            </form>
+                                            </form> --}}
                                         </td>
                                     </tr>
                                     @endforeach

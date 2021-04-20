@@ -6,7 +6,7 @@
 </div>
 <div class="section-body">
     <div class="col-md-10">
-        @can('pengguna-create')
+        @can('pengguna-edit')
         <button data-toggle="modal" data-target="#tambah" class="btn btn-primary mb-2">
             <i class="fas fa-plus-circle"></i> Tambah Data</button>
         @endcan
@@ -57,15 +57,15 @@
                                     <a href="{{route('pengguna.show',$u->id)}}" class="btn btn-info "><i
                                             class="fas fa-eye"></i></a>
 
-                                    @can('pengguna-edit')
+                                    {{-- @can('pengguna-edit')
                                     <button class="btn btn-primary " data-toggle="modal" data-target="#pw{{$u->id}}">
-                                        <i class="fa fa-key"></i></button>
+                                    <i class="fa fa-key"></i></button>
                                     <a href="{{route('pengguna.edit',$u->id)}}" class="btn btn-warning "><i
                                             class="fas fa-user-edit"></i></a>
                                     <button class="btn btn-danger  delete" name="{{ $u->name }}" id="{{ $u->id }}"><i
                                             class="fas fa-trash"></i></button>
 
-                                    @endcan
+                                    @endcan --}}
                                 </td>
                             </tr>
                             @endforeach

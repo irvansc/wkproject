@@ -18,8 +18,9 @@ $w = DB::table('image_fron')->first();
         Sebelum anda mengubah gambar ini, maka anda harus menyesuaikan dengan ukuran gambar yang sudah ada. <br>
         dengan menggunakan tools Adobe Ilustrator/Potoshop atau yang lainnya <br>
         jika tidak maka gambar yang anda unggah tidak akan sesuai dengan tampilan website, <br>
-        untuk title Top Teks berwarna hitam atau yang lainya, <br>
-        dan untuk title buttom Teks harus berwarna putih. <br>
+        disarankan : <br>
+        - Gambar Top teks berwarna putih .<br>
+        - Gambar Bottom teks berwarna putih .<br>
         Download File Dibawah ini :
         <a href="{{asset('images/foto/web/'.$w->img)}}" class="btn btn-primary btn-sm" download><i
                 class="fas fa-file-download"></i> Download</a>

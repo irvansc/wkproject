@@ -48,7 +48,6 @@ class DashboardController extends Controller
             'jenisG',
             'postsWeek',
             'total',
-
         ));
     }
 

@@ -44,14 +44,14 @@
                                     </td>
                                     <td>
                                         <div class="d-flex justify-content-center my-2">
-                                            <a href="{{ route('permissions.edit', $permission->id) }}"
-                                                class="btn btn-sm btn-warning mr-2 ">Edit</a>
+                                            {{-- <a href="{{ route('permissions.edit', $permission->id) }}"
+                                            class="btn btn-sm btn-warning mr-2 ">Edit</a>
                                             <form action="{{ route('permissions.destroy', $permission->id) }}"
                                                 method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                            </form>
+                                            </form> --}}
                                         </div>
                                     </td>
                                 </tr>
@@ -101,7 +101,7 @@
                             </div>
                             @endforeach
                         </div>
-                        <button type="submit" class="btn btn-lg btn-block btn-success">Submit</button>
+                        {{-- <button type="submit" class="btn btn-lg btn-block btn-success">Submit</button> --}}
                     </form>
                 </div>
             </div>

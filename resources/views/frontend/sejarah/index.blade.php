@@ -26,8 +26,8 @@
                     </p>
                 </div>
             </div>
-            <div class="col-md-4 imgkotak text-center">
-                <img src="{{asset('images/'.$sj->foto)}}" alt="">
+            <div class="col-md-4">
+                <img src="{{asset('images/'.$sj->foto)}}" alt="" class="img-fluid">
             </div>
             @endif
         </div>

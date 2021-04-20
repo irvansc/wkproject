@@ -24,9 +24,7 @@
                 </div>
             </div>
             <div class="col-md-4 ">
-                <div class="card">
-                    <img src="{{asset('images/'.$abouts->photo)}}" alt="">
-                </div>
+                <img src="{{asset('images/'.$abouts->photo)}}" alt="" class="img-fluid">
             </div>
         </div>
     </div>

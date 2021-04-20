@@ -88,60 +88,60 @@ class UserController extends Controller
         return view('admin.backend.pengguna.edit', compact('user', 'title', 'roles'));
     }
 
-    public function update(Request $request, $id)
-    {
-        try {
-            $user = User::findOrFail($id);
-            $request->validate([
-                'name' => 'required',
-                'email' => 'required',
-                'image' => 'image|mimes:png,jpg,jpeg'
-            ]);
-            if ($request->file('image')) {
-                File::delete('images/foto/user/' . $user->image);
-                $file = $request->file('image');
-                $filename = time() . '.' . $file->getClientOriginalExtension();
-                $image_resize = Image::make($file->getRealPath());
-                $image_resize->resize(500, 500);
-                $image_resize->save('images/foto/user/' . $filename);
-                $user->image = $filename;
-            }
+    // public function update(Request $request, $id)
+    // {
+    //     try {
+    //         $user = User::findOrFail($id);
+    //         $request->validate([
+    //             'name' => 'required',
+    //             'email' => 'required',
+    //             'image' => 'image|mimes:png,jpg,jpeg'
+    //         ]);
+    //         if ($request->file('image')) {
+    //             File::delete('images/foto/user/' . $user->image);
+    //             $file = $request->file('image');
+    //             $filename = time() . '.' . $file->getClientOriginalExtension();
+    //             $image_resize = Image::make($file->getRealPath());
+    //             $image_resize->resize(500, 500);
+    //             $image_resize->save('images/foto/user/' . $filename);
+    //             $user->image = $filename;
+    //         }
 
-            if ($user->email != $request->email) {
-                $request->validate([
-                    'email' => 'unique:users,email,except,id'
-                ]);
-            }
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->jenkel = $request->jenkel;
-            $user->telp = $request->telp;
-            $user->alamat = $request->alamat;
-            $user->save();
-            $user->roles()
-                ->sync($request->role);
-            Session::flash('sukses', 'User Updated Successfully');
-        } catch (\Exception $e) {
-            Session::flash('error', $e->getMessage());
-        }
-        return redirect()->route('pengguna.index');
-    }
+    //         if ($user->email != $request->email) {
+    //             $request->validate([
+    //                 'email' => 'unique:users,email,except,id'
+    //             ]);
+    //         }
+    //         $user->name = $request->name;
+    //         $user->email = $request->email;
+    //         $user->jenkel = $request->jenkel;
+    //         $user->telp = $request->telp;
+    //         $user->alamat = $request->alamat;
+    //         $user->save();
+    //         $user->roles()
+    //             ->sync($request->role);
+    //         Session::flash('sukses', 'User Updated Successfully');
+    //     } catch (\Exception $e) {
+    //         Session::flash('error', $e->getMessage());
+    //     }
+    //     return redirect()->route('pengguna.index');
+    // }
 
-    public function destroy($id)
-    {
-        abort(404);
-    }
-    public function updatepw(UpdatePasswordRequest $request, $id)
-    {
-        $user['password'] = Hash::make($request->get('password'));
-        User::where('id', $id)->update($user);
-        return redirect()->back()->with('sukses', 'Password Berhasil direset!');
-    }
-    public function delete($id)
-    {
-        $avatar = User::where('id', $id)->first();
-        File::delete('images/foto/user/' . $avatar->image);
-        $avatar->delete();
-        return redirect('/pengguna')->with('sukses', 'User Deleted Successfully');
-    }
+    // public function destroy($id)
+    // {
+    //     abort(404);
+    // }
+    // public function updatepw(UpdatePasswordRequest $request, $id)
+    // {
+    //     $user['password'] = Hash::make($request->get('password'));
+    //     User::where('id', $id)->update($user);
+    //     return redirect()->back()->with('sukses', 'Password Berhasil direset!');
+    // }
+    // public function delete($id)
+    // {
+    //     $avatar = User::where('id', $id)->first();
+    //     File::delete('images/foto/user/' . $avatar->image);
+    //     $avatar->delete();
+    //     return redirect('/pengguna')->with('sukses', 'User Deleted Successfully');
+    // }
 }

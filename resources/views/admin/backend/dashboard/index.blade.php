@@ -62,7 +62,7 @@
                         <h4>Total Artikel</h4>
                     </div>
                     <div class="card-body">
-                        {{-- {{$post}} --}}
+                        {{$post}}
                     </div>
                 </div>
             </div>

@@ -123,11 +123,44 @@
                 </div>
             </div>
         </section>
+        <!-- Modal -->
+        <div class="modal fade" id="modalEx" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Selamat Datang</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label for="colFormLabel" class="col-sm-2 col-form-label">Email :</label>
+                            <div class="col-sm-10">
+                                <p>admin@gmail.com</p>
+                                <p>operator@gmail.com</p>
+                                <p>author@gmail.com</p>
+                            </div>
+                        </div>
+                        <p>Password semua sama : <code>password</code></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <script src="{{ url('') }}/assets/modules/jquery.min.js"></script>
     <script src="{{ url('') }}/assets/modules/bootstrap/js/bootstrap.min.js"></script>
     <script src="{{ asset('') }}assets/modules/sweetalert2/dist/sweetalert2.min.js"></script>
     <script src="{{asset('')}}assets/modules/toastr/build/toastr.min.js"></script>
+    <script>
+        $("#modalEx").modal("show")
+    </script>
     <script type="text/javascript">
         $(document).ready(function () {
 

@@ -136,9 +136,7 @@ class PostController extends Controller
     public function deleteMultiple(Request $request)
     {
         $ids = $request->ids;
-        $avatar = Post::whereIn('id', explode(",", $ids))->first();
-        File::delete('images/foto/post/' . $avatar->img);
-        $avatar->delete();
+        Post::whereIn('id', explode(",", $ids))->delete();
         return response()->json(['status' => true, 'message' => "Post deleted successfully."]);
     }
 }
