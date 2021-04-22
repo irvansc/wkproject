@@ -1,2 +1,2 @@
-Project W-School.
-W-School adalah website gratis untuk sekolah SMP dan SMA.
+Project WK-School.
+Silahkan tonotn terlebih dahulu di Youtube : Bang Devanz
