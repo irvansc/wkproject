@@ -1,2 +1,2 @@
 Project WK-School.
-Silahkan tonotn terlebih dahulu di Youtube : Bang Devanz
+Silahkan tonton terlebih dahulu di Youtube : Bang Devanz
